@@ -1332,15 +1332,29 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         })
     }
 
+    private data class FilterResult(
+        val filteredApps: List<Triple<LauncherActivityInfo, UserHandle, Int>>?,
+        val isEmptyQuery: Boolean
+    )
+
     private suspend fun filterItems(query: String?) {
         val cleanQuery = stringUtils.cleanString(query)
         when (menuView.displayedChild) {
             0 -> {
-                // Always filter from full master list
                 val appsToFilter = installedApps
-                val filteredApps = getFilteredApps(cleanQuery, appsToFilter)
-                if (filteredApps != null) {
-                    applySearchFilter(filteredApps)
+                val result = withContext(Dispatchers.Default) {
+                    getFilteredApps(cleanQuery, appsToFilter)
+                }
+                withContext(Dispatchers.Main) {
+                    if (result.isEmptyQuery) {
+                        isSearchActive = false
+                        currentFilteredApps = installedApps
+                        updateMenu(installedApps)
+                        refreshAlphabetIndex(currentFilteredApps)
+                    } else if (result.filteredApps != null) {
+                        isSearchActive = true
+                        applySearchFilter(result.filteredApps)
+                    }
                 }
             }
 
@@ -1355,16 +1369,10 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
     private suspend fun getFilteredApps(
         cleanQuery: String?,
         updatedApps: List<Triple<LauncherActivityInfo, UserHandle, Int>>
-    ): List<Triple<LauncherActivityInfo, UserHandle, Int>>? {
+    ): FilterResult {
         if (cleanQuery.isNullOrEmpty()) {
-            isSearchActive = false
-            currentFilteredApps = installedApps
-            updateMenu(installedApps) // Use the original installed apps list
-            refreshAlphabetIndex(currentFilteredApps)
-            return null
+            return FilterResult(null, true)
         } else {
-            isSearchActive = true
-
             if (appSearchIndexDirty || appSearchIndex.size != updatedApps.size) {
                 appSearchIndex = buildAppSearchIndex(updatedApps)
                 appSearchIndexDirty = false
@@ -1378,7 +1386,6 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
                 null
             }
 
-            // Preserve original ordering for smoothness; only promote exact matches to the top.
             val exactMatches = mutableListOf<Triple<LauncherActivityInfo, UserHandle, Int>>()
             val otherMatches = mutableListOf<Triple<LauncherActivityInfo, UserHandle, Int>>()
 
@@ -1396,7 +1403,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
                 }
             }
 
-            return exactMatches + otherMatches
+            return FilterResult(exactMatches + otherMatches, false)
         }
     }
 
