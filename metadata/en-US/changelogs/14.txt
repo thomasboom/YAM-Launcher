@@ -1,0 +1,21 @@
+New Features
+- Hardened app launching — more robust and reliable app launch handling
+- Alphabet index — quickly jump to apps by letter, with a dedicated index view
+- Notification dots on home screen — at-a-glance app notification indicators
+- Landscape mode support — the launcher now adapts to landscape orientation
+- Keyboard event listener — improved keyboard input handling throughout the app
+- AGENTS.md — contributor agent documentation added
+
+Improvements
+- Changed popups to Material 3 — Material 3 design consistency across popup dialogs
+- Updated image sources and links to GitHub — keeping resources and references current
+- Fix app names rendering as app ID — apps now display their proper name instead of a raw package ID
+
+Bug Fixes
+- Fix crashes — general stability improvements
+- Fix issue Codeberg #84 — resolved a reported Codeberg issue
+- Permission fix — corrected a permissions-related issue
+- Fix launcher crash when tapping shortcut to uninstalled app — no more crashes when a shortcut points to an app that's been removed (PR #97 by trybysynth)
+
+Stability & Maintenance
+- Improve stability — ongoing reliability work (Mar 14, 2026)
