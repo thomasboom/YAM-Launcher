@@ -1,0 +1,236 @@
+<resources>
+    <!--Home Screen-->
+    <string name="set_default_launcher_prompt">YAM Launcher はデフォルトのホームアプリに設定されていません。</string>
+    <string name="set_default_launcher_button">デフォルトに設定</string>
+    <string name="shortcut_default">長押ししてアプリを追加</string>
+
+    <string name="shortcut_default_click">長押ししてアプリを選択</string>
+
+    <string name="accessibility_set_shortcut">ショートカット用アプリを設定</string>
+
+    <string name="open_app_menu">アプリメニューを開く</string>
+
+    <string name="no_calendar_app">カレンダーアプリが見つかりません</string>
+
+    <!--App Menu-->
+    <string name="select_an_app">アプリを選択</string>
+
+    <string name="search">検索…</string>
+
+    <string name="switch_to_contacts">連絡先に切り替え</string>
+    <string name="switch_to_apps">アプリに切り替え</string>
+
+    <string name="confirm_title">確認</string>
+    <string name="app_confirm_text">このアプリを選択してもよろしいですか</string>
+    <string name="confirm_yes">はい</string>
+    <string name="confirm_no">キャンセル</string>
+
+    <string name="removing">削除中…</string>
+
+    <string name="close_app_menu">アプリメニューを閉じる</string>
+
+    <string name="launch_error">アプリを起動できません</string>
+
+    <string name="empty_rename">名前は空にできませんy</string>
+
+    <!--Action Menu Items-->
+    <string name="pin">固定</string>
+    <string name="unpin">固定を解除</string>
+    <string name="info">情報</string>
+    <string name="uninstall">アンインストール</string>
+    <string name="rename">名前を変更</string>
+    <string name="hide">非表示</string>
+    <string name="close">閉じる</string>
+    <string name="accessibility_pin">Pin app</string>
+    <string name="accessibility_unpin">Unpin app</string>
+    <string name="accessibility_info">App info</string>
+    <string name="accessibility_uninstall">Uninstall app</string>
+    <string name="accessibility_rename">Rename app</string>
+    <string name="accessibility_hide">Hide app</string>
+    <string name="rename_error">名前変更モードを開始できません</string>
+
+    <!--Settings Page-->
+    <string name="settings_title">ランチャー設定</string>
+
+    <string name="default_home">デフォルトのホームに設定</string>
+    <string name="unable_to_launch_settings">設定を起動できません</string>
+
+    <string name="lock_settings">設定をロック</string>
+
+    <string name="customization">カスタマイズ</string>
+
+    <string name="ui_settings_title">全体のUI設定</string>
+    <string name="ui_settings_text">全体のUI</string>
+    <string name="ui_settings_summary">全体の見た目を設定します</string>
+
+    <string name="appearance">表示</string>
+    <string name="background_color">背景色</string>
+    <string name="text_color">文字色</string>
+    <string name="text_font">フォント</string>
+    <string name="text_style">文字スタイル</string>
+    <string name="text_shadow">文字の影</string>
+
+    <string name="operation">操作</string>
+    <string name="animation_speed">アニメーション速度</string>
+    <string name="swipe_threshold">スワイプのしきい値</string>
+    <string name="swipe_velocity_threshold">スワイプ速度のしきい値</string>
+    <string name="show_status_bar">ステータスバーを表示</string>
+    <string name="enable_confirmation">アプリ起動確認ダイアログ</string>
+    <string name="launch_confirmation_text">このアプリを起動しますか？</string>
+
+    <string name="home_settings_title">ホーム画面設定</string>
+    <string name="home_settings_text">ホーム画面</string>
+    <string name="home_settings_summary">ホーム画面を設定します</string>
+
+    <string name="clock">時計</string>
+    <string name="show_clock">時計を表示</string>
+    <string name="clock_alignment">時計の配置</string>
+    <string name="clock_size">時計のサイズ</string>
+    <string name="clicking_time_opens_clock">時刻をタップして時計を開く</string>
+    <string name="custom_clock_gesture">カスタム時計</string>
+    <string name="set_clock_app">時計アプリを設定</string>
+
+    <string name="date">日付</string>
+    <string name="show_date">日付を表示</string>
+    <string name="date_size">日付のサイズ</string>
+    <string name="battery_indicator">バッテリー表示</string>
+    <string name="clicking_date_opens_calendar">日付をタップしてカレンダーを開く</string>
+    <string name="custom_date_gesture">カスタムカレンダー</string>
+    <string name="set_calendar_app">カレンダーアプリを設定</string>
+
+    <string name="weather">天気</string>
+    <string name="gps_location">GPS位置情報の取得</string>
+    <string name="latest_location">最新のGPS位置情報</string>
+    <string name="set_manual_location">手動で場所を設定</string>
+    <string name="find_your_city">都市を検索</string>
+    <string name="weather_update_interval">更新間隔</string>
+    <string name="weather_update_interval_summary">例: 15m、6h、1d（最小1m）</string>
+    <string name="units">単位</string>
+
+    <string name="shortcuts">ショートカット</string>
+    <string name="number_of_shortcuts">ショートカット数</string>
+    <string name="horizontal_alignment">横方向の配置</string>
+    <string name="vertical_alignment">縦方向の配置</string>
+    <string name="shortcut_size">ショートカットのサイズ</string>
+    <string name="shortcut_spacing">ショートカットの間隔</string>
+    <string name="lock_shortcuts">ショートカットをロック</string>
+    <string name="hidden_shortcut_title">非表示アプリ</string>
+    <string name="hidden_shortcuts">ショートカット選択に非表示アプリを表示</string>
+
+    <string name="notification_dots">通知ドット</string>
+    <string name="notification_dots_summary">アプリに通知があると、ショートカットにドットを表示します</string>
+    <string name="notification_permission_required">権限が必要です</string>
+    <string name="notification_permission_text">通知ドットを表示するには、通知へのアクセスを有効にしてください</string>
+
+    <string name="gestures">ジェスチャー</string>
+    <string name="swipe_left">左スワイプ</string>
+    <string name="left_swipe_app">左スワイプで起動するアプリ</string>
+    <string name="swipe_right">右スワイプ</string>
+    <string name="right_swipe_app">右スワイプで起動するアプリ</string>
+    <string name="double_tap_to_lock_screen">ダブルタップで画面をロック</string>
+    <string name="double_tap">ダブルタップ</string>
+    <string name="double_tap_action">ダブルタップ時の動作</string>
+    <string name="double_tap_action_lock_screen">画面をロック</string>
+    <string name="double_tap_action_app">アプリを起動</string>
+    <string name="double_tap_app">ダブルタップで起動するアプリ</string>
+
+    <string name="app_settings_title">アプリメニュー設定</string>
+    <string name="app_settings_text">アプリメニュー</string>
+    <string name="app_settings_summary">アプリメニューを設定します</string>
+
+    <string name="apps">アプリ</string>
+    <string name="app_alignment">アプリの配置</string>
+    <string name="app_size">アプリのサイズ</string>
+    <string name="app_spacing">アプリの間隔</string>
+    <string name="contacts_menu">連絡先メニュー</string>
+    <string name="permission_denied">権限が拒否されました</string>
+    <string name="internet_search">Web検索ボタン</string>
+
+    <string name="alphabet_index_enabled">アルファベットインデックス</string>
+    <string name="alphabet_index_summary">すばやく移動できる文字サイドバーを表示します</string>
+    <string name="alphabet_index_position">インデックスの位置</string>
+    <string name="alphabet_index_left">左</string>
+    <string name="alphabet_index_right">右</string>
+
+    <string name="context_menu_settings_title">長押しメニュー設定</string>
+    <string name="context_menu_settings_text">長押しメニュー</string>
+    <string name="context_menu_settings_summary">長押しメニュー項目の有効/無効を設定します</string>
+
+    <string name="enable_pin">アプリを固定</string>
+    <string name="enable_info">アプリ情報</string>
+    <string name="enable_uninstall">アプリをアンインストール</string>
+    <string name="enable_rename">アプリ名を変更</string>
+    <string name="enable_hide">アプリを非表示</string>
+    <string name="enable_close">メニューを閉じる</string>
+
+    <string name="search_text">検索</string>
+    <string name="enable_search">検索を有効にする</string>
+    <string name="search_alignment">検索欄の配置</string>
+    <string name="search_size">検索欄のサイズ</string>
+    <string name="enable_fuzzy_search">あいまい検索</string>
+    <string name="automatically_open_keyboard">キーボードを自動で開く</string>
+    <string name="automatic_app_opening">アプリを自動で開く</string>
+    <string name="auto_launch_summary">検索結果が1件だけになったとき、自動でアプリを起動します</string>
+    <string name="auto_launch_disabled_reason_web_search">Web検索ボタンが有効なため無効です。</string>
+    <string name="web_search_disabled_reason_auto_open">アプリの自動起動が有効なため無効です。</string>
+
+    <string name="hidden_apps_title">非表示アプリ</string>
+    <string name="hidden_apps_text">非表示アプリを管理</string>
+    <string name="hidden_apps_summary">アプリの非表示を解除</string>
+    <string name="hidden_confirm_text">このアプリの非表示を解除しますか？</string>
+
+    <string name="about">このアプリについて</string>
+    <!--About Page Items-->
+    <string name="about_title">YAM Launcher について</string>
+    <string name="app_icon">アプリアイコン</string>
+    <string name="creditName">Otto が開発し、ThomasNow Productions がメンテナンスしています</string>
+    <string name="source_code">ソースコード</string>
+    <string name="codeberg">Codeberg</string>
+    <string name="github">GitHub</string>
+    <string name="view_github">このプロジェクトを GitHub で見る</string>
+    <string name="install_fdroid">F-Droid でインストール</string>
+    <string name="install_izzy">IzzyOnDroid でインストール</string>
+    <string name="install_play">Google Play でインストール</string>
+
+    <string name="reset">リセット</string>
+    <string name="restart_text">YAM Launcher を再起動</string>
+    <string name="reset_text">すべての設定をリセット</string>
+    <string name="reset_confirm_text">ランチャー設定、ショートカット、非表示アプリなどに加えた変更はすべて失われます。\n\n本当によろしいですか？</string>
+
+    <string name="backup_restore">バックアップと復元</string>
+    <string name="backup">バックアップ</string>
+    <string name="backup_summary">設定をバックアップします</string>
+    <string name="restore">復元</string>
+    <string name="restore_summary">バックアップを復元します</string>
+    <string name="backup_success">バックアップに成功しました :)</string>
+    <string name="backup_fail">バックアップに失敗しました :(</string>
+    <string name="restore_success">復元に成功しました :)</string>
+    <string name="restore_fail">復元に失敗しました :(（ファイルが破損している可能性があります）</string>
+    <string name="restore_wrong_app">YAM Launcher のバックアップではありません</string>
+    <string name="restore_error">ファイルの読み込みに失敗しました</string>
+
+    <!--Logging-->
+    <string name="debug_logs">デバッグログ</string>
+    <string name="export_logs">ログをエクスポート</string>
+    <string name="export_logs_summary">問題の診断に役立つよう、ログを共有します</string>
+    <string name="clear_logs">ログを削除</string>
+    <string name="clear_logs_summary">保存されているすべてのログファイルを削除します</string>
+    <string name="logs_cleared">ログを削除しました</string>
+    <string name="logs_export_success">ログのエクスポートに成功しました</string>
+    <string name="logs_export_fail">ログのエクスポートに失敗しました</string>
+    <string name="no_logs_to_export">エクスポートできるログがありません</string>
+
+    <!--Location Selector Items-->
+    <string name="region_text">%1$s%2$s</string>
+
+    <!--Double tap to lock-->
+    <string name="screenlock_confirmation">ダブルタップで画面をロックするには、アクセシビリティ設定で YAM Launcher を有効にしてください。</string>
+    <string name="accessibility_service_description">ダブルタップで画面をロックできるようにするには、この権限が必要です。\n\nこの権限は、YAM Launcher の「ダブルタップで画面をロック」機能を使う場合にのみ必要です。</string>
+
+    <string name="text_authentication_cancel">認証がキャンセルされました。</string>
+    <string name="text_authentication_error">認証エラー: %1$s (code %2$d)</string>
+    <string name="text_authentication_failed">認証に失敗しました。</string>
+    <string name="text_biometric_login">YAM Launcher の設定をロック解除</string>
+    <string name="text_biometric_login_app">%1$s の生体認証ログイン</string>
+    <string name="text_biometric_login_sub">生体認証を使用してログインします。</string>
+</resources>

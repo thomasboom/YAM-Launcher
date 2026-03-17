@@ -1,0 +1,104 @@
+<resources>
+
+    <!--General UI-->
+    <string-array name="bg_options">
+        <item>透明</item>
+        <item>黒</item>
+        <item>グレー</item>
+        <item>白</item>
+        <item>マテリアル</item>
+    </string-array>
+
+    <string-array name="color_options">
+        <item>ライト</item>
+        <item>ダーク</item>
+        <item>マテリアル</item>
+    </string-array>
+
+    <string-array name="font_options">
+        <item>System</item>
+        <item>Arbutus</item>
+        <item>Casual</item>
+        <item>Cursive</item>
+        <item>Monospace</item>
+        <item>Sans Serif</item>
+        <item>Sans Serif Light</item>
+        <item>Sans Serif Thin</item>
+        <item>Sans Serif Condensed</item>
+        <item>Sans Serif Condensed Light</item>
+        <item>Sans Serif Smallcaps</item>
+        <item>Serif</item>
+        <item>Ubuntu</item>
+        <item>Ubuntu Light</item>
+        <item>Ubuntu Condensed Regular</item>
+        <item>Workbench</item>
+    </string-array>
+
+    <string-array name="style_options">
+        <item>標準</item>
+        <item>太字</item>
+        <item>斜体</item>
+        <item>太字・斜体</item>
+    </string-array>
+
+    <!--Home and App Menu-->
+    <string-array name="h_alignment_options">
+        <item>左</item>
+        <item>中央</item>
+        <item>右</item>
+    </string-array>
+
+    <string-array name="v_alignment_options">
+        <item>上</item>
+        <item>中央</item>
+        <item>下</item>
+    </string-array>
+
+    <string-array name="size_options">
+        <item>極小</item>
+        <item>小</item>
+        <item>中</item>
+        <item>大</item>
+        <item>特大</item>
+        <item>巨大</item>
+    </string-array>
+
+    <string-array name="shortcut_spacing_options">
+        <item>極小</item>
+        <item>小</item>
+        <item>中</item>
+        <item>大</item>
+        <item>特大</item>
+        <item>巨大</item>
+        <item>最大</item>
+    </string-array>
+
+    <string-array name="app_spacing_options">
+        <item>極小</item>
+        <item>小</item>
+        <item>中</item>
+        <item>大</item>
+        <item>特大</item>
+        <item>巨大</item>
+    </string-array>
+    <!-- Reply Preference -->
+    <string-array name="reply_entries">
+        <item>返信</item>
+        <item>全員に返信</item>
+    </string-array>
+
+    <string-array name="reply_values">
+        <item>reply</item>
+        <item>reply_all</item>
+    </string-array>
+
+    <string-array name="double_tap_action_options">
+        <item>@string/double_tap_action_lock_screen</item>
+        <item>@string/double_tap_action_app</item>
+    </string-array>
+
+    <string-array name="alphabet_index_position_options">
+        <item>@string/alphabet_index_left</item>
+        <item>@string/alphabet_index_right</item>
+    </string-array>
+</resources>
