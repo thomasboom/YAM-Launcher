@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -128,7 +129,12 @@ class LocationFragment : Fragment(), LocationListAdapter.OnItemClickListener, Ti
         if (locationName == null || latitude == null || longitude == null) {
             return
         }
-        MaterialAlertDialogBuilder(requireContext()).apply {
+        MaterialAlertDialogBuilder(
+            ContextThemeWrapper(
+                requireContext(),
+                com.google.android.material.R.style.Theme_MaterialComponents_DayNight_NoActionBar
+            )
+        ).apply {
             setTitle(getString(R.string.confirm_title))
             setMessage("${getString(R.string.app_confirm_text)} $locationName?")
             setPositiveButton(getString(R.string.confirm_yes)) { _, _ ->
