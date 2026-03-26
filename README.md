@@ -1,3 +1,6 @@
+> [!WARNING]
+> GitHub randomly decided to susped my account, including the YAM Launcher repository. I'm in contact with support to get it resolved as soon as possible. In the meantime, some images may not load or some links might be broken.
+
 <p align="center">
 <img src="https://raw.githubusercontent.com/ThomasNowProductions/YAM-Launcher/refs/heads/main/metadata/en-US/images/featureGraphic.png" width=100%/>
 </p>
