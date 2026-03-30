@@ -103,7 +103,7 @@ class GestureAppsAdapter(
 
     /**
      * Updates the filtered app list.
-     * 
+     *
      * @param newApps Filtered list of apps
      */
     @SuppressLint("NotifyDataSetChanged")

@@ -103,7 +103,7 @@ class HiddenAppsAdapter(
 
     /**
      * Updates the hidden apps list.
-     * 
+     *
      * @param newApps New list of hidden apps
      */
     @SuppressLint("NotifyDataSetChanged")

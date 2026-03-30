@@ -26,7 +26,7 @@ class GestureUtils(private val context: Context) {
 
     /**
      * Resolves the app assigned to a swipe gesture direction.
-     * 
+     *
      * @param launcherApps LauncherApps service for resolving activities
      * @param direction Gesture direction ("clock", "date", "left", "right", "doubleTap")
      * @return Pair of (LauncherActivityInfo, profileIndex) or (null, null) if not configured
@@ -40,10 +40,10 @@ class GestureUtils(private val context: Context) {
                 // Parse saved component name string
                 val componentNameStr = app.getOrNull(1) ?: return Pair(null, null)
                 if (componentNameStr.isEmpty()) return Pair(null, null)
-                
+
                 val componentName = ComponentName.unflattenFromString(componentNameStr)
                 val profileIndex = app.getOrNull(2)?.toIntOrNull()
-                
+
                 // Validate component and profile before resolving
                 if (componentName != null && profileIndex != null && profileIndex in launcherApps.profiles.indices) {
                     return try {
@@ -67,7 +67,7 @@ class GestureUtils(private val context: Context) {
     /**
      * Checks if a specific accessibility service is enabled.
      * Used to verify ScreenLockService is active before attempting to lock.
-     * 
+     *
      * @param service The accessibility service class to check
      * @return true if the service is enabled and running
      */

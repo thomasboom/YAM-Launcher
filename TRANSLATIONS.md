@@ -82,7 +82,7 @@ Translate all string values while keeping the `name` attributes unchanged.
 
 ### Via Pull Request
 
-1. **Fork** the repository on [Codeberg](https://codeberg.org/ThomasNowProductions/yamlauncher)
+1. **Fork** the repository on [Codeberg](https://codeberg.org/thomasboom/yamlauncher)
 2. **Clone** your fork locally
 3. **Create a new branch**: `git checkout -b add-[language]-translation`
    - Example: `git checkout -b add-polish-translation`
@@ -107,6 +107,6 @@ Translate all string values while keeping the `name` attributes unchanged.
 
 ## Questions?
 
-Open an issue on [Codeberg](https://codeberg.org/ThomasNowProductions/yamlauncher/issues) and we'll help you get started!
+Open an issue on [Codeberg](https://codeberg.org/thomasboom/yamlauncher/issues) and we'll help you get started.
 
 Thank you for helping make YAM Launcher accessible to more people around the world!

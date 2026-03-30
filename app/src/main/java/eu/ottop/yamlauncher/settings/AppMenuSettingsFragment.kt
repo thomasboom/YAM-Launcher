@@ -58,7 +58,7 @@ class AppMenuSettingsFragment : PreferenceFragmentCompat(), TitleProvider {
             autoLaunchPref?.isEnabled = (webSearchPref?.isChecked == false)
             updateAutoLaunchSummary(webSearchPref?.isChecked == true)
             updateWebSearchSummary(searchEnabledPref?.isChecked == true, autoLaunchPref?.isChecked == true)
-            
+
             webSearchPref?.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue ->
                 val enabled = newValue as Boolean
                 autoLaunchPref?.isEnabled = !enabled

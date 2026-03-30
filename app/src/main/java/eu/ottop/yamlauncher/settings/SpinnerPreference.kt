@@ -15,7 +15,7 @@ import eu.ottop.yamlauncher.R
 /**
  * Custom preference that displays as a spinner dropdown.
  * Allows users to select from predefined options.
- * 
+ *
  * XML Attributes:
  * - android:entries - Display labels for options
  * - android:entryValues - Internal values for options
@@ -32,7 +32,7 @@ class SpinnerPreference (context: Context, attrs: AttributeSet? = null): Prefere
     init {
         // Use custom layout for spinner preference
         widgetLayoutResource = R.layout.preference_spinner
-        
+
         // Read custom attributes from XML
         context.theme.obtainStyledAttributes(
             attrs,

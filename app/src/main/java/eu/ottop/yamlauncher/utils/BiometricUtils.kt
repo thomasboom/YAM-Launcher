@@ -10,12 +10,12 @@ import eu.ottop.yamlauncher.R
 /**
  * Utility class for biometric authentication.
  * Handles fingerprint, face unlock, and PIN/pattern/password authentication.
- * 
+ *
  * Supports both strong biometrics (fingerprint, face) and device credentials
  * (PIN, pattern, password) on Android 11+.
  */
 class BiometricUtils(private val activity: FragmentActivity) {
-    
+
     // Callback for authentication results
     private lateinit var callbackSettings: CallbackSettings
     private val logger = Logger.getInstance(activity)
@@ -27,10 +27,10 @@ class BiometricUtils(private val activity: FragmentActivity) {
     interface CallbackSettings {
         /** Called when authentication succeeds */
         fun onAuthenticationSucceeded()
-        
+
         /** Called when authentication fails (valid biometric rejected) */
         fun onAuthenticationFailed()
-        
+
         /** Called when authentication is cancelled or encounters an error */
         fun onAuthenticationError(errorCode: Int, errorMessage: CharSequence?)
     }
@@ -38,7 +38,7 @@ class BiometricUtils(private val activity: FragmentActivity) {
     /**
      * Starts biometric authentication flow.
      * Shows system prompt and handles all authentication callbacks.
-     * 
+     *
      * @param callbackApp Callback for receiving authentication results
      */
     fun startBiometricSettingsAuth(callbackApp: CallbackSettings) {
@@ -73,7 +73,7 @@ class BiometricUtils(private val activity: FragmentActivity) {
         } else {
             BiometricManager.Authenticators.BIOMETRIC_STRONG
         }
-        
+
         // Check if biometric auth is available on this device
         val canAuthenticate =
             BiometricManager.from(activity).canAuthenticate(authenticators)

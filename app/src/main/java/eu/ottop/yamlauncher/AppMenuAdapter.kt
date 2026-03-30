@@ -28,7 +28,7 @@ import eu.ottop.yamlauncher.utils.UIUtils
 /**
  * RecyclerView adapter for displaying installed apps in the app menu.
  * Handles app launching, shortcut assignment, and renaming.
- * 
+ *
  * Features:
  * - DiffUtil for efficient list updates
  * - Pinned apps display with special icons
@@ -275,7 +275,7 @@ class AppMenuAdapter(
     /**
      * Updates app list with DiffUtil for efficient animations.
      * Preserves RecyclerView position when possible.
-     * 
+     *
      * @param newApps New list of apps
      */
     fun updateApps(newApps: List<Triple<LauncherActivityInfo, UserHandle, Int>>) {
@@ -289,7 +289,7 @@ class AppMenuAdapter(
     /**
      * Replaces app list without diff calculation.
      * Use for search results where positions change significantly.
-     * 
+     *
      * @param newApps New list of apps
      */
     @SuppressLint("NotifyDataSetChanged")

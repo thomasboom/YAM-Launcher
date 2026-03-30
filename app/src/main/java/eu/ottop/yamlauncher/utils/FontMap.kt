@@ -5,14 +5,14 @@ import eu.ottop.yamlauncher.R
 /**
  * Font registry mapping font identifiers to font resources.
  * Centralizes custom font loading for consistent typography.
- * 
+ *
  * Available fonts:
  * - arbutus: Decorative display font
  * - ubuntu: Clean sans-serif font
  * - ubuntu_light: Light weight variant of Ubuntu
  * - ubuntu_condensed_regular: Condensed variant for space-constrained areas
  * - workbench: Technical/developer style font
- * 
+ *
  * Maps font key strings to their corresponding R.font resource IDs.
  */
 object FontMap {

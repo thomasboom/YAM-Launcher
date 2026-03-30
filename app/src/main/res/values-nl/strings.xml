@@ -1,10 +1,16 @@
 <resources>
     <!--Home Screen-->
-    <string name="set_default_launcher_prompt">YAM Launcher is niet ingesteld als uw standaard start-app.</string>
+    <string
+        name="set_default_launcher_prompt"
+    >YAM Launcher is niet ingesteld als uw standaard start-app.</string>
     <string name="set_default_launcher_button">Instellen als standaard</string>
-    <string name="shortcut_default">Lang ingedrukt houden om app toe te voegen</string>
+    <string
+        name="shortcut_default"
+    >Lang ingedrukt houden om app toe te voegen</string>
 
-    <string name="shortcut_default_click">Lang klikken om app te selecteren</string>
+    <string
+        name="shortcut_default_click"
+    >Lang klikken om app te selecteren</string>
 
     <string name="accessibility_set_shortcut">Snelkoppeling instellen</string>
 
@@ -50,7 +56,9 @@
     <string name="settings_title">Launcher-instellingen</string>
 
     <string name="default_home">Standaard thuisscherm instellen</string>
-    <string name="unable_to_launch_settings">Kan instellingen niet openen</string>
+    <string
+        name="unable_to_launch_settings"
+    >Kan instellingen niet openen</string>
 
     <string name="lock_settings">Instellingen vergrendelen</string>
 
@@ -58,7 +66,9 @@
 
     <string name="ui_settings_title">Algemene UI-instellingen</string>
     <string name="ui_settings_text">Algemene UI</string>
-    <string name="ui_settings_summary">Configureer het algemene uiterlijk</string>
+    <string
+        name="ui_settings_summary"
+    >Configureer het algemene uiterlijk</string>
 
     <string name="appearance">Uiterlijk</string>
     <string name="background_color">Achtergrondkleur</string>
@@ -73,7 +83,9 @@
     <string name="swipe_velocity_threshold">Veegsnelheidsdrempel</string>
     <string name="show_status_bar">Statusbalk tonen</string>
     <string name="enable_confirmation">App-bevestigingsdialoog</string>
-    <string name="launch_confirmation_text">Weet u zeker dat u deze app wilt starten?</string>
+    <string
+        name="launch_confirmation_text"
+    >Weet u zeker dat u deze app wilt starten?</string>
 
     <string name="home_settings_title">Thuisscherm instellingen</string>
     <string name="home_settings_text">Thuisscherm</string>
@@ -91,7 +103,9 @@
     <string name="show_date">Datum tonen</string>
     <string name="date_size">Datum grootte</string>
     <string name="battery_indicator">Batterij-indicator</string>
-    <string name="clicking_date_opens_calendar">Datum aanraken opent agenda</string>
+    <string
+        name="clicking_date_opens_calendar"
+    >Datum aanraken opent agenda</string>
     <string name="custom_date_gesture">Aangepaste agenda</string>
     <string name="set_calendar_app">Agenda-app instellen</string>
 
@@ -100,7 +114,9 @@
     <string name="latest_location">Laatste GPS-locatie</string>
     <string name="set_manual_location">Handmatige locatie instellen</string>
     <string name="weather_update_interval">Update-interval</string>
-    <string name="weather_update_interval_summary">bijv. 15m, 6h, 1d (minimum 1m)</string>
+    <string
+        name="weather_update_interval_summary"
+    >bijv. 15m, 6h, 1d (minimum 1m)</string>
     <string name="find_your_city">"Zoek uw stad"</string>
     <string name="units">Eenheden</string>
 
@@ -112,14 +128,18 @@
     <string name="shortcut_spacing">Snelkoppeling afstand</string>
     <string name="lock_shortcuts">Snelkoppelingen vergrendelen</string>
     <string name="hidden_shortcut_title">Verborgen apps</string>
-    <string name="hidden_shortcuts">Verborgen apps tonen in snelkoppeling selectie</string>
+    <string
+        name="hidden_shortcuts"
+    >Verborgen apps tonen in snelkoppeling selectie</string>
 
     <string name="gestures">Gebaren</string>
     <string name="swipe_left">Naar links vegen</string>
     <string name="left_swipe_app">Linker veeg-app</string>
     <string name="swipe_right">Naar rechts vegen</string>
     <string name="right_swipe_app">Rechter veeg-app</string>
-    <string name="double_tap_to_lock_screen">Dubbel tikken om scherm te vergrendelen</string>
+    <string
+        name="double_tap_to_lock_screen"
+    >Dubbel tikken om scherm te vergrendelen</string>
 
     <string name="app_settings_title">App-menu instellingen</string>
     <string name="app_settings_text">App-menu</string>
@@ -132,12 +152,18 @@
     <string name="contacts_menu">Contacten-menu</string>
     <string name="permission_denied">Toestemming geweigerd</string>
     <string name="internet_search">Webzoekknop</string>
-    <string name="auto_launch_disabled_reason_web_search">Uitgeschakeld omdat de webzoekknop is ingeschakeld.</string>
-    <string name="web_search_disabled_reason_auto_open">Uitgeschakeld omdat automatisch openen is ingeschakeld.</string>
+    <string
+        name="auto_launch_disabled_reason_web_search"
+    >Uitgeschakeld omdat de webzoekknop is ingeschakeld.</string>
+    <string
+        name="web_search_disabled_reason_auto_open"
+    >Uitgeschakeld omdat automatisch openen is ingeschakeld.</string>
 
     <string name="context_menu_settings_title">Contextmenu instellingen</string>
     <string name="context_menu_settings_text">Contextmenu</string>
-    <string name="context_menu_settings_summary">Contextmenu-items inschakelen/uitschakelen</string>
+    <string
+        name="context_menu_settings_summary"
+    >Contextmenu-items inschakelen/uitschakelen</string>
 
     <string name="enable_pin">App vastzetten</string>
     <string name="enable_info">App-informatie</string>
@@ -151,9 +177,13 @@
     <string name="search_alignment">Zoek uitlijning</string>
     <string name="search_size">Zoek grootte</string>
     <string name="enable_fuzzy_search">Fuzzy zoeken</string>
-    <string name="automatically_open_keyboard">Toetsenbord automatisch openen</string>
+    <string
+        name="automatically_open_keyboard"
+    >Toetsenbord automatisch openen</string>
     <string name="automatic_app_opening">Automatisch app openen</string>
-    <string name="auto_launch_summary">App automatisch starten wanneer het laatste zoekresultaat</string>
+    <string
+        name="auto_launch_summary"
+    >App automatisch starten wanneer het laatste zoekresultaat</string>
 
     <string name="hidden_apps_title">Verborgen apps</string>
     <string name="hidden_apps_text">Verborgen apps beheren</string>
@@ -164,7 +194,9 @@
     <!--About Page Items-->
     <string name="about_title">Over YAM Launcher</string>
     <string name="app_icon">App-pictogram</string>
-    <string name="creditName">gemaakt door Otto, onderhouden door ThomasNow Productions</string>
+    <string
+        name="creditName"
+    >gemaakt door Otto, onderhouden door Thomas Boom</string>
     <string name="source_code">Broncode</string>
     <string name="codeberg">Codeberg</string>
     <string name="github">GitHub</string>
@@ -176,7 +208,9 @@
     <string name="reset">Resetten</string>
     <string name="restart_text">YAM Launcher herstarten</string>
     <string name="reset_text">Alle instellingen resetten</string>
-    <string name="reset_confirm_text">U verliest ALLE wijzigingen die u aan de launcher-instellingen, snelkoppelingen, verborgen apps, enz. hebt aangebracht.\n\nWeet u het zeker?</string>
+    <string
+        name="reset_confirm_text"
+    >U verliest ALLE wijzigingen die u aan de launcher-instellingen, snelkoppelingen, verborgen apps, enz. hebt aangebracht.\n\nWeet u het zeker?</string>
 
     <string name="backup_restore">Back-up en herstel</string>
     <string name="backup">Back-up</string>
@@ -186,16 +220,22 @@
     <string name="backup_success">Back-up succesvol :)</string>
     <string name="backup_fail">Back-up mislukt :(</string>
     <string name="restore_success">Herstel succesvol :)</string>
-    <string name="restore_fail">Herstel mislukt :( (beschadigd bestand?)</string>
+    <string
+        name="restore_fail"
+    >Herstel mislukt :( (beschadigd bestand?)</string>
     <string name="restore_wrong_app">Geen YAM Launcher back-up</string>
     <string name="restore_error">Lezen van bestand mislukt</string>
 
     <!--Logging-->
     <string name="debug_logs">Debuglogboeken</string>
     <string name="export_logs">Logboeken exporteren</string>
-    <string name="export_logs_summary">Logboeken delen om problemen te diagnosticeren</string>
+    <string
+        name="export_logs_summary"
+    >Logboeken delen om problemen te diagnosticeren</string>
     <string name="clear_logs">Logboeken wissen</string>
-    <string name="clear_logs_summary">Alle opgeslagen logboekbestanden verwijderen</string>
+    <string
+        name="clear_logs_summary"
+    >Alle opgeslagen logboekbestanden verwijderen</string>
     <string name="logs_cleared">Logboeken gewist</string>
     <string name="logs_export_success">Logboeken succesvol geëxporteerd</string>
     <string name="logs_export_fail">Exporteren van logboeken mislukt</string>
@@ -205,13 +245,27 @@
     <string name="region_text">%1$s%2$s</string>
 
     <!--Double tap to lock-->
-    <string name="screenlock_confirmation">Schakel YAM Launcher in de toegankelijkheidsinstellingen in om te vergrendelen met dubbel tikken.</string>
-    <string name="accessibility_service_description">De toestemming is vereist om dubbel tikken te laten werken voor schermvergrendeling.\n\nHet is alleen nodig als u de dubbel tikken om scherm te vergrendelen functie in YAM Launcher wilt gebruiken.</string>
+    <string
+        name="screenlock_confirmation"
+    >Schakel YAM Launcher in de toegankelijkheidsinstellingen in om te vergrendelen met dubbel tikken.</string>
+    <string
+        name="accessibility_service_description"
+    >De toestemming is vereist om dubbel tikken te laten werken voor schermvergrendeling.\n\nHet is alleen nodig als u de dubbel tikken om scherm te vergrendelen functie in YAM Launcher wilt gebruiken.</string>
 
-    <string name="text_authentication_cancel">Authenticatie geannuleerd.</string>
-    <string name="text_authentication_error">Authenticatie fout: %1$s (code %2$d)</string>
+    <string
+        name="text_authentication_cancel"
+    >Authenticatie geannuleerd.</string>
+    <string
+        name="text_authentication_error"
+    >Authenticatie fout: %1$s (code %2$d)</string>
     <string name="text_authentication_failed">Authenticatie mislukt.</string>
-    <string name="text_biometric_login">YAM Launcher instellingen ontgrendelen</string>
-    <string name="text_biometric_login_app">Biometrische login voor %1$s</string>
-    <string name="text_biometric_login_sub">Log in met uw biometrische gegevens.</string>
+    <string
+        name="text_biometric_login"
+    >YAM Launcher instellingen ontgrendelen</string>
+    <string
+        name="text_biometric_login_app"
+    >Biometrische login voor %1$s</string>
+    <string
+        name="text_biometric_login_sub"
+    >Log in met uw biometrische gegevens.</string>
 </resources>

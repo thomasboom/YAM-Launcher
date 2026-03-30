@@ -1,12 +1,20 @@
 <resources>
     <!--Home Screen-->
-    <string name="set_default_launcher_prompt">YAM Launcher ei ole asetettu oletuskotisovellukseksi.</string>
+    <string
+        name="set_default_launcher_prompt"
+    >YAM Launcher ei ole asetettu oletuskotisovellukseksi.</string>
     <string name="set_default_launcher_button">Aseta oletukseksi</string>
-    <string name="shortcut_default">Paina pitkään lisätäksesi sovelluksen</string>
+    <string
+        name="shortcut_default"
+    >Paina pitkään lisätäksesi sovelluksen</string>
 
-    <string name="shortcut_default_click">Paina pitkään valitaksesi sovelluksen</string>
+    <string
+        name="shortcut_default_click"
+    >Paina pitkään valitaksesi sovelluksen</string>
 
-    <string name="accessibility_set_shortcut">Valitse pikakuvakkeen sovellus</string>
+    <string
+        name="accessibility_set_shortcut"
+    >Valitse pikakuvakkeen sovellus</string>
 
     <string name="open_app_menu">Avaa sovellusvalikko</string>
 
@@ -20,7 +28,9 @@
     <string name="switch_to_apps">Näytä sovellukset</string>
 
     <string name="confirm_title">Vahvistus</string>
-    <string name="app_confirm_text">Oletko varma, että haluamasi valinta on</string>
+    <string
+        name="app_confirm_text"
+    >Oletko varma, että haluamasi valinta on</string>
     <string name="confirm_yes">Kyllä</string>
     <string name="confirm_no">Ei</string>
 
@@ -48,7 +58,9 @@
     <string name="settings_title">Launcherin Asetukset</string>
 
     <string name="default_home">Valitse Aloitusnäyttö</string>
-    <string name="unable_to_launch_settings">Asetuksien avaaminen epäonnistui</string>
+    <string
+        name="unable_to_launch_settings"
+    >Asetuksien avaaminen epäonnistui</string>
 
     <string name="customization">Kustomointi</string>
     <string name="lock_settings">Lukitse Asetukset</string>
@@ -66,10 +78,14 @@
     <string name="operation">Toiminta</string>
     <string name="animation_speed">Animaation Nopeus</string>
     <string name="swipe_threshold">Pyyhkäisyn Kynnysarvo</string>
-    <string name="swipe_velocity_threshold">Pyyhkäisyn Nopeuden Kynnysarvo</string>
+    <string
+        name="swipe_velocity_threshold"
+    >Pyyhkäisyn Nopeuden Kynnysarvo</string>
     <string name="show_status_bar">Näytä Tilapalkki</string>
     <string name="enable_confirmation">Vahvistus Sovellusta Avatessa</string>
-    <string name="launch_confirmation_text">Oletko varma, että haluat avata tämän sovelluksen?</string>
+    <string
+        name="launch_confirmation_text"
+    >Oletko varma, että haluat avata tämän sovelluksen?</string>
 
     <string name="home_settings_title">Kotinäytön Asetukset</string>
     <string name="home_settings_text">Kotinäyttö</string>
@@ -79,7 +95,9 @@
     <string name="show_clock">Näytä Kello</string>
     <string name="clock_alignment">Kellon Sijainti</string>
     <string name="clock_size">Kellon Koko</string>
-    <string name="clicking_time_opens_clock">Ajan Painaminen Avaa Kello-sovelluksen</string>
+    <string
+        name="clicking_time_opens_clock"
+    >Ajan Painaminen Avaa Kello-sovelluksen</string>
     <string name="custom_clock_gesture">Muu Kello-sovellus</string>
     <string name="set_clock_app">Valitse Kello-sovellus</string>
 
@@ -87,7 +105,9 @@
     <string name="show_date">Näytä Päivämäärä</string>
     <string name="date_size">Päivämäärän Koko</string>
     <string name="battery_indicator">Akun Lataus</string>
-    <string name="clicking_date_opens_calendar">Päivämäärän Painaminen Avaa Kalenterin</string>
+    <string
+        name="clicking_date_opens_calendar"
+    >Päivämäärän Painaminen Avaa Kalenterin</string>
     <string name="custom_date_gesture">Muu Kalenteri-sovellus</string>
     <string name="set_calendar_app">Valitse Kalenteri-sovellus</string>
 
@@ -96,7 +116,9 @@
     <string name="latest_location">Viimeinen GPS Sijainti</string>
     <string name="set_manual_location">Aseta Manuaalinen Sijainti</string>
     <string name="weather_update_interval">Päivitysväli</string>
-    <string name="weather_update_interval_summary">esim. 15m, 6h, 1d (vähintään 1m)</string>
+    <string
+        name="weather_update_interval_summary"
+    >esim. 15m, 6h, 1d (vähintään 1m)</string>
     <string name="find_your_city">"Sijaintihaku"</string>
     <string name="units">Yksiköt</string>
 
@@ -108,14 +130,18 @@
     <string name="shortcut_spacing">Pikakuvakkeiden Väli</string>
     <string name="lock_shortcuts">Lukitse Pikakuvakkeet</string>
     <string name="hidden_shortcut_title">Piilotetut Sovellukset</string>
-    <string name="hidden_shortcuts">Näytä piilotetut sovellukset pikakuvakkeita valitessa</string>
+    <string
+        name="hidden_shortcuts"
+    >Näytä piilotetut sovellukset pikakuvakkeita valitessa</string>
 
     <string name="gestures">Eleet</string>
     <string name="swipe_left">Vasen Pyyhkäisy</string>
     <string name="left_swipe_app">Vasemman Pyyhkäisyn Sovellus</string>
     <string name="swipe_right">Oikea Pyyhkäisy</string>
     <string name="right_swipe_app">Oikean Pyyhkäisyn Sovellus</string>
-    <string name="double_tap_to_lock_screen">Kaksoisnapautus Lukitsee Puhelimen</string>
+    <string
+        name="double_tap_to_lock_screen"
+    >Kaksoisnapautus Lukitsee Puhelimen</string>
 
     <string name="app_settings_title">Sovellusvalikon Asetukset</string>
     <string name="app_settings_text">Sovellusvalikko</string>
@@ -128,12 +154,20 @@
     <string name="contacts_menu">Yhteystiedot</string>
     <string name="permission_denied">Tarvittavat Luvat Kielletty</string>
     <string name="internet_search">Verkkohaku Nappi</string>
-    <string name="auto_launch_disabled_reason_web_search">Poistettu käytöstä, koska verkkohakunappi on käytössä.</string>
-    <string name="web_search_disabled_reason_auto_open">Poistettu käytöstä, koska automaattinen avaus on käytössä.</string>
+    <string
+        name="auto_launch_disabled_reason_web_search"
+    >Poistettu käytöstä, koska verkkohakunappi on käytössä.</string>
+    <string
+        name="web_search_disabled_reason_auto_open"
+    >Poistettu käytöstä, koska automaattinen avaus on käytössä.</string>
 
-    <string name="context_menu_settings_title">Kontekstivalikon Asetukset</string>
+    <string
+        name="context_menu_settings_title"
+    >Kontekstivalikon Asetukset</string>
     <string name="context_menu_settings_text">Kontekstimenu</string>
-    <string name="context_menu_settings_summary">Näytä/piilota kontekstimenun vaihtoehtoja</string>
+    <string
+        name="context_menu_settings_summary"
+    >Näytä/piilota kontekstimenun vaihtoehtoja</string>
 
     <string name="enable_pin">Sovellusten Kiinnitys</string>
     <string name="enable_info">Sovellustiedot</string>
@@ -147,20 +181,26 @@
     <string name="search_alignment">Hakupalkin Sijainti</string>
     <string name="search_size">Hakupalkin Koko</string>
     <string name="enable_fuzzy_search">Sumea haku</string>
-    <string name="automatically_open_keyboard">Avaa Näppäimistö Automaattisesti</string>
+    <string
+        name="automatically_open_keyboard"
+    >Avaa Näppäimistö Automaattisesti</string>
     <string name="automatic_app_opening">Avaa Hakutulos Automaattisesti</string>
-    <string name="auto_launch_summary">Avaa sovellus automaattisesti kun se on viimeinen hakutulos</string>
+    <string
+        name="auto_launch_summary"
+    >Avaa sovellus automaattisesti kun se on viimeinen hakutulos</string>
 
     <string name="hidden_apps_title">Piilotetut Sovellukset</string>
     <string name="hidden_apps_text">Hallitse Piilotettuja Sovelluksia</string>
     <string name="hidden_apps_summary">Näytä piilotetut sovellukset</string>
-    <string name="hidden_confirm_text">Oletko varma, että haluat näyttää sovelluksen</string>
+    <string
+        name="hidden_confirm_text"
+    >Oletko varma, että haluat näyttää sovelluksen</string>
 
     <string name="about">Tietoa</string>
     <!--About Page Items-->
     <string name="about_title">Tietoa YAM Launcherista</string>
     <string name="app_icon">Sovelluksen Icon</string>
-    <string name="creditName">Luonut Otto, ylläpitää ThomasNow Productions</string>
+    <string name="creditName">Luonut Otto, ylläpitää Thomas Boom</string>
     <string name="source_code">Lähdekoodi</string>
     <string name="codeberg">Codeberg</string>
     <string name="github">GitHub</string>
@@ -172,11 +212,15 @@
     <string name="reset">Reset</string>
     <string name="restart_text">Käynnistä YAM Launcher Uudelleen</string>
     <string name="reset_text">Nollaa Kaikki Asetukset</string>
-    <string name="reset_confirm_text">Menetät kaikki muokkauksesi launcherin asetuksiin, pikakuvakkisiin sun muuhun.\n\nOletko varma?</string>
+    <string
+        name="reset_confirm_text"
+    >Menetät kaikki muokkauksesi launcherin asetuksiin, pikakuvakkisiin sun muuhun.\n\nOletko varma?</string>
 
     <string name="backup_restore">Varmuuskopiointi ja Palautus</string>
     <string name="backup">Tee Varmuuskopio</string>
-    <string name="backup_summary">Säilytä Nykyiset Asetukset Tiedostossa</string>
+    <string
+        name="backup_summary"
+    >Säilytä Nykyiset Asetukset Tiedostossa</string>
     <string name="restore">Varmuuskopion Palautus</string>
     <string name="restore_summary">Palauta Asetukset Varmuuskopiosta</string>
     <string name="backup_success">Backup successful :)</string>
@@ -189,9 +233,13 @@
     <!--Logging-->
     <string name="debug_logs">Debug-lokit</string>
     <string name="export_logs">Vie lokit</string>
-    <string name="export_logs_summary">Jaa lokit ongelmien diagnosoimiseksi</string>
+    <string
+        name="export_logs_summary"
+    >Jaa lokit ongelmien diagnosoimiseksi</string>
     <string name="clear_logs">Tyhjennä lokit</string>
-    <string name="clear_logs_summary">Poista kaikki tallennetut lokitiedostot</string>
+    <string
+        name="clear_logs_summary"
+    >Poista kaikki tallennetut lokitiedostot</string>
     <string name="logs_cleared">Lokit tyhjennetty</string>
     <string name="logs_export_success">Lokit viety onnistuneesti</string>
     <string name="logs_export_fail">Lokien vienti epäonnistui</string>
@@ -201,14 +249,28 @@
     <string name="region_text">%1$s%2$s</string>
 
     <!--Double tap to lock-->
-    <string name="screenlock_confirmation">Lukitaksesi näytön kaksoisnapautuksella, laita YAM Launcher päälle saavutettavuusasetuksissa.</string>
-    <string name="accessibility_service_description">Näitä lupia tarvitaan näytön lukitsemiseen.\n\nNe ovat tarpeellisia pelkästään jos käytät elettä, joka lukitsee näytön kaksoisnapautuksesta.</string>
+    <string
+        name="screenlock_confirmation"
+    >Lukitaksesi näytön kaksoisnapautuksella, laita YAM Launcher päälle saavutettavuusasetuksissa.</string>
+    <string
+        name="accessibility_service_description"
+    >Näitä lupia tarvitaan näytön lukitsemiseen.\n\nNe ovat tarpeellisia pelkästään jos käytät elettä, joka lukitsee näytön kaksoisnapautuksesta.</string>
 
-    <string name="text_authentication_cancel">Asetuksien avaus peruttiin.</string>
-    <string name="text_authentication_error">Vika asetuksia avatessa: %1$s (code %2$d)</string>
-    <string name="text_authentication_failed">Asetuksien avaus ei onnistunut.</string>
+    <string
+        name="text_authentication_cancel"
+    >Asetuksien avaus peruttiin.</string>
+    <string
+        name="text_authentication_error"
+    >Vika asetuksia avatessa: %1$s (code %2$d)</string>
+    <string
+        name="text_authentication_failed"
+    >Asetuksien avaus ei onnistunut.</string>
     <string name="text_biometric_login">Avaa YAM Launcherin asetukset</string>
-    <string name="text_biometric_login_app">Biometrinen kirjaantuminen: %1$s</string>
-    <string name="text_biometric_login_sub">Kirjaudu biometrisilla tiedoillasi.</string>
+    <string
+        name="text_biometric_login_app"
+    >Biometrinen kirjaantuminen: %1$s</string>
+    <string
+        name="text_biometric_login_sub"
+    >Kirjaudu biometrisilla tiedoillasi.</string>
 
 </resources>

@@ -6,7 +6,7 @@ import eu.ottop.yamlauncher.MainActivity
 
 /**
  * Custom LinearLayoutManager that adds home screen navigation gestures.
- * 
+ *
  * Features:
  * - Scroll direction detection for navigating back to home
  * - Configurable scroll enable/disable (used during edit modes)
@@ -17,7 +17,7 @@ class AppMenuLinearLayoutManager(private val activity: MainActivity) : LinearLay
     // Tracks the first visible item for overscroll detection
     private var firstVisibleItemPosition = 0
     private var scrollStarted = false
-    
+
     // Controls whether vertical scrolling is allowed
     // Disabled during rename mode to prevent accidental scrolling
     private var isScrollEnabled: Boolean = true
@@ -25,7 +25,7 @@ class AppMenuLinearLayoutManager(private val activity: MainActivity) : LinearLay
     /**
      * Enables or disables vertical scrolling.
      * Used during edit modes (like rename) to prevent accidental navigation.
-     * 
+     *
      * @param enabled true to allow scrolling, false to disable
      */
     fun setScrollEnabled(enabled: Boolean) {
@@ -52,7 +52,7 @@ class AppMenuLinearLayoutManager(private val activity: MainActivity) : LinearLay
     /**
      * Handles vertical scroll operations with overscroll detection.
      * If user scrolls up while at top of list, navigates back to home.
-     * 
+     *
      * @param dy Scroll delta in pixels
      * @param recycler RecyclerView's recycler for view recycling
      * @param state Current scroll state

@@ -27,7 +27,7 @@ class StringUtils {
     /**
      * Appends text to the end of a string if the value is not empty.
      * Useful for building formatted strings with separators.
-     * 
+     *
      * @param value The base string
      * @param addition The text to append
      * @return Combined string or original if value is empty
@@ -39,7 +39,7 @@ class StringUtils {
     /**
      * Prepends text to the beginning of a string if the value is not empty.
      * Useful for adding separators between non-empty values.
-     * 
+     *
      * @param value The base string
      * @param addition The text to prepend
      * @return Combined string or original if value is empty
@@ -51,7 +51,7 @@ class StringUtils {
     /**
      * Removes non-alphanumeric characters from a string.
      * Used for search indexing and comparison.
-     * 
+     *
      * @param string The input string to clean
      * @return Cleaned string or null if input was null
      */
@@ -62,7 +62,7 @@ class StringUtils {
     /**
      * Sets a clickable HTML link on a TextView.
      * Configures both the text content and link movement method.
-     * 
+     *
      * @param view The TextView to configure
      * @param link HTML-formatted link string
      */
@@ -74,15 +74,15 @@ class StringUtils {
     /**
      * Creates a Regex pattern for fuzzy matching in searches.
      * Converts query characters into a pattern that matches them in sequence.
-     * 
+     *
      * Uses LRU cache to avoid recompiling patterns for repeated queries.
      * Thread-safe via synchronized block.
-     * 
+     *
      * Examples:
      * - 'cl' -> 'c.*l' matches 'Clock', 'Calendar'
      * - 'msg' -> 'm.*s.*g' matches 'Messages'
      * - 'cmr' -> 'c.*m.*r' matches 'Camera'
-     * 
+     *
      * @param query The search query to convert
      * @return Compiled Regex pattern for fuzzy matching
      */

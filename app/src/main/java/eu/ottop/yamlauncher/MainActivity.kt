@@ -498,7 +498,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
 
     private fun setShortcutSetup(textView: TextView, savedView: List<String>?) {
         textView.text = savedView?.getOrNull(2) ?: getString(R.string.shortcut_default)
-        
+
         if (savedView?.getOrNull(3)?.toBoolean() == true) {
             val contactId = savedView.getOrNull(1)?.toIntOrNull()
             if (contactId != null) {
@@ -506,11 +506,11 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
             }
             return
         }
-        
+
         if (savedView?.getOrNull(1) != "0") {
             textView.setCompoundDrawablesWithIntrinsicBounds(ResourcesCompat.getDrawable(resources, R.drawable.ic_work_app, null), null, null, null)
         }
-        
+
         setShortcutListeners(textView, savedView)
     }
 
@@ -539,13 +539,13 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
     private fun resolveComponentName(savedView: List<String>, profileIndex: Int): ComponentName? {
         val userHandle = launcherApps.profiles[profileIndex]
         val componentString = savedView.getOrNull(0)
-        
+
         if (componentString.isNullOrEmpty()) {
             logger.w("MainActivity", "Failed to launch shortcut: empty component")
             Toast.makeText(this, getString(R.string.launch_error), Toast.LENGTH_SHORT).show()
             return null
         }
-        
+
         return if (componentString.contains("/")) {
             parseExplicitComponent(componentString, userHandle)
         } else {
@@ -560,7 +560,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
             Toast.makeText(this, getString(R.string.launch_error), Toast.LENGTH_SHORT).show()
             return null
         }
-        
+
         val cn = ComponentName(parts[0], parts[1])
         if (launcherApps.getActivityList(parts[0], userHandle).none { it.componentName == cn }) {
             logger.w("MainActivity", "Failed to launch shortcut: $componentString not found")

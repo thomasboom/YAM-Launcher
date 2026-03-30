@@ -14,13 +14,13 @@ import java.util.concurrent.Executors
 /**
  * Centralized logging utility for YAM Launcher.
  * Provides file-based logging with automatic log rotation and export functionality.
- * 
+ *
  * Features:
  * - Thread-safe singleton implementation
  * - Automatic log rotation when file exceeds 5MB or 5000 entries
  * - File-based persistence in app's private storage
  * - Export functionality for sharing logs
- * 
+ *
  * Usage:
  * val logger = Logger.getInstance(context)
  * logger.d("Tag", "Debug message")
@@ -43,7 +43,7 @@ class Logger private constructor(private val context: Context) {
         /**
          * Gets the singleton Logger instance.
          * Uses double-checked locking for thread safety.
-         * 
+         *
          * @param context Application context (will use applicationContext internally)
          * @return The singleton Logger instance
          */
@@ -56,10 +56,10 @@ class Logger private constructor(private val context: Context) {
 
     // Single-threaded executor ensures all log writes are serialized
     private val logExecutor: ExecutorService = Executors.newSingleThreadExecutor()
-    
+
     // Date format for log timestamps - includes milliseconds for precise ordering
     private val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault())
-    
+
     // Counter for log entries to track rotation threshold
     private var logEntryCount = 0
 
@@ -103,7 +103,7 @@ class Logger private constructor(private val context: Context) {
 
     /**
      * Retrieves the app version name from the package manager.
-     * 
+     *
      * @return Version name string or "unknown" if retrieval fails
      */
     private fun getAppVersion(): String {
@@ -117,7 +117,7 @@ class Logger private constructor(private val context: Context) {
     /**
      * Logs a debug message.
      * Debug logs are visible in Logcat but not written to file by default.
-     * 
+     *
      * @param tag Source identifier (typically class name)
      * @param message The message to log
      */
@@ -129,7 +129,7 @@ class Logger private constructor(private val context: Context) {
     /**
      * Logs an info message.
      * Used for general operational information.
-     * 
+     *
      * @param tag Source identifier (typically class name)
      * @param message The message to log
      */
@@ -141,7 +141,7 @@ class Logger private constructor(private val context: Context) {
     /**
      * Logs a warning message.
      * Indicates potentially harmful situations but the app can continue.
-     * 
+     *
      * @param tag Source identifier (typically class name)
      * @param message The warning message
      * @param throwable Optional exception causing the warning
@@ -154,7 +154,7 @@ class Logger private constructor(private val context: Context) {
     /**
      * Logs an error message.
      * Indicates serious problems that need attention.
-     * 
+     *
      * @param tag Source identifier (typically class name)
      * @param message The error message
      * @param throwable Optional exception causing the error
@@ -167,7 +167,7 @@ class Logger private constructor(private val context: Context) {
     /**
      * Logs an exception with full stack trace.
      * Includes exception class name, message, and complete stack trace.
-     * 
+     *
      * @param tag Source identifier (typically class name)
      * @param message Context message describing what was happening
      * @param throwable The exception to log
@@ -182,7 +182,7 @@ class Logger private constructor(private val context: Context) {
     /**
      * Core logging method that handles file writing and rotation.
      * Executes on a background thread via logExecutor.
-     * 
+     *
      * @param level Log level string (DEBUG, INFO, WARN, ERROR, EXCEPTION)
      * @param tag Source identifier
      * @param message The log message
@@ -215,7 +215,7 @@ class Logger private constructor(private val context: Context) {
     /**
      * Determines if log file rotation should occur.
      * Rotation happens when file exceeds size or entry limit.
-     * 
+     *
      * @return true if rotation is needed
      */
     private fun shouldRotate(): Boolean {
@@ -254,7 +254,7 @@ class Logger private constructor(private val context: Context) {
     /**
      * Writes content to the log file.
      * Uses FileWriter in append mode for thread safety.
-     * 
+     *
      * @param content The content to write
      */
     private fun writeToFile(content: String) {
@@ -266,7 +266,7 @@ class Logger private constructor(private val context: Context) {
     /**
      * Gets the log file for sharing/exporting.
      * Useful for attaching logs to bug reports.
-     * 
+     *
      * @return File object pointing to the log file
      */
     fun getLogFileForExport(): File = logFile
@@ -274,7 +274,7 @@ class Logger private constructor(private val context: Context) {
     /**
      * Gets the current log content as a String.
      * Useful for displaying logs in-app or sending via email.
-     * 
+     *
      * @return The complete log content or empty string if file doesn't exist
      */
     fun getLogContent(): String {
@@ -311,7 +311,7 @@ class Logger private constructor(private val context: Context) {
     /**
      * Gets the current log file size in bytes.
      * Useful for checking storage usage or determining if rotation is needed.
-     * 
+     *
      * @return File size in bytes
      */
     fun getLogFileSize(): Long = logFile.length()

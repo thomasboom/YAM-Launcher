@@ -16,7 +16,7 @@ import eu.ottop.yamlauncher.utils.UIUtils
 /**
  * RecyclerView adapter for displaying contacts in the app menu.
  * Allows quick access to contacts for calling or viewing details.
- * 
+ *
  * Features:
  * - DiffUtil for efficient updates
  * - Shortcut assignment support
@@ -88,7 +88,7 @@ class ContactsAdapter(
                 if (position == RecyclerView.NO_POSITION || position >= contacts.size) {
                     return@setOnClickListener
                 }
-                
+
                 // Check if in shortcut selection mode
                 val localShortcutTextView = shortcutTextView
                 if (localShortcutTextView != null) {
@@ -114,7 +114,7 @@ class ContactsAdapter(
 
     override fun onBindViewHolder(holder: AppViewHolder, position: Int) {
         val contact = contacts[position]
-        
+
         // Clear any app icons (contacts don't have them)
         holder.textView.setCompoundDrawablesWithIntrinsicBounds(
             ResourcesCompat.getDrawable(activity.resources, R.drawable.ic_empty, null),null, ResourcesCompat.getDrawable(activity.resources, R.drawable.ic_empty, null),null)
@@ -154,7 +154,7 @@ class ContactsAdapter(
 
     /**
      * Updates contact list with DiffUtil.
-     * 
+     *
      * @param newContacts New list of (name, contactId) pairs
      */
     fun updateContacts(newContacts: List<Pair<String, Int>>) {

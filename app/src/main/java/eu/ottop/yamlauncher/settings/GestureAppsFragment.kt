@@ -26,7 +26,7 @@ import kotlinx.coroutines.launch
 /**
  * Fragment for selecting an app to assign to a gesture.
  * Used for configuring swipe gestures and tap actions.
- * 
+ *
  * @param direction Which gesture is being configured
  */
 class GestureAppsFragment(private val direction: String) : Fragment(),

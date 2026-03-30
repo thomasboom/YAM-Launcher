@@ -13,13 +13,13 @@ import eu.ottop.yamlauncher.settings.SharedPreferenceManager
 /**
  * Animation utility class for UI transitions.
  * Handles home/app menu transitions and background color animations.
- * 
+ *
  * Animation durations are configurable via SharedPreferences.
  */
 class Animations (context: Context) {
 
     private val sharedPreferenceManager = SharedPreferenceManager(context)
-    
+
     // Flag to prevent concurrent animations
     // Prevents multiple transitions from conflicting
     var isInAnim = false
@@ -30,7 +30,7 @@ class Animations (context: Context) {
 
     /**
      * Fades a view in (for small UI elements like action menus).
-     * 
+     *
      * @param view The view to fade in
      */
     fun fadeViewIn(view: View) {
@@ -39,7 +39,7 @@ class Animations (context: Context) {
 
     /**
      * Fades a view out (for small UI elements like action menus).
-     * 
+     *
      * @param view The view to fade out
      */
     fun fadeViewOut(view: View) {
@@ -49,7 +49,7 @@ class Animations (context: Context) {
     /**
      * Animates transition from app menu back to home screen.
      * Slides app view down and fades home view in.
-     * 
+     *
      * @param homeView The home screen view to show
      * @param appView The app menu view to hide
      * @param duration Animation duration in milliseconds
@@ -62,7 +62,7 @@ class Animations (context: Context) {
     /**
      * Animates transition from home screen to app menu.
      * Slides app view up from bottom and fades home view out.
-     * 
+     *
      * @param homeView The home screen view to hide
      * @param appView The app menu view to show
      */
@@ -74,7 +74,7 @@ class Animations (context: Context) {
     /**
      * Animates semi-transparent overlay appearing on app menu open.
      * Only animates if background is fully transparent.
-     * 
+     *
      * @param activity The activity to animate
      */
     fun backgroundIn(activity: Activity) {
@@ -101,7 +101,7 @@ class Animations (context: Context) {
     /**
      * Animates semi-transparent overlay disappearing on return to home.
      * Only animates if background is fully transparent.
-     * 
+     *
      * @param activity The activity to animate
      * @param duration Animation duration in milliseconds
      */
@@ -140,7 +140,7 @@ class Animations (context: Context) {
             scaleY = 1.2f
             alpha = 0f
             visibility = View.VISIBLE
-            
+
             val duration = sharedPreferenceManager.getAnimationSpeed()
 
             animate()
@@ -182,7 +182,7 @@ class Animations (context: Context) {
     /**
      * Fades view in with slight upward motion.
      * Uses configurable animation speed from preferences.
-     * 
+     *
      * @param duration Animation duration (defaults to preference value)
      */
     private fun View.fadeIn(duration: Long = sharedPreferenceManager.getAnimationSpeed()) {

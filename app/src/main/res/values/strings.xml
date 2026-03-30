@@ -1,6 +1,8 @@
 <resources>
     <!--Home Screen-->
-    <string name="set_default_launcher_prompt">YAM Launcher is not set as your default home app.</string>
+    <string
+        name="set_default_launcher_prompt"
+    >YAM Launcher is not set as your default home app.</string>
     <string name="set_default_launcher_button">Set as Default</string>
     <string name="shortcut_default">Long press to add an app</string>
 
@@ -76,7 +78,9 @@
     <string name="swipe_velocity_threshold">Swipe Velocity Threshold</string>
     <string name="show_status_bar">Show Status Bar</string>
     <string name="enable_confirmation">App Confirmation Dialog</string>
-    <string name="launch_confirmation_text">Are you sure you want to launch this app?</string>
+    <string
+        name="launch_confirmation_text"
+    >Are you sure you want to launch this app?</string>
 
     <string name="home_settings_title">Home Screen Settings</string>
     <string name="home_settings_text">Home Screen</string>
@@ -94,7 +98,9 @@
     <string name="show_date">Show Date</string>
     <string name="date_size">Date Size</string>
     <string name="battery_indicator">Battery Indicator</string>
-    <string name="clicking_date_opens_calendar">Clicking Date Opens Calendar</string>
+    <string
+        name="clicking_date_opens_calendar"
+    >Clicking Date Opens Calendar</string>
     <string name="custom_date_gesture">Custom Calendar</string>
     <string name="set_calendar_app">Set Calendar App</string>
 
@@ -104,7 +110,9 @@
     <string name="set_manual_location">Set Manual Location</string>
     <string name="find_your_city">"Search for Your City"</string>
     <string name="weather_update_interval">Update Interval</string>
-    <string name="weather_update_interval_summary">e.g., 15m, 6h, 1d (minimum 1m)</string>
+    <string
+        name="weather_update_interval_summary"
+    >e.g., 15m, 6h, 1d (minimum 1m)</string>
     <string name="units">Units</string>
 
     <string name="shortcuts">Shortcuts</string>
@@ -115,12 +123,18 @@
     <string name="shortcut_spacing">Shortcut Spacing</string>
     <string name="lock_shortcuts">Lock Shortcuts</string>
     <string name="hidden_shortcut_title">Hidden Apps</string>
-    <string name="hidden_shortcuts">Show Hidden Apps in Shortcut Selection</string>
-    
+    <string
+        name="hidden_shortcuts"
+    >Show Hidden Apps in Shortcut Selection</string>
+
     <string name="notification_dots">Notification Dots</string>
-    <string name="notification_dots_summary">Show a dot on shortcuts when apps have notifications</string>
+    <string
+        name="notification_dots_summary"
+    >Show a dot on shortcuts when apps have notifications</string>
     <string name="notification_permission_required">Permission Required</string>
-    <string name="notification_permission_text">Enable notification access to show notification dots</string>
+    <string
+        name="notification_permission_text"
+    >Enable notification access to show notification dots</string>
 
     <string name="gestures">Gestures</string>
     <string name="swipe_left">Swipe Left</string>
@@ -147,14 +161,18 @@
     <string name="internet_search">Web Search Button</string>
 
     <string name="alphabet_index_enabled">Alphabet Index</string>
-    <string name="alphabet_index_summary">Show a letter sidebar for quick navigation</string>
+    <string
+        name="alphabet_index_summary"
+    >Show a letter sidebar for quick navigation</string>
     <string name="alphabet_index_position">Index Position</string>
     <string name="alphabet_index_left">Left</string>
     <string name="alphabet_index_right">Right</string>
 
     <string name="context_menu_settings_title">Context Menu Settings</string>
     <string name="context_menu_settings_text">Context Menu</string>
-    <string name="context_menu_settings_summary">Enable/disable context menu items</string>
+    <string
+        name="context_menu_settings_summary"
+    >Enable/disable context menu items</string>
 
     <string name="enable_pin">Pin App</string>
     <string name="enable_info">App Info</string>
@@ -168,11 +186,19 @@
     <string name="search_alignment">Search Alignment</string>
     <string name="search_size">Search Size</string>
     <string name="enable_fuzzy_search">Fuzzy Search</string>
-    <string name="automatically_open_keyboard">Automatically Open Keyboard</string>
+    <string
+        name="automatically_open_keyboard"
+    >Automatically Open Keyboard</string>
     <string name="automatic_app_opening">Automatic App Opening</string>
-    <string name="auto_launch_summary">Automatically launch an app when it\'s the last search result</string>
-    <string name="auto_launch_disabled_reason_web_search">Disabled because Web Search Button is enabled.</string>
-    <string name="web_search_disabled_reason_auto_open">Disabled because Automatic App Opening is enabled.</string>
+    <string
+        name="auto_launch_summary"
+    >Automatically launch an app when it\'s the last search result</string>
+    <string
+        name="auto_launch_disabled_reason_web_search"
+    >Disabled because Web Search Button is enabled.</string>
+    <string
+        name="web_search_disabled_reason_auto_open"
+    >Disabled because Automatic App Opening is enabled.</string>
 
     <string name="hidden_apps_title">Hidden Apps</string>
     <string name="hidden_apps_text">Manage Hidden Apps</string>
@@ -183,7 +209,9 @@
     <!--About Page Items-->
     <string name="about_title">About YAM Launcher</string>
     <string name="app_icon">App Icon</string>
-    <string name="creditName">created by Otto, maintained by ThomasNow Productions</string>
+    <string
+        name="creditName"
+    >created by Otto, maintained by Thomas Boom</string>
     <string name="source_code">Source Code</string>
     <string name="codeberg">Codeberg</string>
     <string name="github">GitHub</string>
@@ -195,7 +223,9 @@
     <string name="reset">Reset</string>
     <string name="restart_text">Restart YAM Launcher</string>
     <string name="reset_text">Reset All Settings</string>
-    <string name="reset_confirm_text">You will lose ALL changes that you have made to the launcher settings, shortcuts, hidden apps, etc.\n\nAre you sure?</string>
+    <string
+        name="reset_confirm_text"
+    >You will lose ALL changes that you have made to the launcher settings, shortcuts, hidden apps, etc.\n\nAre you sure?</string>
 
     <string name="backup_restore">Backup and Restore</string>
     <string name="backup">Backup</string>
@@ -212,7 +242,9 @@
     <!--Logging-->
     <string name="debug_logs">Debug Logs</string>
     <string name="export_logs">Export Logs</string>
-    <string name="export_logs_summary">Share logs to help diagnose issues</string>
+    <string
+        name="export_logs_summary"
+    >Share logs to help diagnose issues</string>
     <string name="clear_logs">Clear Logs</string>
     <string name="clear_logs_summary">Delete all stored log files</string>
     <string name="logs_cleared">Logs cleared</string>
@@ -224,13 +256,21 @@
     <string name="region_text">%1$s%2$s</string>
 
     <!--Double tap to lock-->
-    <string name="screenlock_confirmation">To lock with double tap, enable YAM Launcher in accessibility settings.</string>
-    <string name="accessibility_service_description">The permission is required for double tap to work for locking the screen.\n\nIt is only needed if you want to use the double tap to lock screen feature in YAM Launcher.</string>
+    <string
+        name="screenlock_confirmation"
+    >To lock with double tap, enable YAM Launcher in accessibility settings.</string>
+    <string
+        name="accessibility_service_description"
+    >The permission is required for double tap to work for locking the screen.\n\nIt is only needed if you want to use the double tap to lock screen feature in YAM Launcher.</string>
 
     <string name="text_authentication_cancel">Authentication Cancel.</string>
-    <string name="text_authentication_error">Authentication error: %1$s (code %2$d)</string>
+    <string
+        name="text_authentication_error"
+    >Authentication error: %1$s (code %2$d)</string>
     <string name="text_authentication_failed">Authentication failed.</string>
     <string name="text_biometric_login">Unlock YAM Launcher Settings</string>
     <string name="text_biometric_login_app">Biometric login for %1$s</string>
-    <string name="text_biometric_login_sub">Log in using your biometric credentials.</string>
+    <string
+        name="text_biometric_login_sub"
+    >Log in using your biometric credentials.</string>
 </resources>

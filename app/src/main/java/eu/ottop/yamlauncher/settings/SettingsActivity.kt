@@ -155,12 +155,12 @@ class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferen
             put("app_id", application.packageName)
             put("schema_version", BACKUP_SCHEMA_VERSION)
             put("created_at", SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.US).format(Date()))
-            
+
             val data = JSONObject()
             for ((key, value) in allEntries) {
                 // Skip transient keys
                 if (key == TRANSIENT_PREF_KEY_RESTORED) continue
-                
+
                 val entry = JSONObject().apply {
                     when (value) {
                         is String -> put("value", value).put("type", "String")
@@ -218,7 +218,7 @@ class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferen
         if (jsonData != null) {
             try {
                 val backupData = JSONObject(jsonData)
-                
+
                 // Verify this backup is for this app
                 if (backupData.getString("app_id") != application.packageName) {
                     throw IllegalArgumentException(getString(R.string.restore_wrong_app))

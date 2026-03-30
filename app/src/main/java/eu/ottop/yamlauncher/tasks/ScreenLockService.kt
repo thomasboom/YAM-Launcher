@@ -8,7 +8,7 @@ import eu.ottop.yamlauncher.utils.Logger
 /**
  * AccessibilityService for locking the screen.
  * Used as an alternative to DeviceAdmin when more permissions aren't available.
- * 
+ *
  * Note: Requires accessibility service to be enabled by user in system settings.
  * Can be triggered via double-tap gesture.
  */
@@ -34,7 +34,7 @@ class ScreenLockService : AccessibilityService() {
         if (!::logger.isInitialized) {
             logger = Logger.getInstance(this)
         }
-        
+
         // Check for lock action in intent
         if (intent != null && intent.action == "LOCK_SCREEN") {
             logger.i("ScreenLockService", "Lock screen action received")

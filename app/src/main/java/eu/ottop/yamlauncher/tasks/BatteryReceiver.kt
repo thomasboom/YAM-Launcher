@@ -12,7 +12,7 @@ import java.lang.ref.WeakReference
 /**
  * BroadcastReceiver for battery status changes.
  * Updates the home screen with current battery level.
- * 
+ *
  * Uses WeakReference to MainActivity to prevent memory leaks.
  */
 class BatteryReceiver(activity: MainActivity) : BroadcastReceiver() {
@@ -49,7 +49,7 @@ class BatteryReceiver(activity: MainActivity) : BroadcastReceiver() {
     companion object {
         /**
          * Registers the battery receiver with the context.
-         * 
+         *
          * @param context Context to register with
          * @param activity MainActivity to update
          * @return The created BatteryReceiver instance

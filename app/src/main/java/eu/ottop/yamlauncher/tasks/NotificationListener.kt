@@ -14,7 +14,7 @@ import eu.ottop.yamlauncher.utils.Logger
 /**
  * NotificationListenerService for monitoring notifications.
  * Tracks which apps have notifications for badge display.
- * 
+ *
  * Features:
  * - Singleton pattern for easy access
  * - Broadcast updates to MainActivity
@@ -27,20 +27,20 @@ class NotificationListener : NotificationListenerService() {
     companion object {
         // Action broadcast when notification state changes
         const val ACTION_NOTIFICATIONS_CHANGED = "eu.ottop.yamlauncher.NOTIFICATIONS_CHANGED"
-        
+
         // Singleton instance for external access
         private var instance: NotificationListener? = null
-        
+
         /**
          * Gets the current NotificationListener instance.
          * Use to check if service is connected and access notification data.
          */
         fun getInstance(): NotificationListener? = instance
-        
+
         /**
          * Checks if the notification listener is enabled.
          * Verifies user has granted notification access permission.
-         * 
+         *
          * @param context Context for Settings.Secure access
          * @return true if notification listener is enabled
          */
@@ -52,7 +52,7 @@ class NotificationListener : NotificationListenerService() {
             )
             return enabledListeners?.contains(componentName.flattenToString()) == true
         }
-        
+
         /**
          * Opens system settings for user to enable notification access.
          * Should be called when user tries to enable notification dots.
@@ -123,7 +123,7 @@ class NotificationListener : NotificationListenerService() {
 
     /**
      * Checks if a specific package has any active notifications.
-     * 
+     *
      * @param packageName Package to check
      * @return true if package has notifications
      */
@@ -135,7 +135,7 @@ class NotificationListener : NotificationListenerService() {
     /**
      * Gets all package names with active notifications.
      * Used to display notification dots on shortcuts.
-     * 
+     *
      * @return Set of package names with notifications
      */
     fun getPackagesWithNotifications(): Set<String> {

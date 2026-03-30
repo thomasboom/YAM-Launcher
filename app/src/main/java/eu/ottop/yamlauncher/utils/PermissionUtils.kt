@@ -13,7 +13,7 @@ class PermissionUtils {
     /**
      * Checks if a specific permission is granted.
      * Uses ContextCompat for consistent behavior across API levels.
-     * 
+     *
      * @param context Context for checking permissions
      * @param permission The permission to check (e.g., Manifest.permission.READ_CONTACTS)
      * @return true if permission is granted, false otherwise

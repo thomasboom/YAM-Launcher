@@ -1,10 +1,18 @@
 <resources>
     <!--Home Screen-->
-    <string name="set_default_launcher_prompt">YAM Launcher не встановлено як домашній додаток за замовчуванням.</string>
-    <string name="set_default_launcher_button">Встановити за замовчуванням</string>
-    <string name="shortcut_default">Довге натискання, щоб додати додаток</string>
+    <string
+        name="set_default_launcher_prompt"
+    >YAM Launcher не встановлено як домашній додаток за замовчуванням.</string>
+    <string
+        name="set_default_launcher_button"
+    >Встановити за замовчуванням</string>
+    <string
+        name="shortcut_default"
+    >Довге натискання, щоб додати додаток</string>
 
-    <string name="shortcut_default_click">Довге натискання, щоб вибрати додаток</string>
+    <string
+        name="shortcut_default_click"
+    >Довге натискання, щоб вибрати додаток</string>
 
     <string name="accessibility_set_shortcut">Встановити ярлик додатка</string>
 
@@ -49,8 +57,12 @@
     <!--Settings Page-->
     <string name="settings_title">Налаштування лаунчера</string>
 
-    <string name="default_home">Встановити домашню сторінку за замовчуванням</string>
-    <string name="unable_to_launch_settings">Неможливо відкрити налаштування</string>
+    <string
+        name="default_home"
+    >Встановити домашню сторінку за замовчуванням</string>
+    <string
+        name="unable_to_launch_settings"
+    >Неможливо відкрити налаштування</string>
 
     <string name="lock_settings">Заблокувати налаштування</string>
 
@@ -73,7 +85,9 @@
     <string name="swipe_velocity_threshold">Поріг швидкості гортання</string>
     <string name="show_status_bar">Показати рядок стану</string>
     <string name="enable_confirmation">Діалог підтвердження додатка</string>
-    <string name="launch_confirmation_text">Ви впевнені, що хочете запустити цей додаток?</string>
+    <string
+        name="launch_confirmation_text"
+    >Ви впевнені, що хочете запустити цей додаток?</string>
 
     <string name="home_settings_title">Налаштування домашнього екрана</string>
     <string name="home_settings_text">Домашній екран</string>
@@ -83,7 +97,9 @@
     <string name="show_clock">Показати годинник</string>
     <string name="clock_alignment">Вирівнювання годинника</string>
     <string name="clock_size">Розмір годинника</string>
-    <string name="clicking_time_opens_clock">Натискання на час відкриває годинник</string>
+    <string
+        name="clicking_time_opens_clock"
+    >Натискання на час відкриває годинник</string>
     <string name="custom_clock_gesture">Користувацький годинник</string>
     <string name="set_clock_app">Встановити додаток годинника</string>
 
@@ -91,16 +107,22 @@
     <string name="show_date">Показати дату</string>
     <string name="date_size">Розмір дати</string>
     <string name="battery_indicator">Індикатор батареї</string>
-    <string name="clicking_date_opens_calendar">Натискання на дату відкриває календар</string>
+    <string
+        name="clicking_date_opens_calendar"
+    >Натискання на дату відкриває календар</string>
     <string name="custom_date_gesture">Користувацький календар</string>
     <string name="set_calendar_app">Встановити додаток календаря</string>
 
     <string name="weather">Погода</string>
     <string name="gps_location">Місцезнаходження GPS</string>
     <string name="latest_location">Останнє місцезнаходження GPS</string>
-    <string name="set_manual_location">Встановити місцезнаходження вручну</string>
+    <string
+        name="set_manual_location"
+    >Встановити місцезнаходження вручну</string>
     <string name="weather_update_interval">Інтервал оновлення</string>
-    <string name="weather_update_interval_summary">напр., 15m, 6h, 1d (мінімум 1m)</string>
+    <string
+        name="weather_update_interval_summary"
+    >напр., 15m, 6h, 1d (мінімум 1m)</string>
     <string name="find_your_city">"Знайти ваше місто"</string>
     <string name="units">Одиниці виміру</string>
 
@@ -112,14 +134,18 @@
     <string name="shortcut_spacing">Інтервал між ярликами</string>
     <string name="lock_shortcuts">Заблокувати ярлики</string>
     <string name="hidden_shortcut_title">Приховані додатки</string>
-    <string name="hidden_shortcuts">Показати приховані додатки у виборі ярликів</string>
+    <string
+        name="hidden_shortcuts"
+    >Показати приховані додатки у виборі ярликів</string>
 
     <string name="gestures">Жести</string>
     <string name="swipe_left">Гортання вліво</string>
     <string name="left_swipe_app">Додаток лівого гортання</string>
     <string name="swipe_right">Гортання вправо</string>
     <string name="right_swipe_app">Додаток правого гортання</string>
-    <string name="double_tap_to_lock_screen">Подвійне натискання для блокування екрана</string>
+    <string
+        name="double_tap_to_lock_screen"
+    >Подвійне натискання для блокування екрана</string>
 
     <string name="app_settings_title">Налаштування меню додатків</string>
     <string name="app_settings_text">Меню додатків</string>
@@ -132,12 +158,20 @@
     <string name="contacts_menu">Меню контактів</string>
     <string name="permission_denied">У дозволі відмовлено</string>
     <string name="internet_search">Кнопка веб-пошуку</string>
-    <string name="auto_launch_disabled_reason_web_search">Вимкнено, тому що ввімкнено кнопку веб-пошуку.</string>
-    <string name="web_search_disabled_reason_auto_open">Вимкнено, тому що ввімкнено автоматичне відкриття додатків.</string>
+    <string
+        name="auto_launch_disabled_reason_web_search"
+    >Вимкнено, тому що ввімкнено кнопку веб-пошуку.</string>
+    <string
+        name="web_search_disabled_reason_auto_open"
+    >Вимкнено, тому що ввімкнено автоматичне відкриття додатків.</string>
 
-    <string name="context_menu_settings_title">Налаштування контекстного меню</string>
+    <string
+        name="context_menu_settings_title"
+    >Налаштування контекстного меню</string>
     <string name="context_menu_settings_text">Контекстне меню</string>
-    <string name="context_menu_settings_summary">Увімкнути/вимкнути елементи контекстного меню</string>
+    <string
+        name="context_menu_settings_summary"
+    >Увімкнути/вимкнути елементи контекстного меню</string>
 
     <string name="enable_pin">Закріпити додаток</string>
     <string name="enable_info">Інформація про додаток</string>
@@ -151,9 +185,13 @@
     <string name="search_alignment">Вирівнювання пошуку</string>
     <string name="search_size">Розмір пошуку</string>
     <string name="enable_fuzzy_search">Нечіткий пошук</string>
-    <string name="automatically_open_keyboard">Автоматично відкривати клавіатуру</string>
+    <string
+        name="automatically_open_keyboard"
+    >Автоматично відкривати клавіатуру</string>
     <string name="automatic_app_opening">Автоматичне відкриття додатка</string>
-    <string name="auto_launch_summary">Автоматично запускати додаток, коли він є останнім результатом пошуку</string>
+    <string
+        name="auto_launch_summary"
+    >Автоматично запускати додаток, коли він є останнім результатом пошуку</string>
 
     <string name="hidden_apps_title">Приховані додатки</string>
     <string name="hidden_apps_text">Керування прихованими додатками</string>
@@ -164,7 +202,7 @@
     <!--About Page Items-->
     <string name="about_title">Про YAM Launcher</string>
     <string name="app_icon">Значок додатка</string>
-    <string name="creditName">створено Отто, підтримується ThomasNow Productions</string>
+    <string name="creditName">створено Отто, підтримується Thomas Boom</string>
     <string name="source_code">Вихідний код</string>
     <string name="codeberg">Codeberg</string>
     <string name="github">GitHub</string>
@@ -176,26 +214,36 @@
     <string name="reset">Скинути</string>
     <string name="restart_text">Перезапустити YAM Launcher</string>
     <string name="reset_text">Скинути всі налаштування</string>
-    <string name="reset_confirm_text">Ви втратите ВСІ зміни, які ви внесли до налаштувань лаунчера, ярликів, прихованих додатків тощо.\n\nВи впевнені?</string>
+    <string
+        name="reset_confirm_text"
+    >Ви втратите ВСІ зміни, які ви внесли до налаштувань лаунчера, ярликів, прихованих додатків тощо.\n\nВи впевнені?</string>
 
     <string name="backup_restore">Резервне копіювання та відновлення</string>
     <string name="backup">Резервна копія</string>
-    <string name="backup_summary">Створити резервну копію ваших налаштувань</string>
+    <string
+        name="backup_summary"
+    >Створити резервну копію ваших налаштувань</string>
     <string name="restore">Відновити</string>
     <string name="restore_summary">Відновити з резервної копії</string>
     <string name="backup_success">Резервне копіювання успішне :)</string>
     <string name="backup_fail">Помилка резервного копіювання :(</string>
     <string name="restore_success">Відновлення успішне :)</string>
-    <string name="restore_fail">Помилка відновлення :( (пошкоджений файл?)</string>
+    <string
+        name="restore_fail"
+    >Помилка відновлення :( (пошкоджений файл?)</string>
     <string name="restore_wrong_app">Це не резервна копія YAM Launcher</string>
     <string name="restore_error">Не вдалося прочитати файл</string>
 
     <!--Logging-->
     <string name="debug_logs">Журнали налагодження</string>
     <string name="export_logs">Експорт журналів</string>
-    <string name="export_logs_summary">Поділитися журналами для діагностики проблем</string>
+    <string
+        name="export_logs_summary"
+    >Поділитися журналами для діагностики проблем</string>
     <string name="clear_logs">Очистити журнали</string>
-    <string name="clear_logs_summary">Видалити всі збережені файли журналів</string>
+    <string
+        name="clear_logs_summary"
+    >Видалити всі збережені файли журналів</string>
     <string name="logs_cleared">Журнали очищено</string>
     <string name="logs_export_success">Журнали успішно експортовано</string>
     <string name="logs_export_fail">Не вдалося експортувати журнали</string>
@@ -205,13 +253,23 @@
     <string name="region_text">%1$s%2$s</string>
 
     <!--Double tap to lock-->
-    <string name="screenlock_confirmation">Щоб блокувати подвійним натисканням, увімкніть YAM Launcher у налаштуваннях спеціальних можливостей.</string>
-    <string name="accessibility_service_description">Дозвіл потрібен для роботи подвійного натискання для блокування екрана.\n\nПотрібно лише якщо ви хочете використовувати функцію подвійного натискання для блокування екрана в YAM Launcher.</string>
+    <string
+        name="screenlock_confirmation"
+    >Щоб блокувати подвійним натисканням, увімкніть YAM Launcher у налаштуваннях спеціальних можливостей.</string>
+    <string
+        name="accessibility_service_description"
+    >Дозвіл потрібен для роботи подвійного натискання для блокування екрана.\n\nПотрібно лише якщо ви хочете використовувати функцію подвійного натискання для блокування екрана в YAM Launcher.</string>
 
     <string name="text_authentication_cancel">Аутентифікацію скасовано.</string>
-    <string name="text_authentication_error">Помилка аутентифікації: %1$s (код %2$d)</string>
+    <string
+        name="text_authentication_error"
+    >Помилка аутентифікації: %1$s (код %2$d)</string>
     <string name="text_authentication_failed">Помилка аутентифікації.</string>
-    <string name="text_biometric_login">Розблокувати налаштування YAM Launcher</string>
+    <string
+        name="text_biometric_login"
+    >Розблокувати налаштування YAM Launcher</string>
     <string name="text_biometric_login_app">Біометричний вхід для %1$s</string>
-    <string name="text_biometric_login_sub">Увійдіть, використовуючи свої біометричні дані.</string>
+    <string
+        name="text_biometric_login_sub"
+    >Увійдіть, використовуючи свої біометричні дані.</string>
 </resources>

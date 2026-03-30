@@ -1,6 +1,8 @@
 <resources>
     <!--Home Screen-->
-    <string name="set_default_launcher_prompt">YAM Launcher 未设置为默认主屏幕应用。</string>
+    <string
+        name="set_default_launcher_prompt"
+    >YAM Launcher 未设置为默认主屏幕应用。</string>
     <string name="set_default_launcher_button">设为默认</string>
     <string name="shortcut_default">长按以添加应用</string>
 
@@ -100,7 +102,9 @@
     <string name="latest_location">最新的GPS位置</string>
     <string name="set_manual_location">手动设置位置</string>
     <string name="weather_update_interval">更新间隔</string>
-    <string name="weather_update_interval_summary">例如：15m、6h、1d（最少 1m）</string>
+    <string
+        name="weather_update_interval_summary"
+    >例如：15m、6h、1d（最少 1m）</string>
     <string name="find_your_city">"搜索您的城市"</string>
     <string name="units">单位</string>
 
@@ -132,8 +136,12 @@
     <string name="contacts_menu">联系人菜单</string>
     <string name="permission_denied">权限被拒绝</string>
     <string name="internet_search">网络搜索按钮</string>
-    <string name="auto_launch_disabled_reason_web_search">由于已启用网络搜索按钮而被禁用。</string>
-    <string name="web_search_disabled_reason_auto_open">由于启用了自动打开应用而被禁用。</string>
+    <string
+        name="auto_launch_disabled_reason_web_search"
+    >由于已启用网络搜索按钮而被禁用。</string>
+    <string
+        name="web_search_disabled_reason_auto_open"
+    >由于启用了自动打开应用而被禁用。</string>
 
     <string name="context_menu_settings_title">上下文菜单设置</string>
     <string name="context_menu_settings_text">上下文菜单</string>
@@ -164,7 +172,7 @@
     <!--About Page Items-->
     <string name="about_title">关于 YAM Launcher</string>
     <string name="app_icon">应用图标</string>
-    <string name="creditName">由Otto创建，ThomasNow Productions维护</string>
+    <string name="creditName">由Otto创建，Thomas Boom维护</string>
     <string name="source_code">源代码</string>
     <string name="codeberg">Codeberg</string>
     <string name="github">GitHub</string>
@@ -176,7 +184,9 @@
     <string name="reset">重置</string>
     <string name="restart_text">重启 YAM Launcher</string>
     <string name="reset_text">重置所有设置</string>
-    <string name="reset_confirm_text">您将丢失所有对启动器设置、快捷方式、隐藏应用等所做的更改。\n\n您确定吗？</string>
+    <string
+        name="reset_confirm_text"
+    >您将丢失所有对启动器设置、快捷方式、隐藏应用等所做的更改。\n\n您确定吗？</string>
 
     <string name="backup_restore">备份和恢复</string>
     <string name="backup">备份</string>
@@ -205,8 +215,12 @@
     <string name="region_text">%1$s%2$s</string>
 
     <!--Double tap to lock-->
-    <string name="screenlock_confirmation">要启用双击锁定，请在辅助功能设置中启用 YAM Launcher。</string>
-    <string name="accessibility_service_description">需要权限才能使双击锁定屏幕功能正常工作。\n\n仅当您想在 YAM Launcher 中使用双击锁定屏幕功能时才需要此权限。</string>
+    <string
+        name="screenlock_confirmation"
+    >要启用双击锁定，请在辅助功能设置中启用 YAM Launcher。</string>
+    <string
+        name="accessibility_service_description"
+    >需要权限才能使双击锁定屏幕功能正常工作。\n\n仅当您想在 YAM Launcher 中使用双击锁定屏幕功能时才需要此权限。</string>
 
     <string name="text_authentication_cancel">认证已取消。</string>
     <string name="text_authentication_error">认证错误：%1$s (代码 %2$d)</string>

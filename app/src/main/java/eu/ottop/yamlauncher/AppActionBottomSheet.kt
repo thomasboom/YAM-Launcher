@@ -21,7 +21,7 @@ import eu.ottop.yamlauncher.utils.AppNameResolver
 /**
  * Bottom sheet dialog for app actions.
  * Provides options to pin, view info, uninstall, rename, or hide apps.
- * 
+ *
  * Actions can be individually enabled/disabled via preferences.
  */
 class AppActionBottomSheet : BottomSheetDialogFragment() {
@@ -56,7 +56,7 @@ class AppActionBottomSheet : BottomSheetDialogFragment() {
 
     companion object {
         const val TAG = "AppActionBottomSheet"
-        
+
         // Argument keys for fragment arguments
         private const val ARG_COMPONENT_NAME = "component_name"
         private const val ARG_USER_HANDLE_ID = "user_handle_id"
@@ -64,7 +64,7 @@ class AppActionBottomSheet : BottomSheetDialogFragment() {
 
         /**
          * Creates a new instance with app data.
-         * 
+         *
          * @param appActivity The app to show actions for
          * @param userHandle User profile handle
          * @param workProfile Profile index (0 = personal, 1+ = work)
@@ -199,7 +199,7 @@ class AppActionBottomSheet : BottomSheetDialogFragment() {
 
     /**
      * Configures a single action button.
-     * 
+     *
      * @param button Button view
      * @param enabled Whether button should be visible
      * @param additionalCondition Extra condition for visibility
@@ -231,7 +231,7 @@ class AppActionBottomSheet : BottomSheetDialogFragment() {
             appActivity.componentName.flattenToString(),
             workProfile
         )
-        
+
         // Toggle icon between filled (pinned) and outline (not pinned)
         val iconRes = when (isPinned) {
             true -> R.drawable.keep_off_24px

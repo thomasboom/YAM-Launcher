@@ -87,7 +87,7 @@ class LocationListAdapter(
 
     /**
      * Updates the location list.
-     * 
+     *
      * @param newApps New list of location maps
      */
     @SuppressLint("NotifyDataSetChanged")

@@ -17,7 +17,7 @@ import eu.ottop.yamlauncher.R
 /**
  * Custom view displaying an alphabet index sidebar.
  * Allows quick navigation to apps by first letter.
- * 
+ *
  * Features:
  * - Scrollable letter list (A-Z + #)
  * - Visual feedback for available letters
@@ -79,7 +79,7 @@ class AlphabetIndexView @JvmOverloads constructor(
 
     /**
      * Sets which letters are available (have apps starting with that letter).
-     * 
+     *
      * @param letters Set of available letter strings
      */
     fun setAvailableLetters(letters: Set<String>) {
@@ -100,7 +100,7 @@ class AlphabetIndexView @JvmOverloads constructor(
 
     /**
      * Sets callback for letter selection.
-     * 
+     *
      * @param listener Lambda called with selected letter
      */
     fun setOnLetterSelectedListener(listener: (String) -> Unit) {
@@ -187,7 +187,7 @@ class AlphabetIndexView @JvmOverloads constructor(
         if (letterHeight <= 0f) return
 
         val fontMetrics = textPaint.fontMetrics
-        
+
         // Draw each letter
         letters.forEachIndexed { index, letter ->
             val centerY = paddingTop + letterHeight * (index + 0.5f)

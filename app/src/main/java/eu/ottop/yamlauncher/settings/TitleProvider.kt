@@ -7,7 +7,7 @@ package eu.ottop.yamlauncher.settings
 interface TitleProvider {
     /**
      * Returns the title string for this fragment.
-     * 
+     *
      * @return Fragment title
      */
     fun getTitle(): String

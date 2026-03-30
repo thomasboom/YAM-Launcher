@@ -40,7 +40,7 @@ import eu.ottop.yamlauncher.settings.SharedPreferenceManager
 /**
  * UI utility class for managing view styling and layout.
  * Centralizes all UI customization based on user preferences.
- * 
+ *
  * Handles:
  * - Window insets and keyboard detection
  * - Colors (background, text, images)
@@ -60,7 +60,7 @@ class UIUtils(private val context: Context) {
     /**
      * Applies system bar insets to the view.
      * Ensures content isn't drawn under status/navigation bars.
-     * 
+     *
      * @param view Root view to apply insets to
      */
     fun adjustInsets(view: View) {
@@ -85,7 +85,7 @@ class UIUtils(private val context: Context) {
      * Replicates adjustResize behavior for SDK 35+.
      * The standard adjustResize doesn't work with SDK 35's new keyboard behavior.
      * Manually adjusts layout height based on keyboard visibility.
-     * 
+     *
      * @param view Root view to monitor
      */
     fun setLayoutListener(view: View) {
@@ -128,7 +128,7 @@ class UIUtils(private val context: Context) {
 
     /**
      * Sets the window background color from preferences.
-     * 
+     *
      * @param window Window to style
      */
     fun setBackground(window: Window) {
@@ -140,7 +140,7 @@ class UIUtils(private val context: Context) {
     /**
      * Applies text color filter to an ImageView.
      * Used to tint icons based on user's text color preference.
-     * 
+     *
      * @param view ImageView to tint
      */
     fun setImageColor(view: ImageView) {
@@ -150,7 +150,7 @@ class UIUtils(private val context: Context) {
     /**
      * Recursively applies text colors to a view and its children.
      * Handles TextViews with their compound drawables.
-     * 
+     *
      * @param view Root view to style
      */
     fun setTextColors(view: View) {
@@ -166,7 +166,7 @@ class UIUtils(private val context: Context) {
             hasMethod(view, "setTextColor") -> {
                 val textView = view as TextView
                 textView.setTextColor(color)
-                
+
                 // Apply color to compound drawables (icons next to text)
                 val drawables = textView.compoundDrawables
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -198,7 +198,7 @@ class UIUtils(private val context: Context) {
     /**
      * Updates status bar appearance based on text color.
      * Switches between light and dark status bar icons.
-     * 
+     *
      * @param window Window to update
      */
     fun setStatusBarColor(window: Window) {
@@ -237,7 +237,7 @@ class UIUtils(private val context: Context) {
     /**
      * Checks if a view has a specific method using reflection.
      * Used to safely check for methods before calling them.
-     * 
+     *
      * @param view View to check
      * @param methodName Method name to look for
      * @return true if method exists
@@ -254,7 +254,7 @@ class UIUtils(private val context: Context) {
     /**
      * Sets colors for menu item TextViews (search bar, title).
      * Applies custom alpha for hint text and icons.
-     * 
+     *
      * @param view TextView to style
      * @param alphaHex Hex alpha value (default "FF" = fully opaque)
      */
@@ -286,7 +286,7 @@ class UIUtils(private val context: Context) {
 
     /**
      * Recursively applies font to all TextViews in a view hierarchy.
-     * 
+     *
      * @param view Root view to process
      */
     fun setTextFont(view: View) {
@@ -306,7 +306,7 @@ class UIUtils(private val context: Context) {
     /**
      * Sets font and style for a specific TextView.
      * Supports system fonts, custom fonts, and style variations.
-     * 
+     *
      * @param view TextView to style
      */
     fun setFont(view: TextView) {
@@ -365,7 +365,7 @@ class UIUtils(private val context: Context) {
 
     /**
      * Modifies alpha channel of a color.
-     * 
+     *
      * @param color Original color
      * @param alphaHex Hex alpha value (00-FF)
      * @return Color with new alpha
@@ -387,7 +387,7 @@ class UIUtils(private val context: Context) {
     /**
      * Sets clock visibility based on preference.
      * Uses minimal height instead of GONE to preserve layout space.
-     * 
+     *
      * @param clock TextClock to update
      */
     fun setClockVisibility(clock: TextClock) {
@@ -403,7 +403,7 @@ class UIUtils(private val context: Context) {
 
     /**
      * Sets date text visibility based on preference.
-     * 
+     *
      * @param dateText TextClock to update
      */
     fun setDateVisibility(dateText: TextClock) {
@@ -419,7 +419,7 @@ class UIUtils(private val context: Context) {
 
     /**
      * Sets search bar and layout visibility based on preferences.
-     * 
+     *
      * @param searchView Search input field
      * @param searchLayout Layout containing search UI
      * @param replacementView Placeholder when search is hidden
@@ -435,7 +435,7 @@ class UIUtils(private val context: Context) {
 
     /**
      * Sets contacts toggle visibility.
-     * 
+     *
      * @param contactsView Contacts toggle ImageView
      * @param searchLayout Search layout containing the toggle
      * @param replacementView Placeholder when contacts are hidden
@@ -451,7 +451,7 @@ class UIUtils(private val context: Context) {
 
     /**
      * Sets web search button visibility.
-     * 
+     *
      * @param webSearchButton Web search ImageView
      */
     fun setWebSearchVisibility(webSearchButton: View) {
@@ -465,7 +465,7 @@ class UIUtils(private val context: Context) {
     /**
      * Helper to manage search layout and replacement visibility.
      * Shows replacement when both search and contacts are disabled.
-     * 
+     *
      * @param searchLayout Search layout container
      * @param replacementView Placeholder view
      */
@@ -485,7 +485,7 @@ class UIUtils(private val context: Context) {
 
     /**
      * Sets alignment for clock and date TextClocks.
-     * 
+     *
      * @param clock Clock TextClock
      * @param dateText Date TextClock
      */
@@ -497,7 +497,7 @@ class UIUtils(private val context: Context) {
 
     /**
      * Sets alignment for all shortcuts in the home view.
-     * 
+     *
      * @param shortcuts LinearLayout containing shortcut TextViews
      */
     fun setShortcutsAlignment(shortcuts: LinearLayout) {
@@ -513,7 +513,7 @@ class UIUtils(private val context: Context) {
     /**
      * Sets vertical alignment for shortcuts (top, center, bottom).
      * Adjusts weight of spacing views above and below shortcuts.
-     * 
+     *
      * @param topSpace Space above shortcuts
      * @param bottomSpace Space below shortcuts
      */
@@ -545,7 +545,7 @@ class UIUtils(private val context: Context) {
     /**
      * Sets position of drawable icons based on text alignment.
      * Icons move to opposite side of text for balanced appearance.
-     * 
+     *
      * @param textView TextView with drawables
      * @param alignment Text alignment (left, center, right)
      * @param alignments Available alignment options
@@ -554,7 +554,7 @@ class UIUtils(private val context: Context) {
         try {
             val drawables = textView.compoundDrawables.filterNotNull()
             val firstDrawable = drawables.firstOrNull() ?: return
-            
+
             // Position icon opposite to text alignment for visual balance
             when (alignment) {
                 alignments[0] -> {
@@ -589,7 +589,7 @@ class UIUtils(private val context: Context) {
 
     /**
      * Sets alignment for app menu items.
-     * 
+     *
      * @param textView App name TextView
      * @param editText Edit field for renaming
      * @param regionText Region/country subtitle TextView
@@ -616,7 +616,7 @@ class UIUtils(private val context: Context) {
 
     /**
      * Sets search input alignment.
-     * 
+     *
      * @param searchView Search TextInputEditText
      */
     fun setSearchAlignment(searchView: TextInputEditText) {
@@ -626,7 +626,7 @@ class UIUtils(private val context: Context) {
     /**
      * Sets alignment for menu title (during shortcut rename).
      * Drawable icon positioned opposite to text.
-     * 
+     *
      * @param menuTitle Title TextView
      */
     fun setMenuTitleAlignment(menuTitle: TextView) {
@@ -637,7 +637,7 @@ class UIUtils(private val context: Context) {
 
     /**
      * Sets text alignment for a TextView.
-     * 
+     *
      * @param view TextView to update
      * @param alignment Alignment string (left, center, right)
      */
@@ -658,7 +658,7 @@ class UIUtils(private val context: Context) {
     /**
      * Sets gravity for a TextView.
      * Controls both horizontal and vertical positioning.
-     * 
+     *
      * @param view TextView to update
      * @param alignment Alignment string (left, center, right)
      */
@@ -683,7 +683,7 @@ class UIUtils(private val context: Context) {
     /**
      * Sets clock text size based on preference.
      * Uses predefined size presets.
-     * 
+     *
      * @param clock TextClock to size
      */
     fun setClockSize(clock: TextClock) {
@@ -692,7 +692,7 @@ class UIUtils(private val context: Context) {
 
     /**
      * Sets date text size based on preference.
-     * 
+     *
      * @param dateText TextClock to size
      */
     fun setDateSize(dateText: TextClock) {
@@ -701,7 +701,7 @@ class UIUtils(private val context: Context) {
 
     /**
      * Sets size for all shortcuts in home view.
-     * 
+     *
      * @param shortcuts LinearLayout containing shortcuts
      */
     fun setShortcutsSize(shortcuts: LinearLayout) {
@@ -718,7 +718,7 @@ class UIUtils(private val context: Context) {
     /**
      * Sets auto-sizing text for a shortcut.
      * Falls back to fixed size on older API levels.
-     * 
+     *
      * @param shortcut TextView to size
      * @param size Size preset string
      */
@@ -740,7 +740,7 @@ class UIUtils(private val context: Context) {
 
     /**
      * Maps size preset to configuration values.
-     * 
+     *
      * @param size Size preset string
      * @return Pair of (maxAutoSize, fallbackSize)
      */
@@ -771,7 +771,7 @@ class UIUtils(private val context: Context) {
 
     /**
      * Sets size for app menu items.
-     * 
+     *
      * @param textView App name TextView
      * @param editText Edit field (uses same size)
      * @param regionText Region subtitle (smaller size)
@@ -793,7 +793,7 @@ class UIUtils(private val context: Context) {
 
     /**
      * Sets search input text size.
-     * 
+     *
      * @param searchView TextInputEditText to size
      */
     fun setSearchSize(searchView: TextInputEditText) {
@@ -802,7 +802,7 @@ class UIUtils(private val context: Context) {
 
     /**
      * Sets menu title text size.
-     * 
+     *
      * @param menuTitle Title TextView to size
      */
     fun setMenuTitleSize(menuTitle: TextView) {
@@ -812,7 +812,7 @@ class UIUtils(private val context: Context) {
     /**
      * Generic text size setter using preset mappings.
      * Maps size string to specific SP values.
-     * 
+     *
      * @param view TextView to size
      * @param size Size preset string
      * @param t,s,m,l,x,h Size values for tiny through huge
@@ -831,7 +831,7 @@ class UIUtils(private val context: Context) {
     /**
      * Sets spacing between shortcuts in home view.
      * Adjusts layout weight for even distribution.
-     * 
+     *
      * @param shortcuts LinearLayout containing shortcuts
      */
     fun setShortcutsSpacing(shortcuts: LinearLayout) {
@@ -845,7 +845,7 @@ class UIUtils(private val context: Context) {
 
     /**
      * Sets layout weight for a shortcut.
-     * 
+     *
      * @param shortcut TextView to adjust
      * @param shortcutWeight Weight value from preferences
      */
@@ -861,7 +861,7 @@ class UIUtils(private val context: Context) {
 
     /**
      * Sets vertical padding for app menu items.
-     * 
+     *
      * @param item TextView to pad
      */
     fun setItemSpacing(item: TextView) {
@@ -874,7 +874,7 @@ class UIUtils(private val context: Context) {
 
     /**
      * Sets vertical padding for location/weather items.
-     * 
+     *
      * @param item ConstraintLayout to pad
      */
     fun setWeatherSpacing(item: ConstraintLayout) {
@@ -887,7 +887,7 @@ class UIUtils(private val context: Context) {
 
     /**
      * Converts DP to pixels using display density.
-     * 
+     *
      * @param dp Density-independent pixels
      * @return Actual pixel value
      */
@@ -903,7 +903,7 @@ class UIUtils(private val context: Context) {
     /**
      * Shows or hides status bar based on preference.
      * Uses appropriate API for Android version.
-     * 
+     *
      * @param window Window to update
      */
     fun setStatusBar(window: Window) {
@@ -938,7 +938,7 @@ class UIUtils(private val context: Context) {
     /**
      * Switches to a new fragment in the settings activity.
      * Adds to back stack for back navigation.
-     * 
+     *
      * @param activity Activity hosting the fragment
      * @param fragment Fragment to display
      */

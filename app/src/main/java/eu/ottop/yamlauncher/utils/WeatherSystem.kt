@@ -21,7 +21,7 @@ import java.util.Locale
 /**
  * Weather system integration using Open-Meteo API.
  * Handles location acquisition and weather data fetching.
- * 
+ *
  * Features:
  * - GPS-based location detection
  * - Manual location search via geocoding
@@ -37,7 +37,7 @@ class WeatherSystem(private val context: Context) {
     /**
      * Acquires GPS location and updates weather based on current position.
      * Requires ACCESS_COARSE_LOCATION permission.
-     * 
+     *
      * @param activity MainActivity for coroutine scope
      * @suspend Must be called from coroutine context
      */
@@ -93,7 +93,7 @@ class WeatherSystem(private val context: Context) {
     /**
      * Searches for locations matching a search term.
      * Uses Open-Meteo geocoding API.
-     * 
+     *
      * @param searchTerm City name to search for
      * @return List of location maps with name, latitude, longitude, country, region
      * @must Be called from Dispatchers.IO
@@ -112,18 +112,18 @@ class WeatherSystem(private val context: Context) {
             logger.e("WeatherSystem", "Error encoding search term", e)
             return foundLocations
         }
-        
+
         // Use device language for localized results
         val language = Locale.getDefault().language.takeIf { it.isNotBlank() } ?: "en"
         val urlString = "https://geocoding-api.open-meteo.com/v1/search?name=$encodedSearchTerm&count=50&language=$language&format=json"
-        
+
         val url = try {
             URL(urlString)
         } catch (e: Exception) {
             logger.e("WeatherSystem", "Error creating URL", e)
             return foundLocations
         }
-        
+
         try {
             // Make HTTP GET request to geocoding API
             with(url.openConnection() as HttpURLConnection) {
@@ -172,7 +172,7 @@ class WeatherSystem(private val context: Context) {
     /**
      * Fetches current temperature for saved location.
      * Uses Open-Meteo weather API.
-     * 
+     *
      * @return Formatted temperature string with weather icon (e.g., "☀ 22°C")
      * @must Be called from Dispatchers.IO
      */
@@ -193,7 +193,7 @@ class WeatherSystem(private val context: Context) {
                     logger.e("WeatherSystem", "Error creating weather URL", e)
                     return ""
                 }
-                
+
                 try {
                     // Make HTTP GET request to weather API
                     with(url.openConnection() as HttpURLConnection) {

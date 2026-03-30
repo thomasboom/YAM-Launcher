@@ -1,12 +1,18 @@
 <resources>
-    <string name="empty"></string>
+    <string name="empty" />
 
     <!--Home Screen-->
-    <string name="set_default_launcher_prompt">YAM Launcher non è impostato come app home predefinita.</string>
+    <string
+        name="set_default_launcher_prompt"
+    >YAM Launcher non è impostato come app home predefinita.</string>
     <string name="set_default_launcher_button">Imposta come predefinito</string>
-    <string name="shortcut_default">Tocca e tieni premuto per aggiungere un\'app</string>
+    <string
+        name="shortcut_default"
+    >Tocca e tieni premuto per aggiungere un\'app</string>
 
-    <string name="shortcut_default_click">Tocca e tieni premuto per selezionare un\'app</string>
+    <string
+        name="shortcut_default_click"
+    >Tocca e tieni premuto per selezionare un\'app</string>
 
     <string name="accessibility_set_shortcut">Imposta scorciatoia app</string>
 
@@ -42,7 +48,9 @@
     <string name="rename">Rinomina</string>
     <string name="hide">Nascondi</string>
     <string name="close">Chiudi</string>
-    <string name="accessibility_pin">Aggiungi app alla schermata principale</string>
+    <string
+        name="accessibility_pin"
+    >Aggiungi app alla schermata principale</string>
     <string name="accessibility_info">Info app</string>
     <string name="accessibility_uninstall">Disinstalla app</string>
     <string name="accessibility_rename">Rinomina app</string>
@@ -52,7 +60,9 @@
     <string name="settings_title">Impostazioni del Launcher</string>
 
     <string name="default_home">Imposta come Home predefinita</string>
-    <string name="unable_to_launch_settings">Impossibile aprire le impostazioni</string>
+    <string
+        name="unable_to_launch_settings"
+    >Impossibile aprire le impostazioni</string>
 
     <string name="customization">Personalizzazione</string>
     <string name="lock_settings">Blocco impostazione</string>
@@ -73,17 +83,25 @@
     <string name="swipe_velocity_threshold">Soglia velocità swipe</string>
     <string name="show_status_bar">Mostra barra di stato</string>
     <string name="enable_confirmation">Conferma l\'avvio dell\'app</string>
-    <string name="launch_confirmation_text">Sei sicuro di voler avviare questa app?</string>
+    <string
+        name="launch_confirmation_text"
+    >Sei sicuro di voler avviare questa app?</string>
 
-    <string name="home_settings_title">Impostazioni schermata principale</string>
+    <string
+        name="home_settings_title"
+    >Impostazioni schermata principale</string>
     <string name="home_settings_text">Schermata principale</string>
-    <string name="home_settings_summary">Configura la schermata principale</string>
+    <string
+        name="home_settings_summary"
+    >Configura la schermata principale</string>
 
     <string name="clock">Orologio</string>
     <string name="show_clock">Mostra orologio</string>
     <string name="clock_alignment">Allineamento orologio</string>
     <string name="clock_size">Dimensione orologio</string>
-    <string name="clicking_time_opens_clock">Cliccando sull\'ora si aprirà l\'orologio</string>
+    <string
+        name="clicking_time_opens_clock"
+    >Cliccando sull\'ora si aprirà l\'orologio</string>
     <string name="custom_clock_gesture">Orologio personalizzato</string>
     <string name="set_clock_app">Imposta app orologio</string>
 
@@ -91,7 +109,9 @@
     <string name="show_date">Mostra data</string>
     <string name="date_size">Dimensione data</string>
     <string name="battery_indicator">Indicatore batteria</string>
-    <string name="clicking_date_opens_calendar">Cliccando sulla data si aprirà il calendario</string>
+    <string
+        name="clicking_date_opens_calendar"
+    >Cliccando sulla data si aprirà il calendario</string>
     <string name="custom_date_gesture">Calendario personalizzato</string>
     <string name="set_calendar_app">Imposta app calendario</string>
 
@@ -100,7 +120,9 @@
     <string name="latest_location">Ultima posizione GPS</string>
     <string name="set_manual_location">Imposta posizione manuale</string>
     <string name="weather_update_interval">Intervallo di aggiornamento</string>
-    <string name="weather_update_interval_summary">es., 15m, 6h, 1d (minimo 1m)</string>
+    <string
+        name="weather_update_interval_summary"
+    >es., 15m, 6h, 1d (minimo 1m)</string>
     <string name="find_your_city">Cerca la tua città</string>
     <string name="units">Unità di misura</string>
 
@@ -112,14 +134,18 @@
     <string name="shortcut_spacing">Spaziatura scorciatoie</string>
     <string name="lock_shortcuts">Blocca scorciatoie</string>
     <string name="hidden_shortcut_title">App nascoste</string>
-    <string name="hidden_shortcuts">Mostra app nascoste nella selezione scorciatoie</string>
+    <string
+        name="hidden_shortcuts"
+    >Mostra app nascoste nella selezione scorciatoie</string>
 
     <string name="gestures">Gestures</string>
     <string name="swipe_left">Swipe a sinistra</string>
     <string name="left_swipe_app">App swipe sinistra</string>
     <string name="swipe_right">Swipe a destra</string>
     <string name="right_swipe_app">App swipe destra</string>
-    <string name="double_tap_to_lock_screen">Doppio tap per bloccare schermo</string>
+    <string
+        name="double_tap_to_lock_screen"
+    >Doppio tap per bloccare schermo</string>
 
     <string name="app_settings_title">Impostazioni menu app</string>
     <string name="app_settings_text">Menu app</string>
@@ -132,16 +158,24 @@
     <string name="contacts_menu">Menu contatti</string>
     <string name="permission_denied">Permesso negato</string>
     <string name="internet_search">Cerca nel web</string>
-    <string name="auto_launch_disabled_reason_web_search">Disattivato perché il pulsante di ricerca web è attivato.</string>
-    <string name="web_search_disabled_reason_auto_open">Disattivato perché l\'apertura automatica delle app è attiva.</string>
+    <string
+        name="auto_launch_disabled_reason_web_search"
+    >Disattivato perché il pulsante di ricerca web è attivato.</string>
+    <string
+        name="web_search_disabled_reason_auto_open"
+    >Disattivato perché l\'apertura automatica delle app è attiva.</string>
 
-    <string name="context_menu_settings_title">Impostazioni menu contestuale</string>
+    <string
+        name="context_menu_settings_title"
+    >Impostazioni menu contestuale</string>
     <string name="context_menu_settings_text">Menu contestuale</string>
-    <string name="context_menu_settings_summary">Abilita/disabilita voci menu contestuale</string>
+    <string
+        name="context_menu_settings_summary"
+    >Abilita/disabilita voci menu contestuale</string>
 
     <string name="enable_pin">Aggiungi app alla schermata principale</string>
     <string name="enable_info">Info app</string>
-    <string name="enable_uninstall">Disinstalla app</string>    
+    <string name="enable_uninstall">Disinstalla app</string>
     <string name="enable_rename">Rinomina app</string>
     <string name="enable_hide">Nascondi app</string>
     <string name="enable_close">Chiudi menu</string>
@@ -151,9 +185,13 @@
     <string name="search_alignment">Allineamento ricerca</string>
     <string name="search_size">Dimensione ricerca</string>
     <string name="enable_fuzzy_search">Ricerca approssimativa</string>
-    <string name="automatically_open_keyboard">Apri tastiera automaticamente</string>
+    <string
+        name="automatically_open_keyboard"
+    >Apri tastiera automaticamente</string>
     <string name="automatic_app_opening">Apertura automatica app</string>
-    <string name="auto_launch_summary">Avvia automaticamente un\'app quando è l\'ultimo risultato di ricerca</string>
+    <string
+        name="auto_launch_summary"
+    >Avvia automaticamente un\'app quando è l\'ultimo risultato di ricerca</string>
 
     <string name="hidden_apps_title">App nascoste</string>
     <string name="hidden_apps_text">Gestisci app nascoste</string>
@@ -164,7 +202,7 @@
     <!--About Page Items-->
     <string name="about_title">Informazioni su YAM Launcher</string>
     <string name="app_icon">Icona app</string>
-    <string name="creditName">Creato da Otto, mantenuto da ThomasNow Productions</string>
+    <string name="creditName">Creato da Otto, mantenuto da Thomas Boom</string>
     <string name="source_code">Codice sorgente</string>
     <string name="codeberg">Codeberg</string>
     <string name="github">GitHub</string>
@@ -173,52 +211,84 @@
     <string name="install_izzy">Installa su IzzyOnDroid</string>
     <string name="install_play">Installa su Google Play</string>
 
-    <string name="weather_data_credit">Dati meteo da Open-Meteo.com\n(CC BY 4.0)</string>
+    <string
+        name="weather_data_credit"
+    >Dati meteo da Open-Meteo.com\n(CC BY 4.0)</string>
     <!--About page links-->
-    <string name="my_website_link"><![CDATA[by <a href="https://ottop.rip">Otto Petäjä</a>]]></string>
-    <string name="codeberg_link"><![CDATA[<a href="https://codeberg.org/ottoptj/yamlauncher">Codeberg</a>]]></string>
-    <string name="github_link"><![CDATA[<a href="https://codeberg.org/ottoptj/yamlauncher">Codeberg</a>]]></string>
-    <string name="weather_link"><![CDATA[Dati meteo da <a href="https://open-meteo.com/">Open-Meteo.com</a><br>(<a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>)]]></string>
+    <string
+        name="my_website_link"
+    ><![CDATA[by <a href="https://ottop.rip">Otto Petäjä</a>]]></string>
+    <string
+        name="codeberg_link"
+    ><![CDATA[<a href="https://codeberg.org/ottoptj/yamlauncher">Codeberg</a>]]></string>
+    <string
+        name="github_link"
+    ><![CDATA[<a href="https://codeberg.org/ottoptj/yamlauncher">Codeberg</a>]]></string>
+    <string
+        name="weather_link"
+    ><![CDATA[Dati meteo da <a href="https://open-meteo.com/">Open-Meteo.com</a><br>(<a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>)]]></string>
 
     <string name="reset">Ripristina</string>
     <string name="restart_text">Riavvia YAM Launcher</string>
     <string name="reset_text">Ripristina tutte le impostazioni</string>
-    <string name="reset_confirm_text">Perderai TUTTI i cambiamenti che hai fatto nelle impostazioni del launcher, scorciatoie, app nascoste, ecc.\n\nSei sicuro?</string>
+    <string
+        name="reset_confirm_text"
+    >Perderai TUTTI i cambiamenti che hai fatto nelle impostazioni del launcher, scorciatoie, app nascoste, ecc.\n\nSei sicuro?</string>
 
     <string name="backup_restore">Backup e Ripristino</string>
     <string name="backup">Backup</string>
-    <string name="backup_summary">Esegui il backup delle tue impostazioni</string>
+    <string
+        name="backup_summary"
+    >Esegui il backup delle tue impostazioni</string>
     <string name="restore">Ripristina</string>
     <string name="restore_summary">Ripristina un backup</string>
     <string name="backup_success">Backup riuscito :)</string>
     <string name="backup_fail">Backup fallito :(</string>
     <string name="restore_success">Ripristino riuscito :)</string>
-    <string name="restore_fail">Ripristino fallito :( (file danneggiato?)</string>
+    <string
+        name="restore_fail"
+    >Ripristino fallito :( (file danneggiato?)</string>
     <string name="restore_wrong_app">Non è un backup di YAM Launcher</string>
     <string name="restore_error">Impossibile leggere il file</string>
 
     <!--Logging-->
     <string name="debug_logs">Log di debug</string>
     <string name="export_logs">Esporta log</string>
-    <string name="export_logs_summary">Condividi i log per diagnosticare i problemi</string>
+    <string
+        name="export_logs_summary"
+    >Condividi i log per diagnosticare i problemi</string>
     <string name="clear_logs">Cancella log</string>
-    <string name="clear_logs_summary">Elimina tutti i file di log salvati</string>
+    <string
+        name="clear_logs_summary"
+    >Elimina tutti i file di log salvati</string>
     <string name="logs_cleared">Log cancellati</string>
     <string name="logs_export_success">Log esportati con successo</string>
     <string name="logs_export_fail">Esportazione log fallita</string>
     <string name="no_logs_to_export">Nessun log da esportare</string>
 
     <!--Location Selector Items-->
-    <string name="location_link"><![CDATA[Dati di localizzazione da <a href="https://open-meteo.com/">Open-Meteo.com</a> (<a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>)]]></string>
+    <string
+        name="location_link"
+    ><![CDATA[Dati di localizzazione da <a href="https://open-meteo.com/">Open-Meteo.com</a> (<a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>)]]></string>
     <string name="region_text">%1$s%2$s</string>
 
     <!--Double tap to lock-->
-    <string name="screenlock_confirmation">Per bloccare con doppio tap, abilita YAM Launcher nelle impostazioni di accessibilità.</string>
-    <string name="accessibility_service_description">Il permesso è necessario per il doppio tap per bloccare lo schermo.\n\nÈ necessario solo se vuoi usare la funzione di blocco schermo con doppio tap in YAM Launcher.</string>
+    <string
+        name="screenlock_confirmation"
+    >Per bloccare con doppio tap, abilita YAM Launcher nelle impostazioni di accessibilità.</string>
+    <string
+        name="accessibility_service_description"
+    >Il permesso è necessario per il doppio tap per bloccare lo schermo.\n\nÈ necessario solo se vuoi usare la funzione di blocco schermo con doppio tap in YAM Launcher.</string>
     <string name="text_authentication_cancel">Autenticazione Annullata.</string>
-    <string name="text_authentication_error">Errore di autenticazione: %1$s (codice %2$d)</string>
+    <string
+        name="text_authentication_error"
+    >Errore di autenticazione: %1$s (codice %2$d)</string>
     <string name="text_authentication_failed">Autenticazione fallita.</string>
-    <string name="text_biometric_login">Sblocca Impostazioni YAM Launcher</string>
+    <string
+        name="text_biometric_login"
+    >Sblocca Impostazioni YAM Launcher</string>
     <string name="text_biometric_login_app">Accesso biometrico per %1$s</string>
-    <string name="text_biometric_login_sub">Accedi utilizzando le tue credenziali biometriche.</string>
+    <string
+        name="text_biometric_login_sub"
+    >Accedi utilizzando le tue credenziali biometriche.</string>
 </resources>

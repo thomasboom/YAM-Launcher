@@ -1,16 +1,26 @@
 <resources>
     <!--Home Screen-->
-    <string name="set_default_launcher_prompt">YAM Launcher n\'est pas défini comme application d\'accueil par défaut.</string>
+    <string
+        name="set_default_launcher_prompt"
+    >YAM Launcher n\'est pas défini comme application d\'accueil par défaut.</string>
     <string name="set_default_launcher_button">Définir par défaut</string>
-    <string name="shortcut_default">Appui long pour ajouter une application</string>
+    <string
+        name="shortcut_default"
+    >Appui long pour ajouter une application</string>
 
-    <string name="shortcut_default_click">Clic long pour sélectionner une application</string>
+    <string
+        name="shortcut_default_click"
+    >Clic long pour sélectionner une application</string>
 
-    <string name="accessibility_set_shortcut">Définir l\'application de raccourci</string>
+    <string
+        name="accessibility_set_shortcut"
+    >Définir l\'application de raccourci</string>
 
     <string name="open_app_menu">Ouvrir le menu des applications</string>
 
-    <string name="no_calendar_app">Aucune application de calendrier trouvée</string>
+    <string
+        name="no_calendar_app"
+    >Aucune application de calendrier trouvée</string>
 
     <!--App Menu-->
     <string name="select_an_app">Sélectionner une application</string>
@@ -50,13 +60,17 @@
     <string name="settings_title">Paramètres du lanceur</string>
 
     <string name="default_home">Définir l\'accueil par défaut</string>
-    <string name="unable_to_launch_settings">Impossible de lancer les paramètres</string>
+    <string
+        name="unable_to_launch_settings"
+    >Impossible de lancer les paramètres</string>
 
     <string name="lock_settings">Verrouiller les paramètres</string>
 
     <string name="customization">Personnalisation</string>
 
-    <string name="ui_settings_title">Paramètres généraux de l\'interface</string>
+    <string
+        name="ui_settings_title"
+    >Paramètres généraux de l\'interface</string>
     <string name="ui_settings_text">Interface générale</string>
     <string name="ui_settings_summary">Configurer l\'apparence générale</string>
 
@@ -70,12 +84,20 @@
     <string name="operation">Opération</string>
     <string name="animation_speed">Vitesse d\'animation</string>
     <string name="swipe_threshold">Seuil de balayage</string>
-    <string name="swipe_velocity_threshold">Seuil de vitesse de balayage</string>
+    <string
+        name="swipe_velocity_threshold"
+    >Seuil de vitesse de balayage</string>
     <string name="show_status_bar">Afficher la barre d\'état</string>
-    <string name="enable_confirmation">Dialogue de confirmation des applications</string>
-    <string name="launch_confirmation_text">Êtes-vous sûr de vouloir lancer cette application ?</string>
+    <string
+        name="enable_confirmation"
+    >Dialogue de confirmation des applications</string>
+    <string
+        name="launch_confirmation_text"
+    >Êtes-vous sûr de vouloir lancer cette application ?</string>
 
-    <string name="home_settings_title">Paramètres de l\'écran d\'accueil</string>
+    <string
+        name="home_settings_title"
+    >Paramètres de l\'écran d\'accueil</string>
     <string name="home_settings_text">Écran d\'accueil</string>
     <string name="home_settings_summary">Configurer l\'écran d\'accueil</string>
 
@@ -83,7 +105,9 @@
     <string name="show_clock">Afficher l\'horloge</string>
     <string name="clock_alignment">Alignement de l\'horloge</string>
     <string name="clock_size">Taille de l\'horloge</string>
-    <string name="clicking_time_opens_clock">Cliquer sur l\'heure ouvre l\'horloge</string>
+    <string
+        name="clicking_time_opens_clock"
+    >Cliquer sur l\'heure ouvre l\'horloge</string>
     <string name="custom_clock_gesture">Horloge personnalisée</string>
     <string name="set_clock_app">Définir l\'application d\'horloge</string>
 
@@ -91,16 +115,24 @@
     <string name="show_date">Afficher la date</string>
     <string name="date_size">Taille de la date</string>
     <string name="battery_indicator">Indicateur de batterie</string>
-    <string name="clicking_date_opens_calendar">Cliquer sur la date ouvre le calendrier</string>
+    <string
+        name="clicking_date_opens_calendar"
+    >Cliquer sur la date ouvre le calendrier</string>
     <string name="custom_date_gesture">Calendrier personnalisé</string>
-    <string name="set_calendar_app">Définir l\'application de calendrier</string>
+    <string
+        name="set_calendar_app"
+    >Définir l\'application de calendrier</string>
 
     <string name="weather">Météo</string>
     <string name="gps_location">Localisation GPS</string>
     <string name="latest_location">Dernière localisation GPS</string>
-    <string name="set_manual_location">Définir l\'emplacement manuellement</string>
+    <string
+        name="set_manual_location"
+    >Définir l\'emplacement manuellement</string>
     <string name="weather_update_interval">Intervalle de mise à jour</string>
-    <string name="weather_update_interval_summary">p. ex., 15m, 6h, 1d (minimum 1m)</string>
+    <string
+        name="weather_update_interval_summary"
+    >p. ex., 15m, 6h, 1d (minimum 1m)</string>
     <string name="find_your_city">"Rechercher votre ville"</string>
     <string name="units">Unités</string>
 
@@ -112,18 +144,26 @@
     <string name="shortcut_spacing">Espacement des raccourcis</string>
     <string name="lock_shortcuts">Verrouiller les raccourcis</string>
     <string name="hidden_shortcut_title">Applications masquées</string>
-    <string name="hidden_shortcuts">Afficher les applications masquées dans la sélection de raccourcis</string>
+    <string
+        name="hidden_shortcuts"
+    >Afficher les applications masquées dans la sélection de raccourcis</string>
 
     <string name="gestures">Gestes</string>
     <string name="swipe_left">Balayage gauche</string>
     <string name="left_swipe_app">Application de balayage gauche</string>
     <string name="swipe_right">Balayage droit</string>
     <string name="right_swipe_app">Application de balayage droit</string>
-    <string name="double_tap_to_lock_screen">Double tapotement pour verrouiller l\'écran</string>
+    <string
+        name="double_tap_to_lock_screen"
+    >Double tapotement pour verrouiller l\'écran</string>
 
-    <string name="app_settings_title">Paramètres du menu des applications</string>
+    <string
+        name="app_settings_title"
+    >Paramètres du menu des applications</string>
     <string name="app_settings_text">Menu des applications</string>
-    <string name="app_settings_summary">Configurer le menu des applications</string>
+    <string
+        name="app_settings_summary"
+    >Configurer le menu des applications</string>
 
     <string name="apps">Applications</string>
     <string name="app_alignment">Alignement des applications</string>
@@ -132,12 +172,20 @@
     <string name="contacts_menu">Menu des contacts</string>
     <string name="permission_denied">Permission refusée</string>
     <string name="internet_search">Bouton de recherche web</string>
-    <string name="auto_launch_disabled_reason_web_search">Désactivé car le bouton de recherche web est activé.</string>
-    <string name="web_search_disabled_reason_auto_open">Désactivé car l\'ouverture automatique des applications est activée.</string>
+    <string
+        name="auto_launch_disabled_reason_web_search"
+    >Désactivé car le bouton de recherche web est activé.</string>
+    <string
+        name="web_search_disabled_reason_auto_open"
+    >Désactivé car l\'ouverture automatique des applications est activée.</string>
 
-    <string name="context_menu_settings_title">Paramètres du menu contextuel</string>
+    <string
+        name="context_menu_settings_title"
+    >Paramètres du menu contextuel</string>
     <string name="context_menu_settings_text">Menu contextuel</string>
-    <string name="context_menu_settings_summary">Activer/désactiver les éléments du menu contextuel</string>
+    <string
+        name="context_menu_settings_summary"
+    >Activer/désactiver les éléments du menu contextuel</string>
 
     <string name="enable_pin">Épingler l\'application</string>
     <string name="enable_info">Informations sur l\'application</string>
@@ -151,20 +199,30 @@
     <string name="search_alignment">Alignement de la recherche</string>
     <string name="search_size">Taille de la recherche</string>
     <string name="enable_fuzzy_search">Recherche floue</string>
-    <string name="automatically_open_keyboard">Ouvrir automatiquement le clavier</string>
-    <string name="automatic_app_opening">Ouverture automatique des applications</string>
-    <string name="auto_launch_summary">Lancer automatiquement une application lorsqu\'elle est le dernier résultat de recherche</string>
+    <string
+        name="automatically_open_keyboard"
+    >Ouvrir automatiquement le clavier</string>
+    <string
+        name="automatic_app_opening"
+    >Ouverture automatique des applications</string>
+    <string
+        name="auto_launch_summary"
+    >Lancer automatiquement une application lorsqu\'elle est le dernier résultat de recherche</string>
 
     <string name="hidden_apps_title">Applications masquées</string>
     <string name="hidden_apps_text">Gérer les applications masquées</string>
-    <string name="hidden_apps_summary">Afficher les applications masquées</string>
-    <string name="hidden_confirm_text">Êtes-vous sûr de vouloir afficher</string>
+    <string
+        name="hidden_apps_summary"
+    >Afficher les applications masquées</string>
+    <string
+        name="hidden_confirm_text"
+    >Êtes-vous sûr de vouloir afficher</string>
 
     <string name="about">À propos</string>
     <!--About Page Items-->
     <string name="about_title">À propos de YAM Launcher</string>
     <string name="app_icon">Icône de l\'application</string>
-    <string name="creditName">créé par Otto, maintenu par ThomasNow Productions</string>
+    <string name="creditName">créé par Otto, maintenu par Thomas Boom</string>
     <string name="source_code">Code source</string>
     <string name="codeberg">Codeberg</string>
     <string name="github">GitHub</string>
@@ -176,7 +234,9 @@
     <string name="reset">Réinitialiser</string>
     <string name="restart_text">Redémarrer YAM Launcher</string>
     <string name="reset_text">Réinitialiser tous les paramètres</string>
-    <string name="reset_confirm_text">Vous perdrez TOUS les changements que vous avez apportés aux paramètres du lanceur, raccourcis, applications masquées, etc.\n\nÊtes-vous sûr ?</string>
+    <string
+        name="reset_confirm_text"
+    >Vous perdrez TOUS les changements que vous avez apportés aux paramètres du lanceur, raccourcis, applications masquées, etc.\n\nÊtes-vous sûr ?</string>
 
     <string name="backup_restore">Sauvegarde et restauration</string>
     <string name="backup">Sauvegarde</string>
@@ -186,32 +246,56 @@
     <string name="backup_success">Sauvegarde réussie :)</string>
     <string name="backup_fail">Échec de la sauvegarde :(</string>
     <string name="restore_success">Restauration réussie :)</string>
-    <string name="restore_fail">Échec de la restauration : (fichier corrompu ?)</string>
-    <string name="restore_wrong_app">Ce n\'est pas une sauvegarde de YAM Launcher</string>
+    <string
+        name="restore_fail"
+    >Échec de la restauration : (fichier corrompu ?)</string>
+    <string
+        name="restore_wrong_app"
+    >Ce n\'est pas une sauvegarde de YAM Launcher</string>
     <string name="restore_error">Échec de la lecture du fichier</string>
 
     <!--Logging-->
     <string name="debug_logs">Journaux de débogage</string>
     <string name="export_logs">Exporter les journaux</string>
-    <string name="export_logs_summary">Partager les journaux pour diagnostiquer les problèmes</string>
+    <string
+        name="export_logs_summary"
+    >Partager les journaux pour diagnostiquer les problèmes</string>
     <string name="clear_logs">Effacer les journaux</string>
-    <string name="clear_logs_summary">Supprimer tous les fichiers journaux stockés</string>
+    <string
+        name="clear_logs_summary"
+    >Supprimer tous les fichiers journaux stockés</string>
     <string name="logs_cleared">Journaux effacés</string>
     <string name="logs_export_success">Journaux exportés avec succès</string>
-    <string name="logs_export_fail">Échec de l\'exportation des journaux</string>
+    <string
+        name="logs_export_fail"
+    >Échec de l\'exportation des journaux</string>
     <string name="no_logs_to_export">Aucun journal à exporter</string>
 
     <!--Location Selector Items-->
     <string name="region_text">%1$s%2$s</string>
 
     <!--Double tap to lock-->
-    <string name="screenlock_confirmation">Pour verrouiller avec un double tapotement, activez YAM Launcher dans les paramètres d\'accessibilité.</string>
-    <string name="accessibility_service_description">L\'autorisation est requise pour que le double tapotement fonctionne pour verrouiller l\'écran.\n\nElle n\'est nécessaire que si vous souhaitez utiliser la fonctionnalité de double tapotement pour verrouiller l\'écran dans YAM Launcher.</string>
+    <string
+        name="screenlock_confirmation"
+    >Pour verrouiller avec un double tapotement, activez YAM Launcher dans les paramètres d\'accessibilité.</string>
+    <string
+        name="accessibility_service_description"
+    >L\'autorisation est requise pour que le double tapotement fonctionne pour verrouiller l\'écran.\n\nElle n\'est nécessaire que si vous souhaitez utiliser la fonctionnalité de double tapotement pour verrouiller l\'écran dans YAM Launcher.</string>
 
     <string name="text_authentication_cancel">Authentification annulée.</string>
-    <string name="text_authentication_error">Erreur d\'authentification : %1$s (code %2$d)</string>
-    <string name="text_authentication_failed">Échec de l\'authentification.</string>
-    <string name="text_biometric_login">Déverrouiller les paramètres de YAM Launcher</string>
-    <string name="text_biometric_login_app">Connexion biométrique pour %1$s</string>
-    <string name="text_biometric_login_sub">Connectez-vous en utilisant vos identifiants biométriques.</string>
+    <string
+        name="text_authentication_error"
+    >Erreur d\'authentification : %1$s (code %2$d)</string>
+    <string
+        name="text_authentication_failed"
+    >Échec de l\'authentification.</string>
+    <string
+        name="text_biometric_login"
+    >Déverrouiller les paramètres de YAM Launcher</string>
+    <string
+        name="text_biometric_login_app"
+    >Connexion biométrique pour %1$s</string>
+    <string
+        name="text_biometric_login_sub"
+    >Connectez-vous en utilisant vos identifiants biométriques.</string>
 </resources>

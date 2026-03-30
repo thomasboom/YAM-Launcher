@@ -29,7 +29,7 @@ class AppUtils(private val context: Context, private val launcherApps: LauncherA
      * Gets list of installed launchable apps.
      * Includes apps from all user profiles (personal and work).
      * Filters out hidden apps unless showApps is true.
-     * 
+     *
      * @param showApps If true, includes hidden apps (used for shortcut selection)
      * @return List of (LauncherActivityInfo, UserHandle, profileIndex) triples
      * @suspend Must be called from coroutine context
@@ -76,7 +76,7 @@ class AppUtils(private val context: Context, private val launcherApps: LauncherA
     /**
      * Gets list of hidden apps for the hidden apps settings screen.
      * Used to allow users to unhide apps.
-     * 
+     *
      * @return List of hidden apps as (LauncherActivityInfo, UserHandle, profileIndex) triples
      * @suspend Must be called from coroutine context
      */
@@ -108,7 +108,7 @@ class AppUtils(private val context: Context, private val launcherApps: LauncherA
     /**
      * Gets ApplicationInfo for a specific package and profile.
      * Used to check if an app is still installed.
-     * 
+     *
      * @param packageName Package name to look up
      * @param profile Profile index (0 for personal, 1+ for work profiles)
      * @return ApplicationInfo or null if not found
@@ -130,7 +130,7 @@ class AppUtils(private val context: Context, private val launcherApps: LauncherA
     /**
      * Internal method to start an app.
      * Handles the actual launch and error reporting.
-     * 
+     *
      * @param componentName App component to launch
      * @param userHandle User profile to launch in
      * @return true if launch succeeded, false otherwise
@@ -150,7 +150,7 @@ class AppUtils(private val context: Context, private val launcherApps: LauncherA
     /**
      * Launches an app with optional confirmation dialog.
      * Shows confirmation if user has enabled that preference.
-     * 
+     *
      * @param componentName App component to launch
      * @param userHandle User profile to launch in
      */

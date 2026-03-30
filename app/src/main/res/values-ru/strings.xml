@@ -1,12 +1,20 @@
 <resources>
     <!--Home Screen-->
-    <string name="set_default_launcher_prompt">YAM Launcher не установлен как домашнее приложение по умолчанию.</string>
+    <string
+        name="set_default_launcher_prompt"
+    >YAM Launcher не установлен как домашнее приложение по умолчанию.</string>
     <string name="set_default_launcher_button">Установить по умолчанию</string>
-    <string name="shortcut_default">Долгое нажатие для добавления приложения</string>
+    <string
+        name="shortcut_default"
+    >Долгое нажатие для добавления приложения</string>
 
-    <string name="shortcut_default_click">Долгое нажатие, чтобы выбрать приложение</string>
+    <string
+        name="shortcut_default_click"
+    >Долгое нажатие, чтобы выбрать приложение</string>
 
-    <string name="accessibility_set_shortcut">Установить ярлык приложения</string>
+    <string
+        name="accessibility_set_shortcut"
+    >Установить ярлык приложения</string>
 
     <string name="open_app_menu">Открыть меню приложений</string>
 
@@ -49,8 +57,12 @@
     <!--Settings Page-->
     <string name="settings_title">Настройки лаунчера</string>
 
-    <string name="default_home">Установить домашнюю страницу по умолчанию</string>
-    <string name="unable_to_launch_settings">Невозможно открыть настройки</string>
+    <string
+        name="default_home"
+    >Установить домашнюю страницу по умолчанию</string>
+    <string
+        name="unable_to_launch_settings"
+    >Невозможно открыть настройки</string>
 
     <string name="lock_settings">Заблокировать настройки</string>
 
@@ -73,7 +85,9 @@
     <string name="swipe_velocity_threshold">Порог скорости смахивания</string>
     <string name="show_status_bar">Показать строку состояния</string>
     <string name="enable_confirmation">Диалог подтверждения приложения</string>
-    <string name="launch_confirmation_text">Вы уверены, что хотите запустить это приложение?</string>
+    <string
+        name="launch_confirmation_text"
+    >Вы уверены, что хотите запустить это приложение?</string>
 
     <string name="home_settings_title">Настройки главного экрана</string>
     <string name="home_settings_text">Главный экран</string>
@@ -83,7 +97,9 @@
     <string name="show_clock">Показать часы</string>
     <string name="clock_alignment">Выравнивание часов</string>
     <string name="clock_size">Размер часов</string>
-    <string name="clicking_time_opens_clock">Нажатие на время открывает часы</string>
+    <string
+        name="clicking_time_opens_clock"
+    >Нажатие на время открывает часы</string>
     <string name="custom_clock_gesture">Пользовательские часы</string>
     <string name="set_clock_app">Установить приложение часов</string>
 
@@ -91,16 +107,22 @@
     <string name="show_date">Показать дату</string>
     <string name="date_size">Размер даты</string>
     <string name="battery_indicator">Индикатор батареи</string>
-    <string name="clicking_date_opens_calendar">Нажатие на дату открывает календарь</string>
+    <string
+        name="clicking_date_opens_calendar"
+    >Нажатие на дату открывает календарь</string>
     <string name="custom_date_gesture">Пользовательский календарь</string>
     <string name="set_calendar_app">Установить приложение календаря</string>
 
     <string name="weather">Погода</string>
     <string name="gps_location">Местоположение GPS</string>
     <string name="latest_location">Последнее местоположение GPS</string>
-    <string name="set_manual_location">Установить местоположение вручную</string>
+    <string
+        name="set_manual_location"
+    >Установить местоположение вручную</string>
     <string name="weather_update_interval">Интервал обновления</string>
-    <string name="weather_update_interval_summary">напр., 15m, 6h, 1d (минимум 1m)</string>
+    <string
+        name="weather_update_interval_summary"
+    >напр., 15m, 6h, 1d (минимум 1m)</string>
     <string name="find_your_city">"Найти ваш город"</string>
     <string name="units">Единицы измерения</string>
 
@@ -112,14 +134,18 @@
     <string name="shortcut_spacing">Расстояние между ярлыками</string>
     <string name="lock_shortcuts">Заблокировать ярлыки</string>
     <string name="hidden_shortcut_title">Скрытые приложения</string>
-    <string name="hidden_shortcuts">Показать скрытые приложения в выборе ярлыков</string>
+    <string
+        name="hidden_shortcuts"
+    >Показать скрытые приложения в выборе ярлыков</string>
 
     <string name="gestures">Жесты</string>
     <string name="swipe_left">Свайп влево</string>
     <string name="left_swipe_app">Приложение левого свайпа</string>
     <string name="swipe_right">Свайп вправо</string>
     <string name="right_swipe_app">Приложение правого свайпа</string>
-    <string name="double_tap_to_lock_screen">Двойное нажатие для блокировки экрана</string>
+    <string
+        name="double_tap_to_lock_screen"
+    >Двойное нажатие для блокировки экрана</string>
 
     <string name="app_settings_title">Настройки меню приложений</string>
     <string name="app_settings_text">Меню приложений</string>
@@ -132,12 +158,20 @@
     <string name="contacts_menu">Меню контактов</string>
     <string name="permission_denied">В разрешении отказано</string>
     <string name="internet_search">Кнопка веб-поиска</string>
-    <string name="auto_launch_disabled_reason_web_search">Отключено, потому что включена кнопка веб-поиска.</string>
-    <string name="web_search_disabled_reason_auto_open">Отключено, потому что включено автоматическое открытие приложений.</string>
+    <string
+        name="auto_launch_disabled_reason_web_search"
+    >Отключено, потому что включена кнопка веб-поиска.</string>
+    <string
+        name="web_search_disabled_reason_auto_open"
+    >Отключено, потому что включено автоматическое открытие приложений.</string>
 
-    <string name="context_menu_settings_title">Настройки контекстного меню</string>
+    <string
+        name="context_menu_settings_title"
+    >Настройки контекстного меню</string>
     <string name="context_menu_settings_text">Контекстное меню</string>
-    <string name="context_menu_settings_summary">Включить/выключить элементы контекстного меню</string>
+    <string
+        name="context_menu_settings_summary"
+    >Включить/выключить элементы контекстного меню</string>
 
     <string name="enable_pin">Закрепить приложение</string>
     <string name="enable_info">Информация о приложении</string>
@@ -151,9 +185,15 @@
     <string name="search_alignment">Выравнивание поиска</string>
     <string name="search_size">Размер поиска</string>
     <string name="enable_fuzzy_search">Нечеткий поиск</string>
-    <string name="automatically_open_keyboard">Автоматически открывать клавиатуру</string>
-    <string name="automatic_app_opening">Автоматический запуск приложения</string>
-    <string name="auto_launch_summary">Автоматически запускать приложение, когда оно является последним результатом поиска</string>
+    <string
+        name="automatically_open_keyboard"
+    >Автоматически открывать клавиатуру</string>
+    <string
+        name="automatic_app_opening"
+    >Автоматический запуск приложения</string>
+    <string
+        name="auto_launch_summary"
+    >Автоматически запускать приложение, когда оно является последним результатом поиска</string>
 
     <string name="hidden_apps_title">Скрытые приложения</string>
     <string name="hidden_apps_text">Управление скрытыми приложениями</string>
@@ -164,7 +204,7 @@
     <!--About Page Items-->
     <string name="about_title">О YAM Launcher</string>
     <string name="app_icon">Значок приложения</string>
-    <string name="creditName">создано Отто, поддерживается ThomasNow Productions</string>
+    <string name="creditName">создано Отто, поддерживается Thomas Boom</string>
     <string name="source_code">Исходный код</string>
     <string name="codeberg">Codeberg</string>
     <string name="github">GitHub</string>
@@ -176,26 +216,40 @@
     <string name="reset">Сбросить</string>
     <string name="restart_text">Перезапустить YAM Launcher</string>
     <string name="reset_text">Сбросить все настройки</string>
-    <string name="reset_confirm_text">Вы потеряете ВСЕ изменения, которые вы внесли в настройки лаунчера, ярлыки, скрытые приложения и т.д.\n\nВы уверены?</string>
+    <string
+        name="reset_confirm_text"
+    >Вы потеряете ВСЕ изменения, которые вы внесли в настройки лаунчера, ярлыки, скрытые приложения и т.д.\n\nВы уверены?</string>
 
-    <string name="backup_restore">Резервное копирование и восстановление</string>
+    <string
+        name="backup_restore"
+    >Резервное копирование и восстановление</string>
     <string name="backup">Резервная копия</string>
     <string name="backup_summary">Создать резервную копию настроек</string>
     <string name="restore">Восстановить</string>
     <string name="restore_summary">Восстановить из резервной копии</string>
-    <string name="backup_success">Резервное копирование выполнено успешно :)</string>
+    <string
+        name="backup_success"
+    >Резервное копирование выполнено успешно :)</string>
     <string name="backup_fail">Ошибка резервного копирования :(</string>
     <string name="restore_success">Восстановление выполнено успешно :)</string>
-    <string name="restore_fail">Ошибка восстановления :( (поврежденный файл?)</string>
-    <string name="restore_wrong_app">Это не резервная копия YAM Launcher</string>
+    <string
+        name="restore_fail"
+    >Ошибка восстановления :( (поврежденный файл?)</string>
+    <string
+        name="restore_wrong_app"
+    >Это не резервная копия YAM Launcher</string>
     <string name="restore_error">Не удалось прочитать файл</string>
 
     <!--Logging-->
     <string name="debug_logs">Журналы отладки</string>
     <string name="export_logs">Экспорт журналов</string>
-    <string name="export_logs_summary">Поделиться журналами для диагностики проблем</string>
+    <string
+        name="export_logs_summary"
+    >Поделиться журналами для диагностики проблем</string>
     <string name="clear_logs">Очистить журналы</string>
-    <string name="clear_logs_summary">Удалить все сохраненные файлы журналов</string>
+    <string
+        name="clear_logs_summary"
+    >Удалить все сохраненные файлы журналов</string>
     <string name="logs_cleared">Журналы очищены</string>
     <string name="logs_export_success">Журналы успешно экспортированы</string>
     <string name="logs_export_fail">Не удалось экспортировать журналы</string>
@@ -205,13 +259,25 @@
     <string name="region_text">%1$s%2$s</string>
 
     <!--Double tap to lock-->
-    <string name="screenlock_confirmation">Чтобы блокировать двойным нажатием, включите YAM Launcher в настройках специальных возможностей.</string>
-    <string name="accessibility_service_description">Разрешение требуется для работы двойного нажатия для блокировки экрана.\n\nОно нужно только в том случае, если вы хотите использовать функцию двойного нажатия для блокировки экрана в YAM Launcher.</string>
+    <string
+        name="screenlock_confirmation"
+    >Чтобы блокировать двойным нажатием, включите YAM Launcher в настройках специальных возможностей.</string>
+    <string
+        name="accessibility_service_description"
+    >Разрешение требуется для работы двойного нажатия для блокировки экрана.\n\nОно нужно только в том случае, если вы хотите использовать функцию двойного нажатия для блокировки экрана в YAM Launcher.</string>
 
     <string name="text_authentication_cancel">Аутентификация отменена.</string>
-    <string name="text_authentication_error">Ошибка аутентификации: %1$s (код %2$d)</string>
+    <string
+        name="text_authentication_error"
+    >Ошибка аутентификации: %1$s (код %2$d)</string>
     <string name="text_authentication_failed">Ошибка аутентификации.</string>
-    <string name="text_biometric_login">Разблокировать настройки YAM Launcher</string>
-    <string name="text_biometric_login_app">Биометрический вход для %1$s</string>
-    <string name="text_biometric_login_sub">Войдите, используя свои биометрические данные.</string>
+    <string
+        name="text_biometric_login"
+    >Разблокировать настройки YAM Launcher</string>
+    <string
+        name="text_biometric_login_app"
+    >Биометрический вход для %1$s</string>
+    <string
+        name="text_biometric_login_sub"
+    >Войдите, используя свои биометрические данные.</string>
 </resources>

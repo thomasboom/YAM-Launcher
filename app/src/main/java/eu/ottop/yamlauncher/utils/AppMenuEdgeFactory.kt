@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 /**
  * Custom EdgeEffectFactory that speeds up overscroll animations.
- * 
+ *
  * Makes the app menu easier to exit by reducing the rubberband effect duration.
  * The 0.75x speed factor allows faster navigation to home screen.
  */
@@ -14,7 +14,7 @@ class AppMenuEdgeFactory(private val activity: Activity) : RecyclerView.EdgeEffe
 
     /**
      * Creates a custom edge effect with accelerated animation.
-     * 
+     *
      * @param view The RecyclerView this effect is attached to
      * @param direction Which edge (TOP, BOTTOM, LEFT, RIGHT)
      * @return Custom AppMenuEdgeEffect with faster animations
@@ -36,7 +36,7 @@ class AppMenuEdgeFactory(private val activity: Activity) : RecyclerView.EdgeEffe
         /**
          * Accelerates the absorption animation when overscroll completes.
          * Called when user releases while overscrolled.
-         * 
+         *
          * @param velocity Velocity of the fling in pixels per second
          */
         override fun onAbsorb(velocity: Int) {
@@ -46,7 +46,7 @@ class AppMenuEdgeFactory(private val activity: Activity) : RecyclerView.EdgeEffe
         /**
          * Accelerates the pull animation during overscroll.
          * Makes the edge stretch feel more responsive.
-         * 
+         *
          * @param deltaDistance How far the user has pulled (0 to 1)
          * @param displacement Horizontal position of touch
          */
@@ -57,7 +57,7 @@ class AppMenuEdgeFactory(private val activity: Activity) : RecyclerView.EdgeEffe
         /**
          * Accelerates the distance calculation during pull.
          * Reduces the effective pull distance for faster response.
-         * 
+         *
          * @param deltaDistance Raw distance pulled
          * @param displacement Horizontal position of touch
          * @return Adjusted distance for edge effect calculation
