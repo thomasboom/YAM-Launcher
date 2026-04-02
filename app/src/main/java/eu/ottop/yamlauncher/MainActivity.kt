@@ -49,6 +49,7 @@ import android.view.GestureDetector
 import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
@@ -1640,6 +1641,19 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         super.onStart()
         // Keyboard is sometimes open when going back to the app, so close it.
         closeKeyboard()
+    }
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        if (hasFocus) {
+            // Close keyboard and immediately restore full layout height.
+            // onStart() fires before the window has focus, so hideSoftInputFromWindow
+            // can't close a keyboard owned by another app. onWindowFocusChanged is
+            // called once we actually own the window, making this reliable.
+            closeKeyboard()
+            binding.root.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
+            binding.root.requestLayout()
+        }
     }
 
     @SuppressLint("NotifyDataSetChanged")
