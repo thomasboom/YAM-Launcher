@@ -12,7 +12,7 @@
 
     <string
         name="shortcut_default_click"
-    >Tocca e tieni premuto per selezionare un\'app</string>
+    >Clicca e tieni premuto per selezionare un\'app</string>
 
     <string name="accessibility_set_shortcut">Imposta scorciatoia app</string>
 
@@ -42,7 +42,8 @@
     <string name="empty_rename">Il nome non può essere vuoto</string>
 
     <!--Action Menu Items-->
-    <string name="pin">Aggiungi alla schermata principale</string>
+    <string name="pin">Fissa</string>
+    <string name="unpin">Stacca</string>
     <string name="info">Info</string>
     <string name="uninstall">Disinstalla</string>
     <string name="rename">Rinomina</string>
@@ -50,13 +51,15 @@
     <string name="close">Chiudi</string>
     <string
         name="accessibility_pin"
-    >Aggiungi app alla schermata principale</string>
+    >Fissa app</string>
+    <string name="accessibility_unpin">Stacca app</string>
     <string name="accessibility_info">Info app</string>
     <string name="accessibility_uninstall">Disinstalla app</string>
     <string name="accessibility_rename">Rinomina app</string>
     <string name="accessibility_hide">Nascondi app</string>
 
     <!--Settings Page-->
+    <string name="rename_error">Impossibile rinominare l\'app</string>
     <string name="settings_title">Impostazioni del Launcher</string>
 
     <string name="default_home">Imposta come Home predefinita</string>
@@ -65,18 +68,19 @@
     >Impossibile aprire le impostazioni</string>
 
     <string name="customization">Personalizzazione</string>
-    <string name="lock_settings">Blocco impostazione</string>
+    <string name="lock_settings">Blocco impostazioni</string>
 
-    <string name="ui_settings_title">Impostazioni generali UI</string>
-    <string name="ui_settings_text">Generali UI</string>
+    <string name="ui_settings_title">Impostazioni UI generale</string>
+    <string name="ui_settings_text">UI generale</string>
     <string name="ui_settings_summary">Configura l\'aspetto complessivo</string>
 
     <string name="appearance">Aspetto</string>
-    <string name="background_color">Colore di sfondo</string>
+    <string name="background_color">Colore dello sfondo</string>
     <string name="text_color">Colore del testo</string>
     <string name="text_font">Carattere del testo</string>
     <string name="text_style">Stile del testo</string>
 
+    <string name="text_shadow">Ombra del testo</string>
     <string name="operation">Operazioni</string>
     <string name="animation_speed">Velocità animazione</string>
     <string name="swipe_threshold">Soglia swipe</string>
@@ -138,6 +142,7 @@
         name="hidden_shortcuts"
     >Mostra app nascoste nella selezione scorciatoie</string>
 
+    <string name="notification_permission_text">Abilita l\'accesso alle notifiche per mostrare i punti di notifica</string>
     <string name="gestures">Gestures</string>
     <string name="swipe_left">Swipe a sinistra</string>
     <string name="left_swipe_app">App swipe sinistra</string>
@@ -147,6 +152,7 @@
         name="double_tap_to_lock_screen"
     >Doppio tap per bloccare schermo</string>
 
+    <string name="double_tap_app">App doppio tap</string>
     <string name="app_settings_title">Impostazioni menu app</string>
     <string name="app_settings_text">Menu app</string>
     <string name="app_settings_summary">Configura il menu applicazioni</string>
@@ -160,11 +166,12 @@
     <string name="internet_search">Cerca nel web</string>
     <string
         name="auto_launch_disabled_reason_web_search"
-    >Disattivato perché il pulsante di ricerca web è attivato.</string>
+    >Disattivata perché il pulsante di ricerca web è attivato.</string>
     <string
         name="web_search_disabled_reason_auto_open"
     >Disattivato perché l\'apertura automatica delle app è attiva.</string>
 
+    <string name="alphabet_index_right">Destra</string>
     <string
         name="context_menu_settings_title"
     >Impostazioni menu contestuale</string>
@@ -195,7 +202,7 @@
 
     <string name="hidden_apps_title">App nascoste</string>
     <string name="hidden_apps_text">Gestisci app nascoste</string>
-    <string name="hidden_apps_summary">Ripristina app visibili</string>
+    <string name="hidden_apps_summary">Ripristina app</string>
     <string name="hidden_confirm_text">Sei sicuro di voler ripristinare</string>
 
     <string name="about">Info</string>
@@ -279,7 +286,7 @@
     <string
         name="accessibility_service_description"
     >Il permesso è necessario per il doppio tap per bloccare lo schermo.\n\nÈ necessario solo se vuoi usare la funzione di blocco schermo con doppio tap in YAM Launcher.</string>
-    <string name="text_authentication_cancel">Autenticazione Annullata.</string>
+    <string name="text_authentication_cancel">Autenticazione annullata.</string>
     <string
         name="text_authentication_error"
     >Errore di autenticazione: %1$s (codice %2$d)</string>
@@ -291,4 +298,15 @@
     <string
         name="text_biometric_login_sub"
     >Accedi utilizzando le tue credenziali biometriche.</string>
+    <string name="notification_dots">Punti di notifica</string>
+    <string name="notification_dots_summary">Mostra un punto sulle scorciatoie quando le app presentano notifiche</string>
+    <string name="notification_permission_required">Permesso richiesto</string>
+    <string name="double_tap">Doppio tap</string>
+    <string name="double_tap_action">Azione doppio tap</string>
+    <string name="double_tap_action_lock_screen">Blocca schermo</string>
+    <string name="double_tap_action_app">Avvia app</string>
+    <string name="alphabet_index_enabled">Indice alfabetico</string>
+    <string name="alphabet_index_summary">Mostra una barra laterale di lettere per una navigazione veloce</string>
+    <string name="alphabet_index_position">Posizione indice</string>
+    <string name="alphabet_index_left">Sinistra</string>
 </resources>
