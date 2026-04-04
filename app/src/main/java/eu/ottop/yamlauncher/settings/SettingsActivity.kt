@@ -61,7 +61,7 @@ class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferen
         setContentView(binding.root)
 
         // Set up UI
-        uiUtils.setBackground(window)
+        uiUtils.setBackground(window, true)
         preferences.registerOnSharedPreferenceChangeListener(this)
 
         // Configure action bar
@@ -432,7 +432,7 @@ class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferen
         // Update background color when changed
         if (key == "bgColor") {
             val uiUtils = UIUtils(this@SettingsActivity)
-            uiUtils.setBackground(window)
+            uiUtils.setBackground(window, true)
         }
     }
 }
