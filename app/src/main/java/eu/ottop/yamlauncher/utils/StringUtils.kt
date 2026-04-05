@@ -3,7 +3,9 @@ package eu.ottop.yamlauncher.utils
 import android.text.Html
 import android.text.method.LinkMovementMethod
 import android.widget.TextView
+import java.text.Normalizer
 import java.util.LinkedHashMap
+import java.util.regex.Pattern
 
 /**
  * Utility class for string manipulation operations.
@@ -14,6 +16,9 @@ class StringUtils {
         // Regex pattern to remove non-alphanumeric characters for search indexing
         // Keeps only letters (including unicode) and digits
         private val CLEAN_REGEX = Regex("[^\\p{L}0-9]")
+
+        // Regex pattern to remove accent characters (diacritics)
+        private val ACCENT_REGEX = Pattern.compile("\\p{InCombiningDiacriticalMarks}+")
 
         // LRU cache for fuzzy patterns (max 16 entries) - prevents regex recompilation
         // Thread-safe access via synchronized block in getFuzzyPattern
@@ -49,14 +54,18 @@ class StringUtils {
     }
 
     /**
-     * Removes non-alphanumeric characters from a string.
+     * Removes non-alphanumeric characters and accent characters (diacritics) from a string.
      * Used for search indexing and comparison.
      *
      * @param string The input string to clean
      * @return Cleaned string or null if input was null
      */
     fun cleanString(string: String?): String? {
-        return string?.replace(CLEAN_REGEX, "")
+        if (string == null) return null
+        val cleaned = string.replace(CLEAN_REGEX, "")
+        val normalized = Normalizer.normalize(cleaned, Normalizer.Form.NFD)
+        val withoutAccents = ACCENT_REGEX.matcher(normalized).replaceAll("")
+        return withoutAccents.lowercase()
     }
 
     /**

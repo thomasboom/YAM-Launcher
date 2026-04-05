@@ -10,7 +10,7 @@ class StringUtilsTest {
     @Test
     fun cleanString_removesSpecialCharacters() {
         val result = stringUtils.cleanString("App@#\$Name!")
-        assertEquals("AppName", result)
+        assertEquals("appname", result)
     }
 
     @Test
@@ -28,13 +28,25 @@ class StringUtilsTest {
     @Test
     fun cleanString_preservesAlphanumeric() {
         val result = stringUtils.cleanString("App123Name")
-        assertEquals("App123Name", result)
+        assertEquals("app123name", result)
     }
 
     @Test
     fun cleanString_handlesWhitespace() {
         val result = stringUtils.cleanString("  App  Name  ")
-        assertEquals("AppName", result)
+        assertEquals("appname", result)
+    }
+
+    @Test
+    fun cleanString_removesAccents() {
+        val result = stringUtils.cleanString("Café résumé naïve")
+        assertEquals("caferesumenaive", result)
+    }
+
+    @Test
+    fun cleanString_handlesUnicodeCharacters() {
+        val result = stringUtils.cleanString("Äpfel Übung")
+        assertEquals("apfelubung", result)
     }
 
     @Test
