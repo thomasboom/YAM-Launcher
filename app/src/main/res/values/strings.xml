@@ -73,6 +73,8 @@
     <string name="text_shadow">Text Shadow</string>
 
     <string name="operation">Operation</string>
+    <string name="block_auto_rotation">Block Auto Rotation</string>
+    <string name="block_auto_rotation_summary">Prevent the screen from rotating automatically</string>
     <string name="animation_speed">Animation Speed</string>
     <string name="swipe_threshold">Swipe Threshold</string>
     <string name="swipe_velocity_threshold">Swipe Velocity Threshold</string>

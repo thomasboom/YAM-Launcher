@@ -29,6 +29,7 @@ import android.content.SharedPreferences
 import android.content.pm.LauncherActivityInfo
 import android.content.pm.LauncherApps
 import android.content.pm.PackageManager
+import android.content.pm.ActivityInfo
 import android.database.Cursor
 import android.graphics.BlendMode
 import android.graphics.BlendModeColorFilter
@@ -592,6 +593,12 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
     }
 
     private fun setPreferences() {
+        if (sharedPreferenceManager.isAutoRotationBlocked()) {
+            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LOCKED
+        } else {
+            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+        }
+
         uiUtils.setBackground(window, applyHomescreenDarkening = true)
 
         uiUtils.setTextFont(binding.homeView)
@@ -841,6 +848,14 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
             "dateEnabled" -> uiUtils.setDateVisibility(dateText)
             "searchEnabled" -> uiUtils.setSearchVisibility(searchView, binding.searchLayout, binding.searchReplacement)
             "barVisibility" -> uiUtils.setStatusBar(window)
+
+            "blockAutoRotation" -> {
+                requestedOrientation = if (sharedPreferenceManager.isAutoRotationBlocked()) {
+                    ActivityInfo.SCREEN_ORIENTATION_LOCKED
+                } else {
+                    ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+                }
+            }
 
             "clockAlignment" -> uiUtils.setClockAlignment(clock, dateText)
             "shortcutAlignment" -> uiUtils.setShortcutsAlignment(binding.homeView)

@@ -157,6 +157,11 @@ class SharedPreferenceManager(private val context: Context) {
     fun isConfirmationEnabled(): Boolean = preferences.getBooleanOrDefault("enableConfirmation", false)
 
     /**
+     * Checks if auto rotation is blocked.
+     */
+    fun isAutoRotationBlocked(): Boolean = preferences.getBooleanOrDefault("blockAutoRotation", false)
+
+    /**
      * Checks if settings require biometric authentication.
      */
     fun isSettingsLocked(): Boolean = preferences.getBooleanOrDefault("lockSettings", false)

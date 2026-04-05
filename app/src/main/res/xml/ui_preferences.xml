@@ -103,6 +103,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:defaultValue="false"
+            android:title="@string/block_auto_rotation"
+            android:summary="@string/block_auto_rotation_summary"
+            app:key="blockAutoRotation" />
+        <SwitchPreference
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="false"
             android:title="@string/show_status_bar"
             app:key="barVisibility" />
         <SwitchPreference
