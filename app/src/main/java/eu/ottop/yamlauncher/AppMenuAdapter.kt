@@ -92,6 +92,11 @@ class AppMenuAdapter(
     private var cachedTextShadowEnabled: Boolean = sharedPreferenceManager.isTextShadowEnabled()
     private var cachedContactsEnabled: Boolean = sharedPreferenceManager.areContactsEnabled()
 
+    private val drawableEmpty = ResourcesCompat.getDrawable(activity.resources, R.drawable.ic_empty, null)
+    private val drawablePinFilled = ResourcesCompat.getDrawable(activity.resources, R.drawable.keep_filled_15px, null)
+    private val drawablePin = ResourcesCompat.getDrawable(activity.resources, R.drawable.keep_15px, null)
+    private val drawableWork = ResourcesCompat.getDrawable(activity.resources, R.drawable.ic_work_app, null)
+
     fun onPreferencesChanged() {
         cachedTextColor = sharedPreferenceManager.getTextColor()
         cachedTextShadowEnabled = sharedPreferenceManager.isTextShadowEnabled()
@@ -213,23 +218,23 @@ class AppMenuAdapter(
         if (sharedPreferenceManager.isAppPinned(app.first.componentName.flattenToString(), app.third)) {
             if (app.third != 0) {
                 // Pinned work profile app
-                holder.textView.setCompoundDrawablesWithIntrinsicBounds(ResourcesCompat.getDrawable(activity.resources, R.drawable.keep_filled_15px, null),null, ResourcesCompat.getDrawable(activity.resources, R.drawable.ic_empty, null),null)
+                holder.textView.setCompoundDrawablesWithIntrinsicBounds(drawablePinFilled, null, drawableEmpty, null)
             }
             else {
                 // Pinned personal profile app
-                holder.textView.setCompoundDrawablesWithIntrinsicBounds(ResourcesCompat.getDrawable(activity.resources, R.drawable.keep_15px, null),null,ResourcesCompat.getDrawable(activity.resources, R.drawable.ic_empty, null),null)
+                holder.textView.setCompoundDrawablesWithIntrinsicBounds(drawablePin, null, drawableEmpty, null)
             }
             holder.textView.compoundDrawables.getOrNull(0)?.colorFilter = BlendModeColorFilter(cachedTextColor, BlendMode.SRC_ATOP)
         }
         // Show work profile icon for non-pinned work apps
         else if (app.third != 0) {
-            holder.textView.setCompoundDrawablesWithIntrinsicBounds(ResourcesCompat.getDrawable(activity.resources, R.drawable.ic_work_app, null),null, ResourcesCompat.getDrawable(activity.resources, R.drawable.ic_empty, null),null)
+            holder.textView.setCompoundDrawablesWithIntrinsicBounds(drawableWork, null, drawableEmpty, null)
             holder.textView.compoundDrawables.getOrNull(0)?.colorFilter =
                 BlendModeColorFilter(cachedTextColor, BlendMode.SRC_ATOP)
         }
         // Empty drawable for personal profile non-pinned apps
         else {
-            holder.textView.setCompoundDrawablesWithIntrinsicBounds(ResourcesCompat.getDrawable(activity.resources, R.drawable.ic_empty, null),null,ResourcesCompat.getDrawable(activity.resources, R.drawable.ic_empty, null),null)
+            holder.textView.setCompoundDrawablesWithIntrinsicBounds(drawableEmpty, null, drawableEmpty, null)
         }
 
         // Apply styling from preferences
