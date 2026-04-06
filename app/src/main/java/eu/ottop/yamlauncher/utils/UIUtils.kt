@@ -54,6 +54,65 @@ class UIUtils(private val context: Context) {
     private val sharedPreferenceManager = SharedPreferenceManager(context)
 
     // ============================================
+    // Style Cache
+    // ============================================
+
+    private var cachedAlignment: String? = null
+    private var cachedSize: String? = null
+    private var cachedSpacing: Int? = null
+    private var cachedTypeface: Typeface? = null
+    private var styleCacheValid = false
+
+    fun invalidateStyleCache() {
+        styleCacheValid = false
+        cachedAlignment = null
+        cachedSize = null
+        cachedSpacing = null
+        cachedTypeface = null
+    }
+
+    private fun ensureStyleCache() {
+        if (styleCacheValid) return
+        cachedAlignment = sharedPreferenceManager.getAppAlignment()
+        cachedSize = sharedPreferenceManager.getAppSize()
+        cachedSpacing = sharedPreferenceManager.getAppSpacing()
+        cachedTypeface = resolveTypeface()
+        styleCacheValid = true
+    }
+
+    private fun resolveTypeface(): Typeface? {
+        val font = sharedPreferenceManager.getTextFont()
+        val style = sharedPreferenceManager.getTextStyle()
+
+        val base = when (font) {
+            "system" -> {
+                val typedArray = context.obtainStyledAttributes(android.R.style.TextAppearance_DeviceDefault, intArrayOf(android.R.attr.fontFamily))
+                val systemFont = typedArray.getString(0)
+                typedArray.recycle()
+                if (systemFont != null) Typeface.create(systemFont, Typeface.NORMAL) else Typeface.DEFAULT
+            }
+            "casual" -> Typeface.SANS_SERIF
+            "cursive" -> Typeface.SANS_SERIF
+            "monospace" -> Typeface.MONOSPACE
+            "sans-serif" -> Typeface.SANS_SERIF
+            "serif" -> Typeface.SERIF
+            "sans-serif-light", "sans-serif-thin", "sans-serif-condensed", "sans-serif-condensed-light", "sans-serif-smallcaps" ->
+                Typeface.create(font, Typeface.NORMAL)
+            else -> {
+                val fontId = FontMap.fonts[font]
+                if (fontId != null) ResourcesCompat.getFont(context, fontId) else Typeface.DEFAULT
+            }
+        }
+
+        return when (style) {
+            "bold" -> Typeface.create(base, Typeface.BOLD)
+            "italic" -> Typeface.create(base, Typeface.ITALIC)
+            "bold-italic" -> Typeface.create(base, Typeface.BOLD_ITALIC)
+            else -> base
+        }
+    }
+
+    // ============================================
     // Window Insets
     // ============================================
 
@@ -321,57 +380,8 @@ class UIUtils(private val context: Context) {
      * @param view TextView to style
      */
     fun setFont(view: TextView) {
-        var font = sharedPreferenceManager.getTextFont()
-        val style = sharedPreferenceManager.getTextStyle()
-
-        // Resolve font based on preference
-        val newFont = when (font) {
-            "system" -> {
-                // Get system default font
-                val typedArray = context.obtainStyledAttributes(android.R.style.TextAppearance_DeviceDefault, intArrayOf(android.R.attr.fontFamily))
-                val systemFont = typedArray.getString(0)
-                typedArray.recycle()
-                if (systemFont != null) {
-                    Typeface.create(systemFont, Typeface.NORMAL)
-                } else {
-                    Typeface.DEFAULT
-                }
-            }
-            "casual" -> Typeface.SANS_SERIF
-            "cursive" -> Typeface.SANS_SERIF // Cursive may not be available on all devices
-            "monospace" -> Typeface.MONOSPACE
-            "sans-serif" -> Typeface.SANS_SERIF
-            "serif" -> Typeface.SERIF
-            // System-defined variant fonts
-            "sans-serif-light", "sans-serif-thin", "sans-serif-condensed", "sans-serif-condensed-light", "sans-serif-smallcaps" -> {
-                Typeface.create(font, Typeface.NORMAL)
-            }
-            else -> {
-                // Custom fonts from FontMap
-                val fontId = FontMap.fonts[font]
-                if (fontId != null) {
-                    ResourcesCompat.getFont(context, fontId)
-                } else {
-                    Typeface.DEFAULT
-                }
-            }
-        }
-
-        // Apply style (normal, bold, italic, bold-italic)
-        when (style) {
-            "normal" -> {
-                view.typeface = newFont
-            }
-            "bold" -> {
-                view.typeface = Typeface.create(newFont, Typeface.BOLD)
-            }
-            "italic" -> {
-                view.typeface = Typeface.create(newFont, Typeface.ITALIC)
-            }
-            "bold-italic" -> {
-                view.typeface = Typeface.create(newFont, Typeface.BOLD_ITALIC)
-            }
-        }
+        ensureStyleCache()
+        view.typeface = cachedTypeface
     }
 
     /**
@@ -610,7 +620,8 @@ class UIUtils(private val context: Context) {
         editText: TextView? = null,
         regionText: TextView? = null,
     ) {
-        val alignment = sharedPreferenceManager.getAppAlignment()
+        ensureStyleCache()
+        val alignment = cachedAlignment
         setTextGravity(textView, alignment)
 
         if (regionText != null) {
@@ -792,7 +803,8 @@ class UIUtils(private val context: Context) {
         editText: TextInputEditText? = null,
         regionText: TextView? = null
     ) {
-        val size = sharedPreferenceManager.getAppSize()
+        ensureStyleCache()
+        val size = cachedSize
         setTextSize(textView, size, 21F, 24F, 27F, 30F, 33F, 36F)
         if (editText != null) {
             setTextSize(editText, size, 21F, 24F, 27F, 30F, 33F, 36F)
@@ -876,7 +888,8 @@ class UIUtils(private val context: Context) {
      * @param item TextView to pad
      */
     fun setItemSpacing(item: TextView) {
-        val spacing = sharedPreferenceManager.getAppSpacing()
+        ensureStyleCache()
+        val spacing = cachedSpacing
         if (spacing != null) {
             val spacingPx = dpToPx(spacing)
             item.setPadding(item.paddingLeft, spacingPx, item.paddingRight, spacingPx)

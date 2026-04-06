@@ -88,6 +88,18 @@ class AppMenuAdapter(
     private val appUtils = AppUtils(activity, launcherApps)
     private val logger = Logger.getInstance(activity)
 
+    private var cachedTextColor: Int = sharedPreferenceManager.getTextColor()
+    private var cachedTextShadowEnabled: Boolean = sharedPreferenceManager.isTextShadowEnabled()
+    private var cachedContactsEnabled: Boolean = sharedPreferenceManager.areContactsEnabled()
+
+    fun onPreferencesChanged() {
+        cachedTextColor = sharedPreferenceManager.getTextColor()
+        cachedTextShadowEnabled = sharedPreferenceManager.isTextShadowEnabled()
+        cachedContactsEnabled = sharedPreferenceManager.areContactsEnabled()
+        uiUtils.invalidateStyleCache()
+        notifyDataSetChanged()
+    }
+
     // ============================================
     // Listener Interfaces
     // ============================================
@@ -207,13 +219,13 @@ class AppMenuAdapter(
                 // Pinned personal profile app
                 holder.textView.setCompoundDrawablesWithIntrinsicBounds(ResourcesCompat.getDrawable(activity.resources, R.drawable.keep_15px, null),null,ResourcesCompat.getDrawable(activity.resources, R.drawable.ic_empty, null),null)
             }
-            holder.textView.compoundDrawables.getOrNull(0)?.colorFilter = BlendModeColorFilter(sharedPreferenceManager.getTextColor(), BlendMode.SRC_ATOP)
+            holder.textView.compoundDrawables.getOrNull(0)?.colorFilter = BlendModeColorFilter(cachedTextColor, BlendMode.SRC_ATOP)
         }
         // Show work profile icon for non-pinned work apps
         else if (app.third != 0) {
             holder.textView.setCompoundDrawablesWithIntrinsicBounds(ResourcesCompat.getDrawable(activity.resources, R.drawable.ic_work_app, null),null, ResourcesCompat.getDrawable(activity.resources, R.drawable.ic_empty, null),null)
             holder.textView.compoundDrawables.getOrNull(0)?.colorFilter =
-                BlendModeColorFilter(sharedPreferenceManager.getTextColor(), BlendMode.SRC_ATOP)
+                BlendModeColorFilter(cachedTextColor, BlendMode.SRC_ATOP)
         }
         // Empty drawable for personal profile non-pinned apps
         else {
@@ -225,8 +237,8 @@ class AppMenuAdapter(
         uiUtils.setAppSize(holder.textView, holder.editText)
         uiUtils.setItemSpacing(holder.textView)
         uiUtils.setTextFont(holder.listItem)
-        holder.textView.setTextColor(sharedPreferenceManager.getTextColor())
-        if (sharedPreferenceManager.isTextShadowEnabled()) {
+        holder.textView.setTextColor(cachedTextColor)
+        if (cachedTextShadowEnabled) {
             holder.textView.setShadowLayer(4f, 2f, 2f, android.graphics.Color.BLACK)
         } else {
             holder.textView.setShadowLayer(0f, 0f, 0f, android.graphics.Color.TRANSPARENT)
@@ -260,7 +272,7 @@ class AppMenuAdapter(
             true
         }
 
-        if (sharedPreferenceManager.areContactsEnabled()) {
+        if (cachedContactsEnabled) {
             ViewCompat.addAccessibilityAction(holder.textView, activity.getString(R.string.switch_to_contacts)) { _, _ ->
                 activity.switchMenus()
                 true

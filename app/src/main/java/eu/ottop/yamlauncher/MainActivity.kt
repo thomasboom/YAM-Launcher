@@ -825,6 +825,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
                     alphabetIndex.setTextColor(sharedPreferenceManager.getTextColor())
                     alphabetIndex.setTextShadow(sharedPreferenceManager.isTextShadowEnabled())
                 }
+                appAdapter?.onPreferencesChanged()
             }
 
             "textShadow" -> {
@@ -836,12 +837,14 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
                 if (sharedPreferenceManager.isAlphabetIndexEnabled()) {
                     alphabetIndex.setTextShadow(sharedPreferenceManager.isTextShadowEnabled())
                 }
+                appAdapter?.onPreferencesChanged()
             }
 
             "textFont", "textStyle" -> {
                 uiUtils.setTextFont(binding.homeView)
                 uiUtils.setFont(searchView)
                 uiUtils.setFont(menuTitle)
+                appAdapter?.onPreferencesChanged()
             }
 
             "clockEnabled" -> uiUtils.setClockVisibility(clock)
@@ -899,7 +902,12 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
                 } catch (_: UninitializedPropertyAccessException) {
                     setupContactRecycler()
                 }
+                appAdapter?.onPreferencesChanged()
             }
+
+            "appMenuAlignment" -> appAdapter?.onPreferencesChanged()
+            "appMenuSize" -> appAdapter?.onPreferencesChanged()
+            "appSpacing" -> appAdapter?.onPreferencesChanged()
 
             "alphabetIndexEnabled" -> {
                 setAlphabetIndexPosition()
