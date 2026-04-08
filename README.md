@@ -96,8 +96,8 @@ Enabling weather integration will send the coordinates that are set for the weat
 
 You can optionally enable accessibility services for YAM Launcher if you choose to use the "Double Tap to Lock Screen" gesture. The accessibility services are exclusively used to lock the screen and are not used to collect any data.
 
-## Mirrors
+## Repositories
 
 [Codeberg (main)](https://codeberg.org/thomasboom/YAM-Launcher/)
 
-[GitHub (secondary)](https://github.com/ThomasNowProductions/YAM-Launcher/)
+[GitHub (secondary, read-only)](https://github.com/ThomasNowProductions/YAM-Launcher/)
