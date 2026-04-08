@@ -83,9 +83,9 @@ class GestureAppsAdapter(
         }
 
         // Apply styling
-        uiUtils.setAppAlignment(holder.textView)
-        uiUtils.setAppSize(holder.textView)
-        uiUtils.setItemSpacing(holder.textView)
+        uiUtils.setAppAlignment(holder.textView, sharedPreferenceManager.getAppAlignment())
+        uiUtils.setAppSize(holder.textView, sharedPreferenceManager.getAppSize())
+        uiUtils.setItemSpacing(holder.textView, sharedPreferenceManager.getAppSpacing())
 
         // Get app name (may have been renamed)
         holder.textView.text = sharedPreferenceManager.getAppName(

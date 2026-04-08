@@ -38,6 +38,7 @@ class AboutFragment : Fragment(), TitleProvider {
         stringUtils.setLink(requireActivity().findViewById(R.id.fdroidLink), getString(R.string.fdroid_link))
         stringUtils.setLink(requireActivity().findViewById(R.id.izzyLink), getString(R.string.izzy_link))
         stringUtils.setLink(requireActivity().findViewById(R.id.playLink), getString(R.string.play_link))
+        stringUtils.setLink(requireActivity().findViewById(R.id.donateLink), getString(R.string.ko_fi_link))
 
         // Display app version
         val currentVersion = "v" + requireActivity().packageManager.getPackageInfo(requireActivity().packageName, 0).versionName

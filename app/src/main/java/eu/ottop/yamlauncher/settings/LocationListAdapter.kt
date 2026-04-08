@@ -23,6 +23,7 @@ class LocationListAdapter(
     RecyclerView.Adapter<LocationListAdapter.AppViewHolder>() {
 
     private val uiUtils = UIUtils(context)
+    private val sharedPreferenceManager = SharedPreferenceManager(context)
 
     /**
      * Called when user selects a location.
@@ -70,8 +71,8 @@ class LocationListAdapter(
         val location = locations[position]
 
         // Apply styling
-        uiUtils.setAppAlignment(holder.textView, null, holder.regionText)
-        uiUtils.setAppSize(holder.textView, null, holder.regionText)
+        uiUtils.setAppAlignment(holder.textView, sharedPreferenceManager.getAppAlignment(), regionText = holder.regionText)
+        uiUtils.setAppSize(holder.textView, sharedPreferenceManager.getAppSize(), regionText = holder.regionText)
         uiUtils.setWeatherSpacing(holder.listItem)
 
         holder.textView.text = location["name"]

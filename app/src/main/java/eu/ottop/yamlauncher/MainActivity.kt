@@ -601,9 +601,10 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
 
         uiUtils.setBackground(window, applyHomescreenDarkening = true)
 
-        uiUtils.setTextFont(binding.homeView)
-        uiUtils.setFont(searchView)
-        uiUtils.setFont(menuTitle)
+        val typeface = uiUtils.resolveTypeface()
+        uiUtils.setTextFont(binding.homeView, typeface)
+        uiUtils.setFont(searchView, typeface)
+        uiUtils.setFont(menuTitle, typeface)
 
         uiUtils.setTextColors(binding.homeView)
         uiUtils.setStatusBarColor(window)
@@ -825,6 +826,8 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
                     alphabetIndex.setTextColor(sharedPreferenceManager.getTextColor())
                     alphabetIndex.setTextShadow(sharedPreferenceManager.isTextShadowEnabled())
                 }
+                appAdapter?.onPreferencesChanged()
+                contactAdapter?.onPreferencesChanged()
             }
 
             "textShadow" -> {
@@ -836,12 +839,17 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
                 if (sharedPreferenceManager.isAlphabetIndexEnabled()) {
                     alphabetIndex.setTextShadow(sharedPreferenceManager.isTextShadowEnabled())
                 }
+                appAdapter?.onPreferencesChanged()
+                contactAdapter?.onPreferencesChanged()
             }
 
             "textFont", "textStyle" -> {
-                uiUtils.setTextFont(binding.homeView)
-                uiUtils.setFont(searchView)
-                uiUtils.setFont(menuTitle)
+                val typeface = uiUtils.resolveTypeface()
+                uiUtils.setTextFont(binding.homeView, typeface)
+                uiUtils.setFont(searchView, typeface)
+                uiUtils.setFont(menuTitle, typeface)
+                appAdapter?.onPreferencesChanged()
+                contactAdapter?.onPreferencesChanged()
             }
 
             "clockEnabled" -> uiUtils.setClockVisibility(clock)
@@ -899,7 +907,13 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
                 } catch (_: UninitializedPropertyAccessException) {
                     setupContactRecycler()
                 }
+                appAdapter?.onPreferencesChanged()
+                contactAdapter?.onPreferencesChanged()
             }
+
+            "appMenuAlignment" -> appAdapter?.onPreferencesChanged()
+            "appMenuSize" -> appAdapter?.onPreferencesChanged()
+            "appSpacing" -> appAdapter?.onPreferencesChanged()
 
             "alphabetIndexEnabled" -> {
                 setAlphabetIndexPosition()

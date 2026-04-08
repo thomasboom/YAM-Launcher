@@ -1,6 +1,7 @@
 package eu.ottop.yamlauncher
 
 import android.annotation.SuppressLint
+import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -60,6 +61,27 @@ class ContactsAdapter(
     private val uiUtils = UIUtils(activity)
     private val sharedPreferenceManager = SharedPreferenceManager(activity)
 
+    private var cachedTextColor: Int = sharedPreferenceManager.getTextColor()
+    private var cachedTextShadowEnabled: Boolean = sharedPreferenceManager.isTextShadowEnabled()
+    private var cachedContactsEnabled: Boolean = sharedPreferenceManager.areContactsEnabled()
+    private var cachedAlignment: String? = sharedPreferenceManager.getAppAlignment()
+    private var cachedSize: String? = sharedPreferenceManager.getAppSize()
+    private var cachedSpacing: Int? = sharedPreferenceManager.getAppSpacing()
+    private var cachedTypeface: Typeface? = uiUtils.resolveTypeface()
+
+    private val drawableEmpty = ResourcesCompat.getDrawable(activity.resources, R.drawable.ic_empty, null)
+
+    fun onPreferencesChanged() {
+        cachedTextColor = sharedPreferenceManager.getTextColor()
+        cachedTextShadowEnabled = sharedPreferenceManager.isTextShadowEnabled()
+        cachedContactsEnabled = sharedPreferenceManager.areContactsEnabled()
+        cachedAlignment = sharedPreferenceManager.getAppAlignment()
+        cachedSize = sharedPreferenceManager.getAppSize()
+        cachedSpacing = sharedPreferenceManager.getAppSpacing()
+        cachedTypeface = uiUtils.resolveTypeface()
+        notifyDataSetChanged()
+    }
+
     // ============================================
     // Listener Interfaces
     // ============================================
@@ -116,16 +138,15 @@ class ContactsAdapter(
         val contact = contacts[position]
 
         // Clear any app icons (contacts don't have them)
-        holder.textView.setCompoundDrawablesWithIntrinsicBounds(
-            ResourcesCompat.getDrawable(activity.resources, R.drawable.ic_empty, null),null, ResourcesCompat.getDrawable(activity.resources, R.drawable.ic_empty, null),null)
+        holder.textView.setCompoundDrawablesWithIntrinsicBounds(drawableEmpty, null, drawableEmpty, null)
 
         // Apply styling from preferences
-        uiUtils.setAppAlignment(holder.textView)
-        uiUtils.setAppSize(holder.textView)
-        uiUtils.setItemSpacing(holder.textView)
-        uiUtils.setTextFont(holder.listItem)
-        holder.textView.setTextColor(sharedPreferenceManager.getTextColor())
-        if (sharedPreferenceManager.isTextShadowEnabled()) {
+        uiUtils.setAppAlignment(holder.textView, cachedAlignment)
+        uiUtils.setAppSize(holder.textView, cachedSize)
+        uiUtils.setItemSpacing(holder.textView, cachedSpacing)
+        uiUtils.setTextFont(holder.listItem, cachedTypeface)
+        holder.textView.setTextColor(cachedTextColor)
+        if (cachedTextShadowEnabled) {
             holder.textView.setShadowLayer(4f, 2f, 2f, android.graphics.Color.BLACK)
         } else {
             holder.textView.setShadowLayer(0f, 0f, 0f, android.graphics.Color.TRANSPARENT)
@@ -140,7 +161,7 @@ class ContactsAdapter(
             true
         }
 
-        if (sharedPreferenceManager.areContactsEnabled()) {
+        if (cachedContactsEnabled) {
             ViewCompat.addAccessibilityAction(holder.textView, activity.getString(R.string.switch_to_apps)) { _, _ ->
                 activity.switchMenus()
                 true

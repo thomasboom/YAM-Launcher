@@ -226,6 +226,8 @@
     <string name="install_fdroid">Install on F-Droid</string>
     <string name="install_izzy">Install on IzzyOnDroid</string>
     <string name="install_play">Install on Google Play</string>
+    <string name="donate">Support Development</string>
+    <string name="ko_fi_link">https://liberapay.com/thomasboom</string>
 
     <string name="reset">Reset</string>
     <string name="restart_text">Restart YAM Launcher</string>
