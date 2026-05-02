@@ -257,11 +257,11 @@ class AppMenuAdapter(
             holder.textView.setShadowLayer(0f, 0f, 0f, android.graphics.Color.TRANSPARENT)
         }
 
-        // Check if app is still installed
-        val isAppInstalled = appUtils.getAppInfo(
+        // Check if app is still installed (treats archived apps as installed)
+        val isAppInstalled = appUtils.isAppInstalled(
             app.first.applicationInfo.packageName,
             app.third
-        ) != null
+        )
 
         // Set app name or removal placeholder
         if (isAppInstalled) {
