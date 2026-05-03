@@ -2,21 +2,21 @@
 
     <!--General UI-->
     <string-array name="bg_options">
-        <item>Transparent</item>
-        <item>Black</item>
-        <item>Grey</item>
-        <item>White</item>
+        <item>Przezroczysty</item>
+        <item>Czarny</item>
+        <item>Szary</item>
+        <item>Biały</item>
         <item>Material</item>
     </string-array>
 
     <string-array name="color_options">
-        <item>Light</item>
-        <item>Dark</item>
+        <item>Jasny</item>
+        <item>Ciemny</item>
         <item>Material</item>
     </string-array>
 
     <string-array name="font_options">
-        <item>System</item>
+        <item>Systemowa</item>
         <item>Arbutus</item>
         <item>Casual</item>
         <item>Cursive</item>
@@ -35,56 +35,56 @@
     </string-array>
 
     <string-array name="style_options">
-        <item>Normal</item>
-        <item>Bold</item>
-        <item>Italic</item>
-        <item>Bold-Italic</item>
+        <item>Normalny</item>
+        <item>Pogrubiony</item>
+        <item>Pochylony</item>
+        <item>Pogrubiony i pochylony</item>
     </string-array>
 
     <!--Home and App Menu-->
     <string-array name="h_alignment_options">
-        <item>Left</item>
-        <item>Center</item>
-        <item>Right</item>
+        <item>Lewo</item>
+        <item>Środek</item>
+        <item>Prawo</item>
     </string-array>
 
     <string-array name="v_alignment_options">
-        <item>Top</item>
-        <item>Center</item>
-        <item>Bottom</item>
+        <item>Góra</item>
+        <item>Środek</item>
+        <item>Dół</item>
     </string-array>
 
     <string-array name="size_options">
-        <item>Tiny</item>
-        <item>Small</item>
-        <item>Medium</item>
-        <item>Large</item>
-        <item>Extra Large</item>
-        <item>Huge</item>
+        <item>Bardzo mały</item>
+        <item>Mały</item>
+        <item>Średni</item>
+        <item>Duży</item>
+        <item>Bardzo duży</item>
+        <item>Ogromny</item>
     </string-array>
 
     <string-array name="shortcut_spacing_options">
-        <item>Tiny</item>
-        <item>Small</item>
-        <item>Medium</item>
-        <item>Large</item>
-        <item>Extra Large</item>
-        <item>Huge</item>
-        <item>Extra Huge</item>
+        <item>Bardzo mały</item>
+        <item>Mały</item>
+        <item>Średni</item>
+        <item>Duży</item>
+        <item>Bardzo duży</item>
+        <item>Ogromny</item>
+        <item>Przeogromny</item>
     </string-array>
 
     <string-array name="app_spacing_options">
-        <item>Tiny</item>
-        <item>Small</item>
-        <item>Medium</item>
-        <item>Large</item>
-        <item>Extra Large</item>
-        <item>Huge</item>
+        <item>Bardzo mały</item>
+        <item>Mały</item>
+        <item>Średni</item>
+        <item>Duży</item>
+        <item>Bardzo duży</item>
+        <item>Ogromny</item>
     </string-array>
     <!-- Reply Preference -->
     <string-array name="reply_entries">
-        <item>Reply</item>
-        <item>Reply to all</item>
+        <item>Odpowiedz</item>
+        <item>Odpowiedz wszystkim</item>
     </string-array>
 
     <string-array name="reply_values">
