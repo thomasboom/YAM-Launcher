@@ -3,7 +3,6 @@ package eu.ottop.yamlauncher.utils
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import android.content.ComponentName
 import android.content.Context
-import android.content.pm.ApplicationInfo
 import android.view.ContextThemeWrapper
 import android.content.pm.LauncherActivityInfo
 import android.content.pm.LauncherApps
@@ -107,24 +106,15 @@ class AppUtils(private val context: Context, private val launcherApps: LauncherA
     }
 
     /**
-     * Gets ApplicationInfo for a specific package and profile.
-     * Used to check if an app is still installed.
-     *
-     * @param packageName Package name to look up
-     * @param profile Profile index (0 for personal, 1+ for work profiles)
-     * @return ApplicationInfo or null if not found
+     * Checks whether a package is still installed and launchable in the given profile.
+     * Treats archived apps (Android 15+) as installed since their launch stub remains.
      */
-    fun getAppInfo(
-        packageName: String,
-        profile: Int
-    ): ApplicationInfo? {
+    fun isAppInstalled(packageName: String, profile: Int): Boolean {
         return try {
-            if (profile !in launcherApps.profiles.indices) {
-                return null
-            }
-            launcherApps.getApplicationInfo(packageName, 0, launcherApps.profiles[profile])
+            if (profile !in launcherApps.profiles.indices) return false
+            launcherApps.getActivityList(packageName, launcherApps.profiles[profile]).isNotEmpty()
         } catch (_: Exception) {
-            null
+            false
         }
     }
 
