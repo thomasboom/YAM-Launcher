@@ -1,0 +1,104 @@
+<resources>
+
+    <!--General UI-->
+    <string-array name="bg_options">
+        <item>Przezroczysty</item>
+        <item>Czarny</item>
+        <item>Szary</item>
+        <item>Biały</item>
+        <item>Material</item>
+    </string-array>
+
+    <string-array name="color_options">
+        <item>Jasny</item>
+        <item>Ciemny</item>
+        <item>Material</item>
+    </string-array>
+
+    <string-array name="font_options">
+        <item>Systemowa</item>
+        <item>Arbutus</item>
+        <item>Casual</item>
+        <item>Cursive</item>
+        <item>Monospace</item>
+        <item>Sans Serif</item>
+        <item>Sans Serif Light</item>
+        <item>Sans Serif Thin</item>
+        <item>Sans Serif Condensed</item>
+        <item>Sans Serif Condensed Light</item>
+        <item>Sans Serif Smallcaps</item>
+        <item>Serif</item>
+        <item>Ubuntu</item>
+        <item>Ubuntu Light</item>
+        <item>Ubuntu Condensed Regular</item>
+        <item>Workbench</item>
+    </string-array>
+
+    <string-array name="style_options">
+        <item>Normalny</item>
+        <item>Pogrubiony</item>
+        <item>Pochylony</item>
+        <item>Pogrubiony i pochylony</item>
+    </string-array>
+
+    <!--Home and App Menu-->
+    <string-array name="h_alignment_options">
+        <item>Lewo</item>
+        <item>Środek</item>
+        <item>Prawo</item>
+    </string-array>
+
+    <string-array name="v_alignment_options">
+        <item>Góra</item>
+        <item>Środek</item>
+        <item>Dół</item>
+    </string-array>
+
+    <string-array name="size_options">
+        <item>Bardzo mały</item>
+        <item>Mały</item>
+        <item>Średni</item>
+        <item>Duży</item>
+        <item>Bardzo duży</item>
+        <item>Ogromny</item>
+    </string-array>
+
+    <string-array name="shortcut_spacing_options">
+        <item>Bardzo mały</item>
+        <item>Mały</item>
+        <item>Średni</item>
+        <item>Duży</item>
+        <item>Bardzo duży</item>
+        <item>Ogromny</item>
+        <item>Przeogromny</item>
+    </string-array>
+
+    <string-array name="app_spacing_options">
+        <item>Bardzo mały</item>
+        <item>Mały</item>
+        <item>Średni</item>
+        <item>Duży</item>
+        <item>Bardzo duży</item>
+        <item>Ogromny</item>
+    </string-array>
+    <!-- Reply Preference -->
+    <string-array name="reply_entries">
+        <item>Odpowiedz</item>
+        <item>Odpowiedz wszystkim</item>
+    </string-array>
+
+    <string-array name="reply_values">
+        <item>reply</item>
+        <item>reply_all</item>
+    </string-array>
+
+    <string-array name="double_tap_action_options">
+        <item>@string/double_tap_action_lock_screen</item>
+        <item>@string/double_tap_action_app</item>
+    </string-array>
+
+    <string-array name="alphabet_index_position_options">
+        <item>@string/alphabet_index_left</item>
+        <item>@string/alphabet_index_right</item>
+    </string-array>
+</resources>

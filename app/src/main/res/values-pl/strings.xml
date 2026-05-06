@@ -1,0 +1,285 @@
+<resources>
+    <!--Home Screen-->
+    <string
+        name="set_default_launcher_prompt"
+    >YAM Launcher nie jest ustawiony jako domyślny ekran główny.</string>
+    <string name="set_default_launcher_button">Ustaw jako domyślny</string>
+    <string name="shortcut_default">Przytrzymaj, by dodać aplikację</string>
+
+    <string name="shortcut_default_click">Przytrzymaj, by wybrać aplikację</string>
+
+    <string name="accessibility_set_shortcut">Set Shortcut App</string>
+
+    <string name="open_app_menu">Otwórz menu aplikacji</string>
+
+    <string name="no_calendar_app">Nie znaleziono aplikacji kalendarza</string>
+
+    <!--App Menu-->
+    <string name="select_an_app">Wybierz aplikację</string>
+
+    <string name="search">Szukaj…</string>
+
+    <string name="switch_to_contacts">Przejdź do kontaktów</string>
+    <string name="switch_to_apps">Przejdź do aplikacji</string>
+
+    <string name="confirm_title">Potwierdzenie</string>
+    <string name="app_confirm_text">Czy na pewno chcesz wybrać</string>
+    <string name="confirm_yes">Tak</string>
+    <string name="confirm_no">Anuluj</string>
+
+    <string name="removing">Usuwanie…</string>
+
+    <string name="close_app_menu">Zamknij menu aplikacji</string>
+
+    <string name="launch_error">Nie można uruchomić aplikacji</string>
+
+    <string name="empty_rename">Nazwa nie może być pusta</string>
+
+    <!--Action Menu Items-->
+    <string name="pin">Przypnij</string>
+    <string name="unpin">Odepnij</string>
+    <string name="info">Info</string>
+    <string name="uninstall">Odinstaluj</string>
+    <string name="rename">Zmień nazwę</string>
+    <string name="hide">Ukryj</string>
+    <string name="close">Zamknij</string>
+    <string name="accessibility_pin">Pin app</string>
+    <string name="accessibility_unpin">Unpin app</string>
+    <string name="accessibility_info">App info</string>
+    <string name="accessibility_uninstall">Uninstall app</string>
+    <string name="accessibility_rename">Rename app</string>
+    <string name="accessibility_hide">Hide app</string>
+    <string name="rename_error">Nie można przejść w tryb zmiany nazwy</string>
+
+    <!--Settings Page-->
+    <string name="settings_title">Ustawienia launchera</string>
+
+    <string name="default_home">Ustaw domyślny ekran główny</string>
+    <string name="unable_to_launch_settings">Nie można przejść do ustawień</string>
+
+    <string name="lock_settings">Blokada ustawień</string>
+
+    <string name="customization">Personalizacja</string>
+
+    <string name="ui_settings_title">Ustawienia interfejsu użytkownika</string>
+    <string name="ui_settings_text">Interfejs użytkownika</string>
+    <string name="ui_settings_summary">Dostosuj wygląd aplikacji</string>
+
+    <string name="appearance">Wygląd</string>
+    <string name="background_color">Kolor tła</string>
+    <string name="text_color">Kolor czcionki</string>
+    <string name="text_font">Czcionka</string>
+    <string name="text_style">Styl czcionki</string>
+    <string name="text_shadow">Cień tekstu</string>
+
+    <string name="operation">Działanie</string>
+    <string name="block_auto_rotation">Zablokuj autoobracanie ekranu</string>
+    <string name="block_auto_rotation_summary">Zapobiega automatycznemu obracaniu ekranu</string>
+    <string name="animation_speed">Szybkość animacji</string>
+    <string name="swipe_threshold">Czułość przesunięcia</string>
+    <string name="swipe_velocity_threshold">Czułość prędkości przesunięcia</string>
+    <string name="show_status_bar">Pokaż pasek stanu</string>
+    <string name="app_drawer_darkening">Przyciemnienie tła szuflady aplikacji</string>
+    <string
+        name="settings_darkening"
+    >Przyciemnienie tła panelu ustawień</string>
+    <string name="homescreen_darkening">Przyciemnienie tła ekranu głównego</string>
+    <string name="enable_confirmation">Pytaj przed uruchomieniem aplikacji</string>
+    <string
+        name="launch_confirmation_text"
+    >Czy na pewno chcesz uruchomić tę aplikację?</string>
+
+    <string name="home_settings_title">Ustawienia ekranu głównego</string>
+    <string name="home_settings_text">Ekran główny</string>
+    <string name="home_settings_summary">Dostosuj ekran główny</string>
+
+    <string name="clock">Zegar</string>
+    <string name="show_clock">Pokaż zegar</string>
+    <string name="clock_alignment">Pozycja zegara</string>
+    <string name="clock_size">Rozmiar zegara</string>
+    <string name="clicking_time_opens_clock">Dotknięcie godziny otwiera zegar</string>
+    <string name="custom_clock_gesture">Niestandardowy zegar</string>
+    <string name="set_clock_app">Wybierz aplikację zegara</string>
+
+    <string name="date">Data</string>
+    <string name="show_date">Pokaż datę</string>
+    <string name="date_size">Rozmiar daty</string>
+    <string name="battery_indicator">Procent naładowania baterii</string>
+    <string
+        name="clicking_date_opens_calendar"
+    >Dotknięcie daty otwiera kalendarz</string>
+    <string name="custom_date_gesture">Niestandardowy kalendarz</string>
+    <string name="set_calendar_app">Wybierz aplikację kalendarza</string>
+
+    <string name="weather">Pogoda</string>
+    <string name="gps_location">Lokalizacja GPS</string>
+    <string name="latest_location">Ostatnia lokalizacja GPS</string>
+    <string name="set_manual_location">Wybierz lokalizację ręcznie</string>
+    <string name="find_your_city">"Wyszukaj swoje miasto"</string>
+    <string name="weather_update_interval">Częstotliwość odświeżania</string>
+    <string
+        name="weather_update_interval_summary"
+    >np. 15m, 6h, 1d (minimum 1m)</string>
+    <string name="units">Jednostka temperatury</string>
+
+    <string name="shortcuts">Skróty</string>
+    <string name="number_of_shortcuts">Ilość skrótów</string>
+    <string name="horizontal_alignment">Położenie poziome</string>
+    <string name="vertical_alignment">Położenie pionowe</string>
+    <string name="shortcut_size">Rozmiar skrótu</string>
+    <string name="shortcut_spacing">Odstęp między skrótami</string>
+    <string name="lock_shortcuts">Blokada skrótów</string>
+    <string name="hidden_shortcut_title">Ukryte aplikacje</string>
+    <string
+        name="hidden_shortcuts"
+    >Pokaż ukryte aplikacje przy wyborze skrótu</string>
+
+    <string name="notification_dots">Kropki powiadomień</string>
+    <string
+        name="notification_dots_summary"
+    >Wyświetl kropkę na skrócie, gdy aplikacja ma powiadomienie</string>
+    <string name="notification_permission_required">Wymagane udzielenie dostępu</string>
+    <string
+        name="notification_permission_text"
+    >Przyznaj aplikacji dostęp do powiadomień, by wyświetlać kropki powiadomień</string>
+
+    <string name="gestures">Gesty</string>
+    <string name="swipe_left">Przesunięcie w lewo</string>
+    <string name="left_swipe_app">Aplikacja po przesunięciu w lewo</string>
+    <string name="swipe_right">Przesunięcie w prawo</string>
+    <string name="right_swipe_app">Aplikacja po przesunięciu w prawo</string>
+    <string name="double_tap_to_lock_screen">Zablokuj ekran dwukrotnym stuknięciem</string>
+    <string name="double_tap">Dwukrotne stuknięcie</string>
+    <string name="double_tap_action">Wykonanie po dwukrotnym stuknięciu</string>
+    <string name="double_tap_action_lock_screen">Zablokuj ekran</string>
+    <string name="double_tap_action_app">Uruchom aplikację</string>
+    <string name="double_tap_app">Aplikacja po dwukrotnym stuknięciu</string>
+
+    <string name="app_settings_title">Ustawienia menu aplikacji</string>
+    <string name="app_settings_text">Menu aplikacji</string>
+    <string name="app_settings_summary">Dostosuj menu aplikacji</string>
+
+    <string name="apps">Aplikacje</string>
+    <string name="app_alignment">Położenie aplikacji</string>
+    <string name="app_size">Rozmiar aplikacji</string>
+    <string name="app_spacing">Odstęp między aplikacjami</string>
+    <string name="contacts_menu">Menu kontaktów</string>
+    <string name="permission_denied">Nie udzielono dostępu</string>
+    <string name="internet_search">Przycisk wyszukiwania w sieci</string>
+
+    <string name="alphabet_index_enabled">Indeks alfabetyczny</string>
+    <string
+        name="alphabet_index_summary"
+    >Pokaż pasek boczny z literami do szybkiej nawigacji</string>
+    <string name="alphabet_index_position">Położenie indeksu</string>
+    <string name="alphabet_index_left">Po lewej</string>
+    <string name="alphabet_index_right">Po prawej</string>
+
+    <string name="context_menu_settings_title">Ustawienia menu kontekstowego</string>
+    <string name="context_menu_settings_text">Menu kontekstowe</string>
+    <string
+        name="context_menu_settings_summary"
+    >Włącz/wyłącz elementy menu kontekstowego</string>
+
+    <string name="enable_pin">Przypnij aplikację</string>
+    <string name="enable_info">Informacje o aplikacji</string>
+    <string name="enable_uninstall">Odinstaluj aplikację</string>
+    <string name="enable_rename">Zmień nazwę aplikacji</string>
+    <string name="enable_hide">Ukryj aplikację</string>
+    <string name="enable_close">Zamknij menu</string>
+
+    <string name="search_text">Wyszukiwanie</string>
+    <string name="enable_search">Włącz wyszukiwanie</string>
+    <string name="search_alignment">Położenie pola wyszukiwania</string>
+    <string name="search_size">Rozmiar pola wyszukiwania</string>
+    <string name="enable_fuzzy_search">Przybliżone wyszukiwanie</string>
+    <string
+        name="automatically_open_keyboard"
+    >Automatyczne otwieranie klawiatury</string>
+    <string name="automatic_app_opening">Automatyczne otwieranie aplikacji</string>
+    <string
+        name="auto_launch_summary"
+    >Automatycznie uruchom aplikację, gdy jest ostatnim wynikiem wyszukiwania</string>
+    <string
+        name="auto_launch_disabled_reason_web_search"
+    >Niedostępne, ponieważ przycisk wyszukiwania w sieci jest włączony.</string>
+    <string
+        name="web_search_disabled_reason_auto_open"
+    >Niedostępne, ponieważ automatyczne otwieranie aplikacji jest włączone.</string>
+
+    <string name="hidden_apps_title">Ukryte aplikacje</string>
+    <string name="hidden_apps_text">Zarządzaj ukrytymi aplikacjami</string>
+    <string name="hidden_apps_summary">Ujawnij aplikacje</string>
+    <string name="hidden_confirm_text">Czy na pewno chcesz ujawnić?</string>
+
+    <string name="about">O aplikacji</string>
+    <!--About Page Items-->
+    <string name="about_title">O aplikacji YAM Launcher</string>
+    <string name="app_icon">Ikona aplikacji</string>
+    <string
+        name="creditName"
+    >stworzone przez Otto, rozwijane przez Thomas Boom</string>
+    <string name="source_code">Kod źródłowy</string>
+    <string name="codeberg">Codeberg</string>
+    <string name="github">GitHub</string>
+    <string name="view_github">Sprawdź na GitHub</string>
+    <string name="install_fdroid">Zainstaluj z F-Droid</string>
+    <string name="install_izzy">Zainstaluj z IzzyOnDroid</string>
+    <string name="install_play">Zainstaluj z Google Play</string>
+    <string name="donate">Wesprzyj rozwój</string>
+    <string name="ko_fi_link">https://liberapay.com/thomasboom</string>
+
+    <string name="reset">Reset</string>
+    <string name="restart_text">Uruchom ponownie YAM Launcher</string>
+    <string name="reset_text">Przywróć ustawienia domyślne</string>
+    <string
+        name="reset_confirm_text"
+    >Utracisz WSZYSTKIE wprowadzone zmiany w ustawieniach launchera, w tym skróty, ukryte aplikacje, itp.\n\nCzy na pewno kontynuować?</string>
+
+    <string name="backup_restore">Kopia zapasowa i przywracanie</string>
+    <string name="backup">Kopia zapasowa</string>
+    <string name="backup_summary">Utwórz kopię zapasową ustawień</string>
+    <string name="restore">Przywrócenie ustawień</string>
+    <string name="restore_summary">Przywróć ustawienia z kopii zapasowej</string>
+    <string name="backup_success">Pomyślnie utworzono kopię zapasową :)</string>
+    <string name="backup_fail">Nie udało się utworzyć kopii zapasowej :(</string>
+    <string name="restore_success">Pomyślnie przywrócono ustawienia :)</string>
+    <string name="restore_fail">Nie udało się przywrócić ustawień :( (uszkodzony plik?)</string>
+    <string name="restore_wrong_app">Kopia zapasowa nie pochodzi z YAM Launchera</string>
+    <string name="restore_error">Nie udało się odczytać pliku</string>
+
+    <!--Logging-->
+    <string name="debug_logs">Logi debugowania</string>
+    <string name="export_logs">Eksportuj logi</string>
+    <string
+        name="export_logs_summary"
+    >Udostępnij logi, by pomóc zdiagnozować problemy</string>
+    <string name="clear_logs">Wyczyść logi</string>
+    <string name="clear_logs_summary">Usuń wszystkie zapisane logi</string>
+    <string name="logs_cleared">Logi wyczyszczone</string>
+    <string name="logs_export_success">Pomyślnie wyeksportowano logi</string>
+    <string name="logs_export_fail">Nie udało się wyeksportować logów</string>
+    <string name="no_logs_to_export">Brak logów do eksportu</string>
+
+    <!--Location Selector Items-->
+    <string name="region_text">%1$s%2$s</string>
+
+    <!--Double tap to lock-->
+    <string
+        name="screenlock_confirmation"
+    >By móc blokować ekran dwukrotnym stuknięciem, włącz usługę YAM Launcher w ustawieniach ułatwienia dostępu.</string>
+    <string
+        name="accessibility_service_description"
+    >Te uprawnienie jest wymagane, by móc blokować ekran dwukrotnym stuknięciem.\n\nJest to potrzebne tylko wtedy, gdy chcesz używać funkcji blokowania ekranu dwukrotnym stuknięciem w YAM Launcherze.</string>
+
+    <string name="text_authentication_cancel">Uwierzytelnianie przerwane.</string>
+    <string
+        name="text_authentication_error"
+    >Błąd uwierzytelniania: %1$s (kod %2$d)</string>
+    <string name="text_authentication_failed">Uwierzytelnianie nie powiodło się.</string>
+    <string name="text_biometric_login">Odblokuj ustawienia YAM Launchera</string>
+    <string name="text_biometric_login_app">Logowanie biometryczne do %1$s</string>
+    <string
+        name="text_biometric_login_sub"
+    >Zaloguj się używając swoich danych biometrycznych.</string>
+</resources>
