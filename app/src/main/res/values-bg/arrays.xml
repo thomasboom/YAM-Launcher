@@ -1,0 +1,104 @@
+<resources>
+
+    <!--General UI-->
+    <string-array name="bg_options">
+        <item>Прозрачен</item>
+        <item>Черен</item>
+        <item>Сив</item>
+        <item>Бял</item>
+        <item>Material</item>
+    </string-array>
+
+    <string-array name="color_options">
+        <item>Светъл</item>
+        <item>Tъмен</item>
+        <item>Material</item>
+    </string-array>
+
+    <string-array name="font_options">
+        <item>Система</item>
+        <item>Arbutus</item>
+        <item>Casual</item>
+        <item>Cursive</item>
+        <item>Monospace</item>
+        <item>Sans Serif</item>
+        <item>Sans Serif Light</item>
+        <item>Sans Serif Thin</item>
+        <item>Sans Serif Condensed</item>
+        <item>Sans Serif Condensed Light</item>
+        <item>Sans Serif Smallcaps</item>
+        <item>Serif</item>
+        <item>Ubuntu</item>
+        <item>Ubuntu Light</item>
+        <item>Ubuntu Condensed Regular</item>
+        <item>Workbench</item>
+    </string-array>
+
+    <string-array name="style_options">
+        <item>Обикновен</item>
+        <item>Удебелен</item>
+        <item>Курсив</item>
+        <item>Удебелен-Курсив</item>
+    </string-array>
+
+    <!--Home and App Menu-->
+    <string-array name="h_alignment_options">
+        <item>Ляво</item>
+        <item>По средата</item>
+        <item>Дясно</item>
+    </string-array>
+
+    <string-array name="v_alignment_options">
+        <item>Горе</item>
+        <item>По средата</item>
+        <item>Долу</item>
+    </string-array>
+
+    <string-array name="size_options">
+        <item>Много малък</item>
+        <item>Малък</item>
+        <item>Среден</item>
+        <item>Голям</item>
+        <item>Много голям</item>
+        <item>Огромен</item>
+    </string-array>
+
+    <string-array name="shortcut_spacing_options">
+        <item>Много малък</item>
+        <item>Малък</item>
+        <item>Среден</item>
+        <item>Голям</item>
+        <item>Много голям</item>
+        <item>Огромен</item>
+        <item>Много огромен</item>
+    </string-array>
+
+    <string-array name="app_spacing_options">
+        <item>Много малък</item>
+        <item>Малък</item>
+        <item>Среден</item>
+        <item>Голям</item>
+        <item>Много голям</item>
+        <item>Огромен</item>
+    </string-array>
+    <!-- Reply Preference -->
+    <string-array name="reply_entries">
+        <item>Отговор</item>
+        <item>Отговор до всички</item>
+    </string-array>
+
+    <string-array name="reply_values">
+        <item>reply</item>
+        <item>reply_all</item>
+    </string-array>
+
+    <string-array name="double_tap_action_options">
+        <item>@string/double_tap_action_lock_screen</item>
+        <item>@string/double_tap_action_app</item>
+    </string-array>
+
+    <string-array name="alphabet_index_position_options">
+        <item>@string/alphabet_index_left</item>
+        <item>@string/alphabet_index_right</item>
+    </string-array>
+</resources>

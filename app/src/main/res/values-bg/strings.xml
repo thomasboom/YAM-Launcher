@@ -1,0 +1,236 @@
+<resources>
+    <!--Home Screen-->
+    <string name="set_default_launcher_prompt">YAM Launcher не е зададен като приложение по подразбиране за начален екран.</string>
+    <string name="set_default_launcher_button">Задаване като по подразбиране</string>
+    <string name="shortcut_default">Натиснете и задръжте, за да добавите приложение</string>
+
+    <string name="shortcut_default_click">Натиснете и задръжте, за да изберете приложение</string>
+
+    <string name="accessibility_set_shortcut">Задаване на приложение за бърз достъп</string>
+
+    <string name="open_app_menu">Отворете менюто на приложението</string>
+
+    <string name="no_calendar_app">Не беше намерено приложение „Календар“</string>
+
+    <!--App Menu-->
+    <string name="select_an_app">Избиране на приложение</string>
+
+    <string name="search">Търсене…</string>
+
+    <string name="switch_to_contacts">Преминаване към „Контакти“</string>
+    <string name="switch_to_apps">Преминаване към приложения</string>
+
+    <string name="confirm_title">Потвърждение</string>
+    <string name="app_confirm_text">Сигурен ли сте, че искате да изберете</string>
+    <string name="confirm_yes">Да</string>
+    <string name="confirm_no">Отказ</string>
+
+    <string name="removing">Премахване…</string>
+
+    <string name="close_app_menu">Затвори менюто на приложението</string>
+
+    <string name="launch_error">Приложението не може да се стартира</string>
+
+    <string name="empty_rename">Името не може да бъде празно</string>
+
+    <!--Action Menu Items-->
+    <string name="pin">Закачане</string>
+    <string name="unpin">Откачане</string>
+    <string name="info">Информация</string>
+    <string name="uninstall">Деинсталиране</string>
+    <string name="rename">Преименуване</string>
+    <string name="hide">Скриване</string>
+    <string name="close">Затваряне</string>
+    <string name="accessibility_pin">Закачане на приложението</string>
+    <string name="accessibility_unpin">Откачане на приложението</string>
+    <string name="accessibility_info">Информация за приложението</string>
+    <string name="accessibility_uninstall">Деинсталиране на приложението</string>
+    <string name="accessibility_rename">Преименуване на приложението</string>
+    <string name="accessibility_hide">Скриване на приложението</string>
+    <string name="rename_error">Не може да се стартира режим на преименуване</string>
+
+    <!--Settings Page-->
+    <string name="settings_title">Настройки на начален екран</string>
+
+    <string name="default_home">Задаване на начален екран по подразбиране</string>
+    <string name="unable_to_launch_settings">Не може да се стартират настройките</string>
+
+    <string name="lock_settings">Заключване на настройките</string>
+
+    <string name="customization">Персонализиране</string>
+
+    <string name="ui_settings_title">Общи настройки на потребителския интерфейс</string>
+    <string name="ui_settings_text">Общ потребителски интерфейс</string>
+    <string name="ui_settings_summary">Настройка на цялостния вид</string>
+
+    <string name="appearance">Външен вид</string>
+    <string name="background_color">Цвят на фона</string>
+    <string name="text_color">Цвят на текста</string>
+    <string name="text_font">Шрифт на текста</string>
+    <string name="text_style">Стил на текста</string>
+    <string name="text_shadow">Сянка на текста</string>
+
+    <string name="operation">Действие</string>
+    <string name="animation_speed">Скорост на анимацията</string>
+    <string name="swipe_threshold">Праг на плъзгане</string>
+    <string name="swipe_velocity_threshold">Праг на скоростта на плъзгане</string>
+    <string name="show_status_bar">Показване на лентата за състоянието</string>
+    <string name="enable_confirmation">Диалогов прозорец за потвърждение на приложението</string>
+    <string name="launch_confirmation_text">Сигурни ли сте, че искате да стартирате това приложение?</string>
+
+    <string name="home_settings_title">Настройки на начален екран</string>
+    <string name="home_settings_text">Начален екран</string>
+    <string name="home_settings_summary">Конфигуриране на начален екран</string>
+
+    <string name="clock">Часовник</string>
+    <string name="show_clock">Показване на часовника</string>
+    <string name="clock_alignment">Синхронизиране на часовника</string>
+    <string name="clock_size">Размер на часовника</string>
+    <string name="clicking_time_opens_clock">При кликване върху времето се отваря часовника</string>
+    <string name="custom_clock_gesture">Персонализиран часовник</string>
+    <string name="set_clock_app">Задаване на приложение за часовник</string>
+
+    <string name="date">Дата</string>
+    <string name="show_date">Показване на датата</string>
+    <string name="date_size">Размер на датата</string>
+    <string name="battery_indicator">Индикатор на батерията</string>
+    <string name="clicking_date_opens_calendar">При кликване върху датата се отваря календарът</string>
+    <string name="custom_date_gesture">Персонализиран календар</string>
+    <string name="set_calendar_app">Задаване на приложение за календар</string>
+
+    <string name="weather">Времето</string>
+    <string name="gps_location">GPS местоположение</string>
+    <string name="latest_location">Последно GPS местоположение</string>
+    <string name="set_manual_location">Задаване на ръчно местоположение</string>
+    <string name="find_your_city">„Търсене на вашия град“</string>
+    <string name="weather_update_interval">Интервал на актуализация</string>
+    <string name="weather_update_interval_summary">напр., 15 мин., 6 ч., 1 д. (минимум 1 мин.)</string>
+    <string name="units">Единици</string>
+
+    <string name="shortcuts">Преки пътища</string>
+    <string name="number_of_shortcuts">Брой преки пътища</string>
+    <string name="horizontal_alignment">Хоризонтално изравняване</string>
+    <string name="vertical_alignment">Вертикално изравняване</string>
+    <string name="shortcut_size">Размер на пряк път</string>
+    <string name="shortcut_spacing">Разстояние на пряк път</string>
+    <string name="lock_shortcuts">Заключване на преки пътища</string>
+    <string name="hidden_shortcut_title">Скрити приложения</string>
+    <string name="hidden_shortcuts">Показване на скритите приложения при избора на преки пътища</string>
+    
+    <string name="notification_dots">Точки за известия</string>
+    <string name="notification_dots_summary">Показване на точка върху преките пътища, когато приложенията имат известия</string>
+    <string name="notification_permission_required">Необходимо разрешение</string>
+    <string name="notification_permission_text">Активирайте достъпа до известия, за да се показват точките за известия</string>
+
+    <string name="gestures">Жестове</string>
+    <string name="swipe_left">Плъзгане наляво</string>
+    <string name="left_swipe_app">Приложение при плъзгане наляво</string>
+    <string name="swipe_right">Плъзгане надясно</string>
+    <string name="right_swipe_app">Приложение при плъзгане надясно</string>
+    <string name="double_tap_to_lock_screen">Двойно докосване за заключване на екрана</string>
+    <string name="double_tap">Двойно докосване</string>
+    <string name="double_tap_action">Действие при двойно докосване</string>
+    <string name="double_tap_action_lock_screen">Заключване на екрана</string>
+    <string name="double_tap_action_app">Стартиране на приложение</string>
+    <string name="double_tap_app">Приложение при двойно докосване</string>
+
+    <string name="app_settings_title">Настройки на менюто на приложението</string>
+    <string name="app_settings_text">Меню на приложението</string>
+    <string name="app_settings_summary">Конфигуриране на менюто на приложението</string>
+
+    <string name="apps">Приложения</string>
+    <string name="app_alignment">Подреждане на приложенията</string>
+    <string name="app_size">Размер на приложенията</string>
+    <string name="app_spacing">Разстояние между приложенията</string>
+    <string name="contacts_menu">Меню Контакти</string>
+    <string name="permission_denied">Достъпът е отказан</string>
+    <string name="internet_search">Бутон за търсене в интернет</string>
+
+    <string name="alphabet_index_enabled">Алфабетен списък</string>
+    <string name="alphabet_index_summary">Показване на странична лента с букви за бърза навигация</string>
+    <string name="alphabet_index_position">Позиция на списъка</string>
+    <string name="alphabet_index_left">Ляво</string>
+    <string name="alphabet_index_right">Дясно</string>
+
+    <string name="context_menu_settings_title">Настройки на контекстното меню</string>
+    <string name="context_menu_settings_text">Контекстно меню</string>
+    <string name="context_menu_settings_summary">Активиране/деактивиране на елементи от контекстното меню</string>
+
+    <string name="enable_pin">Закачи приложението</string>
+    <string name="enable_info">Информация за приложението</string>
+    <string name="enable_uninstall">Деинсталиране на приложението</string>
+    <string name="enable_rename">Преименуване на приложението</string>
+    <string name="enable_hide">Скриване на приложението</string>
+    <string name="enable_close">Затваряне на менюто</string>
+
+    <string name="search_text">Търсене</string>
+    <string name="enable_search">Активиране на търсенето</string>
+    <string name="search_alignment">Подреждане на резултатите от търсенето</string>
+    <string name="search_size">Размер на резултатите от търсенето</string>
+    <string name="enable_fuzzy_search">Неточно търсене</string>
+    <string name="automatically_open_keyboard">Автоматично отваряне на клавиатурата</string>
+    <string name="automatic_app_opening">Автоматично отваряне на приложение</string>
+    <string name="auto_launch_summary">Автоматично стартиране на приложение, когато то е последният резултат от търсенето</string>
+    <string name="auto_launch_disabled_reason_web_search">Деактивирано, защото бутонът за интернет търсене е активиран.</string>
+    <string name="web_search_disabled_reason_auto_open">Деактивирано, защото автоматичното отваряне на приложения е активирано.</string>
+
+    <string name="hidden_apps_title">Скрити приложения</string>
+    <string name="hidden_apps_text">Управление на скритите приложения</string>
+    <string name="hidden_apps_summary">Показване на приложенията</string>
+    <string name="hidden_confirm_text">Сигурен ли сте, че искате да ги покажете?</string>
+
+    <string name="about">Относно</string>
+    <!--About Page Items-->
+    <string name="about_title">За YAM Launcher</string>
+    <string name="app_icon">Икона на приложението</string>
+    <string name="creditName">Създадено от Otto, поддържано от ThomasNow Productions</string>
+    <string name="source_code">Изходен код</string>
+    <string name="codeberg">Codeberg</string>
+    <string name="github">GitHub</string>
+    <string name="view_github">Вижте този проект в GitHub</string>
+    <string name="install_fdroid">Инсталирай от F-Droid</string>
+    <string name="install_izzy">Инсталирай от IzzyOnDroid</string>
+    <string name="install_play">Инсталирай от Google Play</string>
+
+    <string name="reset">Рестартиране</string>
+    <string name="restart_text">Рестартиране на YAM Launcher</string>
+    <string name="reset_text">Възстановяване на всички настройки</string>
+    <string name="reset_confirm_text">Ще загубите ВСИЧКИ промени, които сте направили в настройките на стартиращата програма, преки пътища, скрити приложения и т.н.\n\nСигурни ли сте</string>
+
+    <string name="backup_restore">Архивиране и възстановяване</string>
+    <string name="backup">Архивиране</string>
+    <string name="backup_summary">Архивиране на настройките ви</string>
+    <string name="restore">Възстановяване</string>
+    <string name="restore_summary">Възстановяване на архивирана копия</string>
+    <string name="backup_success">Архивирането е успешно :)</string>
+    <string name="backup_fail">Архивирането не е успешно :(</string>
+    <string name="restore_success">Възстановяването е успешно :)</string>
+    <string name="restore_fail">Възстановяването не е успешно :( (повреден файл?)</string>
+    <string name="restore_wrong_app">Не е резервно копие на YAM Launcher</string>
+    <string name="restore_error">Четането на файла е неуспешно</string>
+
+    <!--Logging-->
+    <string name="debug_logs">Логове за отстраняване на грешки</string>
+    <string name="export_logs">Изнасяне на логове</string>
+    <string name="export_logs_summary">Споделяне на логове за диагностициране на проблеми</string>
+    <string name="clear_logs">Изчистване на логове</string>
+    <string name="clear_logs_summary">Изтриване на всички съхранени лог файлове</string>
+    <string name="logs_cleared">Логовете са изчистени</string>
+    <string name="logs_export_success">Логовете са изнесени успешно</string>
+    <string name="logs_export_fail">Изнасянето на логове е неуспешно</string>
+    <string name="no_logs_to_export">Няма логове за изнасяне</string>
+
+    <!--Location Selector Items-->
+    <string name="region_text">%1$s%2$s</string>
+
+    <!--Double tap to lock-->
+    <string name="screenlock_confirmation">За да заключите екрана с двойно докосване, активирайте YAM Launcher в настройките за достъпност.</string>
+    <string name="accessibility_service_description">Това разрешение е необходимо, за да работи функцията за заключване на екрана чрез двойно докосване.\n\nТо е необходимо само ако искате да използвате функцията за заключване на екрана чрез двойно докосване в YAM Launcher.</string>
+
+    <string name="text_authentication_cancel">Отмяна на удостоверяването.</string>
+    <string name="text_authentication_error">Грешка при удостоверяването: %1$s (code %2$d)</string>
+    <string name="text_authentication_failed">Удостоверяването се провали.</string>
+    <string name="text_biometric_login">Отключване на настройките на YAM Launcher</string>
+    <string name="text_biometric_login_app">Биометрично влизане за %1$s</string>
+    <string name="text_biometric_login_sub">Влезте, като използвате биометричните си данни за достъп.</string>
+</resources>
