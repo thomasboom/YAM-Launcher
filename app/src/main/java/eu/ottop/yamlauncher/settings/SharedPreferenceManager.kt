@@ -588,6 +588,12 @@ class SharedPreferenceManager(private val context: Context) {
     }
 
     /**
+     * Checks if strict text clicking is enabled.
+     * When enabled, only clicking directly on the text triggers the app launch.
+     */
+    fun isAppStrictClickEnabled(): Boolean = preferences.getBooleanOrDefault("appStrictClick", false)
+
+    /**
      * Checks if keyboard should auto-open on menu open.
      */
     fun isAutoKeyboardEnabled(): Boolean = preferences.getBooleanOrDefault("autoKeyboard", false)

@@ -6,9 +6,11 @@ import android.content.pm.LauncherActivityInfo
 import android.content.pm.LauncherApps
 import android.graphics.BlendMode
 import android.graphics.BlendModeColorFilter
+import android.graphics.Rect
 import android.graphics.Typeface
 import android.os.UserHandle
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
@@ -95,6 +97,7 @@ class AppMenuAdapter(
     private var cachedAlignment: String? = sharedPreferenceManager.getAppAlignment()
     private var cachedSize: String? = sharedPreferenceManager.getAppSize()
     private var cachedSpacing: Int? = sharedPreferenceManager.getAppSpacing()
+    private var cachedStrictClick: Boolean = sharedPreferenceManager.isAppStrictClickEnabled()
     private var cachedTypeface: Typeface? = uiUtils.resolveTypeface()
 
     private val drawableEmpty = ResourcesCompat.getDrawable(activity.resources, R.drawable.ic_empty, null)
@@ -109,6 +112,7 @@ class AppMenuAdapter(
         cachedAlignment = sharedPreferenceManager.getAppAlignment()
         cachedSize = sharedPreferenceManager.getAppSize()
         cachedSpacing = sharedPreferenceManager.getAppSpacing()
+        cachedStrictClick = sharedPreferenceManager.isAppStrictClickEnabled()
         cachedTypeface = uiUtils.resolveTypeface()
         notifyDataSetChanged()
     }
@@ -158,6 +162,25 @@ class AppMenuAdapter(
         val editText: TextInputEditText = editView.findViewById(R.id.appNameEdit)
 
         init {
+            // Strict click mode: only trigger click when touching actual text bounds
+            textView.setOnTouchListener { _, event ->
+                if (!cachedStrictClick || shortcutTextView != null || event.action != MotionEvent.ACTION_UP) {
+                    return@setOnTouchListener false
+                }
+                val layout = textView.layout ?: return@setOnTouchListener false
+                val line = layout.getLineForVertical(event.y.toInt())
+                val lineBounds = Rect()
+                layout.getLineBounds(line, lineBounds)
+                val compoundPaddingLeft = textView.compoundPaddingLeft
+                val touchX = event.x.toInt() - compoundPaddingLeft
+                val touchY = event.y.toInt()
+                if (touchX < lineBounds.left || touchX > lineBounds.right ||
+                    touchY < lineBounds.top || touchY > lineBounds.bottom) {
+                    return@setOnTouchListener true
+                }
+                false
+            }
+
             // Single tap behavior depends on mode
             textView.setOnClickListener {
                 val position = bindingAdapterPosition
@@ -250,6 +273,7 @@ class AppMenuAdapter(
         uiUtils.setAppSize(holder.textView, cachedSize, holder.editText)
         uiUtils.setItemSpacing(holder.textView, cachedSpacing)
         uiUtils.setTextFont(holder.listItem, cachedTypeface)
+
         holder.textView.setTextColor(cachedTextColor)
         if (cachedTextShadowEnabled) {
             holder.textView.setShadowLayer(4f, 2f, 2f, android.graphics.Color.BLACK)

@@ -36,6 +36,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:defaultValue="false"
+            android:title="@string/app_strict_click"
+            android:summary="@string/app_strict_click_summary"
+            app:key="appStrictClick" />
+        <SwitchPreference
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="false"
             android:title="@string/alphabet_index_enabled"
             app:key="alphabetIndexEnabled"
             app:summary="@string/alphabet_index_summary" />

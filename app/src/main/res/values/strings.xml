@@ -163,6 +163,8 @@
     <string name="app_alignment">App Alignment</string>
     <string name="app_size">App Size</string>
     <string name="app_spacing">App Spacing</string>
+    <string name="app_strict_click">Strict Text Click</string>
+    <string name="app_strict_click_summary">Only open app when clicking directly on text</string>
     <string name="contacts_menu">Contacts Menu</string>
     <string name="permission_denied">Permission Denied</string>
     <string name="internet_search">Web Search Button</string>
