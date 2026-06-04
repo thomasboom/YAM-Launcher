@@ -12,6 +12,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import eu.ottop.yamlauncher.R
 import eu.ottop.yamlauncher.utils.StringUtils
+import eu.ottop.yamlauncher.utils.UIUtils
 
 /**
  * About fragment displaying app information and links.
@@ -32,6 +33,8 @@ class AboutFragment : Fragment(), TitleProvider {
         super.onViewCreated(view, savedInstanceState)
 
         val launcherApps = requireActivity().getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
+        val uiUtils = UIUtils(requireContext())
+        uiUtils.setTextColors(view)
 
         // Set up clickable links
         stringUtils.setLink(requireActivity().findViewById(R.id.githubLink), getString(R.string.github_link))

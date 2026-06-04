@@ -70,6 +70,7 @@ class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferen
         supportActionBar?.setDisplayShowTitleEnabled(true)
 
         uiUtils.adjustInsets(binding.root)
+        uiUtils.setTextColors(binding.root)
 
         // Load initial fragment if none exists
         if (supportFragmentManager.backStackEntryCount == 0) {
@@ -430,9 +431,10 @@ class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferen
 
     override fun onSharedPreferenceChanged(preferences: SharedPreferences?, key: String?) {
         // Update background color or darkening setting when changed
-        if (key == "bgColor" || key == "settingsDarkening") {
+        if (key == "bgColor" || key == "settingsDarkening" || key == "textColor" || key == "textShadow") {
             val uiUtils = UIUtils(this@SettingsActivity)
             uiUtils.setBackground(window, true)
+            uiUtils.setTextColors(binding.root)
         }
     }
 }

@@ -65,6 +65,7 @@ class GestureAppsFragment(private val direction: String) : Fragment(),
             val recyclerView = view.findViewById<RecyclerView>(R.id.gestureAppRecycler)
             val appMenuEdgeFactory = AppMenuEdgeFactory(requireActivity())
             val uiUtils = UIUtils(requireContext())
+            uiUtils.setTextColors(view)
 
             recyclerView.edgeEffectFactory = appMenuEdgeFactory
             recyclerView.adapter = adapter

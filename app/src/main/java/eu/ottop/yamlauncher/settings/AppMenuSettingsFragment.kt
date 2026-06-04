@@ -2,6 +2,7 @@ package eu.ottop.yamlauncher.settings
 
 import android.Manifest
 import android.os.Bundle
+import android.view.View
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreference
@@ -87,6 +88,12 @@ class AppMenuSettingsFragment : PreferenceFragmentCompat(), TitleProvider {
             Preference.OnPreferenceClickListener {
                 uiUtils.switchFragment(requireActivity(), ContextMenuSettingsFragment())
                 true }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val uiUtils = UIUtils(requireContext())
+        uiUtils.setTextColors(view)
     }
 
     override fun getTitle(): String {

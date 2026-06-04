@@ -52,6 +52,7 @@ class LocationFragment : Fragment(), LocationListAdapter.OnItemClickListener, Ti
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         uiUtils = UIUtils(requireContext())
+        uiUtils.setTextColors(view)
         weatherSystem = WeatherSystem(requireContext())
         sharedPreferenceManager = SharedPreferenceManager(requireContext())
 

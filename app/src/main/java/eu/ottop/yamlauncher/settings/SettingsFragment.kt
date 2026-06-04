@@ -3,6 +3,7 @@ package eu.ottop.yamlauncher.settings
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
+import android.view.View
 import android.widget.Toast
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
@@ -109,6 +110,12 @@ class SettingsFragment : PreferenceFragmentCompat(), TitleProvider {
                 logger.clearLogs()
                 Toast.makeText(requireContext(), getString(R.string.logs_cleared), Toast.LENGTH_SHORT).show()
                 true }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val uiUtils = UIUtils(requireContext())
+        uiUtils.setTextColors(view)
     }
 
     override fun getTitle(): String {
