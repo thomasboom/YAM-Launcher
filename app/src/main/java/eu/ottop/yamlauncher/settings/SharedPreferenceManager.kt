@@ -65,7 +65,7 @@ class SharedPreferenceManager(private val context: Context) {
     fun getTextColor(): Int {
         val textColor = getTextString()
         if (textColor == "material") {
-            return getThemeColor(com.google.android.material.R.attr.colorPrimary)
+            return getThemeColor(androidx.appcompat.R.attr.colorPrimary)
         }
         return try {
             textColor?.toColorInt() ?: 0xFFF3F3F3.toInt()

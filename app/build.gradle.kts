@@ -1,6 +1,5 @@
 plugins {
     id("com.android.application")
-    id("org.jetbrains.kotlin.android")
 }
 
 android {
@@ -50,11 +49,13 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
+    kotlin {
+        jvmToolchain(17)
     }
     buildFeatures {
         viewBinding = true
+        buildConfig = false
+        resValues = true
     }
 }
 
@@ -67,7 +68,6 @@ dependencies {
     implementation(libs.activity.ktx)
     implementation(libs.constraintlayout)
     implementation(libs.biometric.ktx)
-    implementation(libs.localbroadcastmanager)
 
     // Test dependencies
     testImplementation(libs.junit)

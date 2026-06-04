@@ -8,7 +8,6 @@ import android.graphics.drawable.Drawable
 import android.os.Build
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import eu.ottop.yamlauncher.utils.Logger
 
 /**
@@ -113,12 +112,11 @@ class NotificationListener : NotificationListenerService() {
     }
 
     /**
-     * Broadcasts notification state change to MainActivity.
+     * Notifies MainActivity that notification state has changed.
      * Triggers UI update for notification badges.
      */
     private fun broadcastUpdate() {
-        val intent = Intent(ACTION_NOTIFICATIONS_CHANGED)
-        LocalBroadcastManager.getInstance(this).sendBroadcast(intent)
+        NotificationEventBus.emitNotificationsChanged()
     }
 
     /**

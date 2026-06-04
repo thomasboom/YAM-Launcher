@@ -74,7 +74,6 @@ import androidx.core.view.marginLeft
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputEditText
@@ -82,6 +81,7 @@ import eu.ottop.yamlauncher.databinding.ActivityMainBinding
 import eu.ottop.yamlauncher.settings.SettingsActivity
 import eu.ottop.yamlauncher.settings.SharedPreferenceManager
 import eu.ottop.yamlauncher.tasks.BatteryReceiver
+import eu.ottop.yamlauncher.tasks.NotificationEventBus
 import eu.ottop.yamlauncher.tasks.NotificationListener
 import eu.ottop.yamlauncher.tasks.ScreenLockService
 import eu.ottop.yamlauncher.utils.Animations
@@ -168,7 +168,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
     private lateinit var preferences: SharedPreferences
 
     private var isBatteryReceiverRegistered = false
-    private var isNotificationReceiverRegistered = false
+    private var notificationCollectionJob: Job? = null
     private var isSearchActive = false
     private var isInitialOpen = false
     private var canLaunchShortcut = true
@@ -1609,33 +1609,25 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
     }
 
     private fun registerNotificationReceiver() {
-        if (!isNotificationReceiverRegistered) {
+        if (notificationCollectionJob == null) {
             try {
-                val filter = android.content.IntentFilter(NotificationListener.ACTION_NOTIFICATIONS_CHANGED)
-                LocalBroadcastManager.getInstance(this).registerReceiver(notificationReceiver, filter)
-                isNotificationReceiverRegistered = true
+                notificationCollectionJob = lifecycleScope.launch {
+                    lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                        NotificationEventBus.notificationsChanged.collect {
+                            updateNotificationDots()
+                        }
+                    }
+                }
             } catch (e: Exception) {
+                notificationCollectionJob = null
                 logger.w("MainActivity", "Failed to register notification receiver: ${e.message}")
             }
         }
     }
 
     private fun unregisterNotificationReceiver() {
-        if (isNotificationReceiverRegistered) {
-            try {
-                LocalBroadcastManager.getInstance(this).unregisterReceiver(notificationReceiver)
-                isNotificationReceiverRegistered = false
-            } catch (e: Exception) {
-                logger.w("MainActivity", "Failed to unregister notification receiver: ${e.message}")
-                isNotificationReceiverRegistered = false
-            }
-        }
-    }
-
-    private val notificationReceiver = object : android.content.BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
-            updateNotificationDots()
-        }
+        notificationCollectionJob?.cancel()
+        notificationCollectionJob = null
     }
 
     private fun updateNotificationDots() {

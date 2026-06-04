@@ -1,13 +1,13 @@
 # gradle/libs.versions.toml
 
 [versions]
-agp = "9.1.0"
-kotlin = "2.2.10"
+agp = "9.2.0"
+kotlin = "2.4.0"
 
 # AndroidX Core and AppCompat
-core-ktx = "1.16.0"
+core-ktx = "1.18.0"
 appcompat = "1.7.1"
-material = "1.12.0"
+material = "1.14.0"
 preferenceKtx = "1.2.1"
 recyclerview = "1.4.0"
 
@@ -15,15 +15,14 @@ recyclerview = "1.4.0"
 constraintlayout = "2.2.1"
 
 # Compose Versions
-activity-compose = "1.10.1"
+activity-compose = "1.13.0"
 
 # Other Libraries
 biometric-ktx = "1.4.0-alpha02"
-localbroadcastmanager = "1.1.0"
 
 # Testing
 junit = "4.13.2"
-kotlinx-coroutines-test = "1.8.1"
+kotlinx-coroutines-test = "1.10.2"
 androidx-junit = "1.2.1"
 espresso-core = "3.6.1"
 mockito-core = "5.12.0"
@@ -43,9 +42,6 @@ constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayo
 
 # Biometric
 biometric-ktx = { group = "androidx.biometric", name = "biometric-ktx", version.ref = "biometric-ktx" }
-
-# LocalBroadcastManager
-localbroadcastmanager = { group = "androidx.localbroadcastmanager", name = "localbroadcastmanager", version.ref = "localbroadcastmanager" }
 
 # Testing
 junit = { group = "junit", name = "junit", version.ref = "junit" }
