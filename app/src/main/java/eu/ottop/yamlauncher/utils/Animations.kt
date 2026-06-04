@@ -67,6 +67,7 @@ class Animations (context: Context) {
      * @param appView The app menu view to show
      */
     fun showApps(homeView: View, appView: View) {
+        isInAnim = true
         appView.slideInFromBottom()
         homeView.fadeOut()
     }
@@ -164,7 +165,16 @@ fun backgroundOut(activity: Activity, duration: Long) {
                     .scaleY(1f)
                     .alpha(1f)
                     .setDuration(duration)
-                    .setListener(null)
+                    .setListener(object : AnimatorListenerAdapter() {
+                        override fun onAnimationEnd(animation: Animator) {
+                            super.onAnimationEnd(animation)
+                            isInAnim = false
+                        }
+                        override fun onAnimationCancel(animation: Animator) {
+                            super.onAnimationCancel(animation)
+                            isInAnim = false
+                        }
+                    })
         }
     }
 

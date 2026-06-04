@@ -175,6 +175,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
     private var showHidden = false
     private var searchJob: Job? = null
     private var isResettingSearch = false
+    private var isDrawerOpen = false
 
     private data class AppSearchEntry(
         val item: Triple<LauncherActivityInfo, UserHandle, Int>,
@@ -474,6 +475,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         } catch (e: Exception) {
             logger.w("MainActivity", "Error in toAppMenu: ${e.message}")
         }
+        isDrawerOpen = true
         animations.showApps(binding.homeView, binding.appView)
         animations.backgroundIn(this@MainActivity)
         if (sharedPreferenceManager.isAutoKeyboardEnabled()) {
@@ -653,6 +655,9 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         preferences.registerOnSharedPreferenceChangeListener(this)
 
         binding.homeView.setOnTouchListener { _, event ->
+            if (isDrawerOpen || animations.isInAnim) {
+                return@setOnTouchListener false
+            }
             super.onTouchEvent(event)
             gestureDetector.onTouchEvent(event)
             true
@@ -964,12 +969,12 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
     fun backToHome(animSpeed: Long = sharedPreferenceManager.getAnimationSpeed()) {
         canLaunchShortcut = true
         showHidden = false
+        isDrawerOpen = false
 
-        // Clear search immediately to prevent race conditions
         searchJob?.cancel()
         isResettingSearch = true
         searchView.setText(R.string.empty)
-        isResettingSearch = false  // Unblock immediately after programmatic setText
+        isResettingSearch = false
         isSearchActive = false
 
         closeKeyboard()
@@ -1580,6 +1585,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         } catch (e: Exception) {
             logger.w("MainActivity", "Error in toAppMenuWithKeyboard: ${e.message}")
         }
+        isDrawerOpen = true
         animations.showApps(binding.homeView, binding.appView)
         animations.backgroundIn(this@MainActivity)
 
