@@ -980,11 +980,13 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         handler.postDelayed({
             try {
                 appMenuLinearLayoutManager.setScrollEnabled(true)
-                currentFilteredApps = installedApps
-                // Explicitly reset adapter to show full list
-                lifecycleScope.launch {
-                    updateMenu(installedApps)
-                    refreshAppMenu()
+                if (::installedApps.isInitialized) {
+                    currentFilteredApps = installedApps
+                    // Explicitly reset adapter to show full list
+                    lifecycleScope.launch {
+                        updateMenu(installedApps)
+                        refreshAppMenu()
+                    }
                 }
             } catch (e: Exception) {
                 logger.w("MainActivity", "Error in backToHome handler: ${e.message}")
@@ -1001,7 +1003,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
     suspend fun refreshAppMenu() {
         try {
             // Don't reset app menu while under a search
-            if (!isSearchActive) {
+            if (!isSearchActive && ::installedApps.isInitialized) {
                 val updatedApps = appUtils.getInstalledApps(showHidden)
                 // Use structural equality check and atomic update pattern
                 if (installedApps.isEmpty() || !listsEqual(installedApps, updatedApps)) {
@@ -1401,6 +1403,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         val displayedChild = if (::menuView.isInitialized) menuView.displayedChild else 0
         when (displayedChild) {
             0 -> {
+                if (!::installedApps.isInitialized) return
                 val appsToFilter = installedApps
                 val result = withContext(Dispatchers.Default) {
                     getFilteredApps(cleanQuery, appsToFilter)
