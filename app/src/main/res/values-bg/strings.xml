@@ -71,10 +71,15 @@
     <string name="text_shadow">Сянка на текста</string>
 
     <string name="operation">Действие</string>
+    <string name="block_auto_rotation">Блокиране на автоматично завъртане</string>
+    <string name="block_auto_rotation_summary">Предотвратяване на автоматичното завъртане на екрана</string>
     <string name="animation_speed">Скорост на анимацията</string>
     <string name="swipe_threshold">Праг на плъзгане</string>
     <string name="swipe_velocity_threshold">Праг на скоростта на плъзгане</string>
     <string name="show_status_bar">Показване на лентата за състоянието</string>
+    <string name="app_drawer_darkening">Потъмняване на фона на чекмеджето с приложения</string>
+    <string name="settings_darkening">Потъмняване на фона на панела с настройки</string>
+    <string name="homescreen_darkening">Потъмняване на фона на началния екран</string>
     <string name="enable_confirmation">Диалогов прозорец за потвърждение на приложението</string>
     <string name="launch_confirmation_text">Сигурни ли сте, че искате да стартирате това приложение?</string>
 
@@ -142,6 +147,8 @@
     <string name="app_alignment">Подреждане на приложенията</string>
     <string name="app_size">Размер на приложенията</string>
     <string name="app_spacing">Разстояние между приложенията</string>
+    <string name="app_strict_click">Кликване върху самия текст</string>
+    <string name="app_strict_click_summary">Отваряне на приложението само при директно кликване върху текст</string>
     <string name="contacts_menu">Меню Контакти</string>
     <string name="permission_denied">Достъпът е отказан</string>
     <string name="internet_search">Бутон за търсене в интернет</string>
@@ -191,7 +198,8 @@
     <string name="install_fdroid">Инсталирай от F-Droid</string>
     <string name="install_izzy">Инсталирай от IzzyOnDroid</string>
     <string name="install_play">Инсталирай от Google Play</string>
-
+    <string name="donate">Подкрепа за развитие</string>
+    <string name="ko_fi_link">https://liberapay.com/thomasboom</string>
     <string name="reset">Рестартиране</string>
     <string name="restart_text">Рестартиране на YAM Launcher</string>
     <string name="reset_text">Възстановяване на всички настройки</string>
