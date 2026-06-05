@@ -1,0 +1,1 @@
+A heap of new features and a lot of bug fixes, along with updated translations, I hope you enjoy the update! To view the full changelog, visit https://codeberg.org/thomasboom/YAM-Launcher/releases/tag/v2.3
