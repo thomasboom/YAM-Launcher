@@ -94,6 +94,7 @@ Translate all string values while keeping the `name` attributes unchanged.
 ## Currently Supported Languages
 
 - **English** (default)
+- **Bulgarian** (Български)
 - **Chinese** (中文)
 - **Dutch** (Nederlands)
 - **Finnish** (Suomi)
