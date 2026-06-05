@@ -216,8 +216,8 @@
     >Otto が開発し、Thomas Boom がメンテナンスしています</string>
     <string name="source_code">ソースコード</string>
     <string name="codeberg">Codeberg</string>
-    <string name="github">GitHub</string>
-    <string name="view_github">このプロジェクトを GitHub で見る</string>
+    <string name="github">Codeberg</string>
+    <string name="view_github">このプロジェクトを Codeberg で見る</string>
     <string name="install_fdroid">F-Droid でインストール</string>
     <string name="install_izzy">IzzyOnDroid でインストール</string>
     <string name="install_play">Google Play でインストール</string>

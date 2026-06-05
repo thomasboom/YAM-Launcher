@@ -203,8 +203,8 @@
     <string name="creditName">Luonut Otto, ylläpitää Thomas Boom</string>
     <string name="source_code">Lähdekoodi</string>
     <string name="codeberg">Codeberg</string>
-    <string name="github">GitHub</string>
-    <string name="view_github">Näytä projekti GitHubissa</string>
+    <string name="github">Codeberg</string>
+    <string name="view_github">Näytä projekti Codebergissa</string>
     <string name="install_fdroid">Asenna F-Droidistä</string>
     <string name="install_izzy">Asenna IzzyOnDroidistä</string>
     <string name="install_play">Asenna Google Playstä</string>

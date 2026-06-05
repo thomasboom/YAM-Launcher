@@ -183,11 +183,11 @@
     <!--About Page Items-->
     <string name="about_title">За YAM Launcher</string>
     <string name="app_icon">Икона на приложението</string>
-    <string name="creditName">Създадено от Otto, поддържано от ThomasNow Productions</string>
+    <string name="creditName">Създадено от Otto, поддържано от Thomas Boom</string>
     <string name="source_code">Изходен код</string>
     <string name="codeberg">Codeberg</string>
-    <string name="github">GitHub</string>
-    <string name="view_github">Вижте този проект в GitHub</string>
+    <string name="github">Codeberg</string>
+    <string name="view_github">Вижте този проект в Codeberg</string>
     <string name="install_fdroid">Инсталирай от F-Droid</string>
     <string name="install_izzy">Инсталирай от IzzyOnDroid</string>
     <string name="install_play">Инсталирай от Google Play</string>

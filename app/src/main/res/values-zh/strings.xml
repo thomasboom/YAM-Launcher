@@ -175,8 +175,8 @@
     <string name="creditName">由Otto创建，Thomas Boom维护</string>
     <string name="source_code">源代码</string>
     <string name="codeberg">Codeberg</string>
-    <string name="github">GitHub</string>
-    <string name="view_github">在GitHub上查看此项目</string>
+    <string name="github">Codeberg</string>
+    <string name="view_github">在Codeberg上查看此项目</string>
     <string name="install_fdroid">在F-Droid上安装</string>
     <string name="install_izzy">在IzzyOnDroid上安装</string>
     <string name="install_play">在Google Play上安装</string>

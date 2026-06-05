@@ -89,7 +89,7 @@ Translate all string values while keeping the `name` attributes unchanged.
 4. **Add your translation files** to the appropriate folder
 5. **Commit** your changes: `git commit -m "Add [Language] translation"`
 6. **Push** to your fork: `git push origin add-[language]-translation`
-7. **Open a Pull Request** on Codeberg or GitHub
+7. **Open a Pull Request** on Codeberg
 
 ## Currently Supported Languages
 

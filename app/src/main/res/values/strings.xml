@@ -223,8 +223,8 @@
     >created by Otto, maintained by Thomas Boom</string>
     <string name="source_code">Source Code</string>
     <string name="codeberg">Codeberg</string>
-    <string name="github">GitHub</string>
-    <string name="view_github">View this project on GitHub</string>
+    <string name="github">Codeberg</string>
+    <string name="view_github">View this project on Codeberg</string>
     <string name="install_fdroid">Install on F-Droid</string>
     <string name="install_izzy">Install on IzzyOnDroid</string>
     <string name="install_play">Install on Google Play</string>

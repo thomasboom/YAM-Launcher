@@ -3,7 +3,7 @@
 </p>
 
 > [!NOTE]
-> GitHub suspended my personal account and the YAM Launcher repository. While both are back up, I've permanently moved all code hosting to Codeberg. The GitHub mirror remains available for browsing, but contributions (PRs, issues) happen on Codeberg only.
+> All code hosting has moved to Codeberg. Contributions (PRs, issues) happen on Codeberg only.
 # YAM Launcher
 
 YAM (Yet Another Minimalist) Launcher is a minimalist, open, customisable and text-based launcher for Android.
@@ -98,9 +98,7 @@ You can optionally enable accessibility services for YAM Launcher if you choose 
 
 ## Repositories
 
-[Codeberg (main)](https://codeberg.org/thomasboom/YAM-Launcher/)
-
-[GitHub (secondary, read-only)](https://github.com/ThomasNowProductions/YAM-Launcher/)
+[Codeberg](https://codeberg.org/thomasboom/YAM-Launcher/)
 
 ## Support
 

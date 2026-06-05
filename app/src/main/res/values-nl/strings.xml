@@ -199,8 +199,8 @@
     >gemaakt door Otto, onderhouden door Thomas Boom</string>
     <string name="source_code">Broncode</string>
     <string name="codeberg">Codeberg</string>
-    <string name="github">GitHub</string>
-    <string name="view_github">Bekijk dit project op GitHub</string>
+    <string name="github">Codeberg</string>
+    <string name="view_github">Bekijk dit project op Codeberg</string>
     <string name="install_fdroid">Installeren op F-Droid</string>
     <string name="install_izzy">Installeren op IzzyOnDroid</string>
     <string name="install_play">Installeren op Google Play</string>

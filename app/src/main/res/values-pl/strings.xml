@@ -221,8 +221,8 @@
     >stworzone przez Otto, rozwijane przez Thomas Boom</string>
     <string name="source_code">Kod źródłowy</string>
     <string name="codeberg">Codeberg</string>
-    <string name="github">GitHub</string>
-    <string name="view_github">Sprawdź na GitHub</string>
+    <string name="github">Codeberg</string>
+    <string name="view_github">Sprawdź na Codeberg</string>
     <string name="install_fdroid">Zainstaluj z F-Droid</string>
     <string name="install_izzy">Zainstaluj z IzzyOnDroid</string>
     <string name="install_play">Zainstaluj z Google Play</string>

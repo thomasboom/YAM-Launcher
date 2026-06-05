@@ -207,8 +207,8 @@
     <string name="creditName">создано Отто, поддерживается Thomas Boom</string>
     <string name="source_code">Исходный код</string>
     <string name="codeberg">Codeberg</string>
-    <string name="github">GitHub</string>
-    <string name="view_github">Посмотреть этот проект на GitHub</string>
+    <string name="github">Codeberg</string>
+    <string name="view_github">Посмотреть этот проект на Codeberg</string>
     <string name="install_fdroid">Установить из F-Droid</string>
     <string name="install_izzy">Установить из IzzyOnDroid</string>
     <string name="install_play">Установить из Google Play</string>
