@@ -679,6 +679,18 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
                 if (sharedPreferenceManager.isGestureEnabled("clock") && clockApp.first != null && clockApp.second != null) {
                     try {
                         launcherApps.startMainActivity(clockApp.first!!.componentName, launcherApps.profiles[clockApp.second!!], null, null)
+                    } catch (e: SecurityException) {
+                        try {
+                            val intent = Intent(Intent.ACTION_MAIN).apply {
+                                addCategory(Intent.CATEGORY_LAUNCHER)
+                                component = clockApp.first!!.componentName
+                                flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                            }
+                            startActivity(intent)
+                        } catch (e2: Exception) {
+                            logger.e("MainActivity", "Failed to launch clock gesture app via Intent fallback", e2)
+                            Toast.makeText(this@MainActivity, getString(R.string.launch_error), Toast.LENGTH_SHORT).show()
+                        }
                     } catch (e: Exception) {
                         logger.e("MainActivity", "Failed to launch clock gesture app", e)
                         Toast.makeText(this@MainActivity, getString(R.string.launch_error), Toast.LENGTH_SHORT).show()
@@ -698,6 +710,18 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
                 if (sharedPreferenceManager.isGestureEnabled("date") && dateApp.first != null && dateApp.second != null) {
                     try {
                         launcherApps.startMainActivity(dateApp.first!!.componentName, launcherApps.profiles[dateApp.second!!], null, null)
+                    } catch (e: SecurityException) {
+                        try {
+                            val intent = Intent(Intent.ACTION_MAIN).apply {
+                                addCategory(Intent.CATEGORY_LAUNCHER)
+                                component = dateApp.first!!.componentName
+                                flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                            }
+                            startActivity(intent)
+                        } catch (e2: Exception) {
+                            logger.e("MainActivity", "Failed to launch date gesture app via Intent fallback", e2)
+                            Toast.makeText(this@MainActivity, getString(R.string.launch_error), Toast.LENGTH_SHORT).show()
+                        }
                     } catch (e: Exception) {
                         logger.e("MainActivity", "Failed to launch date gesture app", e)
                         Toast.makeText(this@MainActivity, getString(R.string.launch_error), Toast.LENGTH_SHORT).show()
@@ -1824,12 +1848,28 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
     }
 
     override fun onAppInfo(appActivity: LauncherActivityInfo, userHandle: UserHandle) {
-        launcherApps.startAppDetailsActivity(
-            appActivity.componentName,
-            userHandle,
-            null,
-            null
-        )
+        try {
+            launcherApps.startAppDetailsActivity(
+                appActivity.componentName,
+                userHandle,
+                null,
+                null
+            )
+        } catch (e: SecurityException) {
+            try {
+                val intent = Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                    data = Uri.fromParts("package", appActivity.applicationInfo.packageName, null)
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                }
+                startActivity(intent)
+            } catch (e2: Exception) {
+                logger.e("MainActivity", "Failed to open app details via Intent fallback", e2)
+                Toast.makeText(this, getString(R.string.launch_error), Toast.LENGTH_SHORT).show()
+            }
+        } catch (e: Exception) {
+            logger.e("MainActivity", "Failed to open app details", e)
+            Toast.makeText(this, getString(R.string.launch_error), Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onUninstallApp(appActivity: LauncherActivityInfo, userHandle: UserHandle) {

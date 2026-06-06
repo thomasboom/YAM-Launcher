@@ -3,6 +3,7 @@ package eu.ottop.yamlauncher.utils
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import android.content.ComponentName
 import android.content.Context
+import android.content.Intent
 import android.view.ContextThemeWrapper
 import android.content.pm.LauncherActivityInfo
 import android.content.pm.LauncherApps
@@ -131,6 +132,21 @@ class AppUtils(private val context: Context, private val launcherApps: LauncherA
             launcherApps.startMainActivity(componentName, userHandle, null, null)
             logger.i("AppUtils", "Launched app: ${componentName.packageName}")
             true
+        } catch (e: SecurityException) {
+            try {
+                val intent = Intent(Intent.ACTION_MAIN).apply {
+                    addCategory(Intent.CATEGORY_LAUNCHER)
+                    component = componentName
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                }
+                context.startActivity(intent)
+                logger.i("AppUtils", "Launched app via Intent fallback: ${componentName.packageName}")
+                true
+            } catch (e2: Exception) {
+                logger.e("AppUtils", "Failed to launch app via Intent fallback: ${componentName.packageName}", e2)
+                showLaunchError()
+                false
+            }
         } catch (e: Exception) {
             logger.e("AppUtils", "Failed to launch app: ${componentName.packageName}", e)
             showLaunchError()

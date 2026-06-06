@@ -184,7 +184,7 @@ class AppMenuAdapter(
             // Single tap behavior depends on mode
             textView.setOnClickListener {
                 val position = bindingAdapterPosition
-                if (position == RecyclerView.NO_POSITION || position >= apps.size) {
+                if (position < 0 || position >= apps.size) {
                     return@setOnClickListener
                 }
                 val entry = apps[position]
@@ -203,7 +203,7 @@ class AppMenuAdapter(
             // Long press opens action menu or assigns shortcut
             textView.setOnLongClickListener {
                 val position = bindingAdapterPosition
-                if (position == RecyclerView.NO_POSITION || position >= apps.size) {
+                if (position < 0 || position >= apps.size) {
                     return@setOnLongClickListener true
                 }
 
@@ -240,7 +240,7 @@ class AppMenuAdapter(
 
     override fun onBindViewHolder(holder: AppViewHolder, position: Int) {
         holder.editView.visibility = View.INVISIBLE
-        if (position >= apps.size) {
+        if (position < 0 || position >= apps.size) {
             return
         }
         val app = apps[position]
