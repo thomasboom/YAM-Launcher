@@ -12,19 +12,19 @@ import eu.ottop.yamlauncher.R
 import eu.ottop.yamlauncher.utils.Logger
 
 // Extension functions for safe typed access to SharedPreferences
-private inline fun SharedPreferences.getStringAsInt(key: String, default: Int): Int {
+private fun SharedPreferences.getStringAsInt(key: String, default: Int): Int {
     return getString(key, default.toString())?.toInt() ?: default
 }
 
-private inline fun SharedPreferences.getStringAsLong(key: String, default: Long): Long {
+private fun SharedPreferences.getStringAsLong(key: String, default: Long): Long {
     return getString(key, default.toString())?.toLong() ?: default
 }
 
-private inline fun SharedPreferences.getStringAsFloat(key: String, default: Float): Float {
+private fun SharedPreferences.getStringAsFloat(key: String, default: Float): Float {
     return getString(key, default.toString())?.toFloat() ?: default
 }
 
-private inline fun SharedPreferences.getBooleanOrDefault(key: String, default: Boolean): Boolean {
+private fun SharedPreferences.getBooleanOrDefault(key: String, default: Boolean): Boolean {
     return getBoolean(key, default)
 }
 
@@ -686,30 +686,11 @@ class SharedPreferenceManager(private val context: Context) {
     fun getAppName(componentName: String, profile: Int, appName: CharSequence): CharSequence? {
         val key = "name$componentName-$profile"
         val savedName = preferences.getString(key, null)
-        if (savedName.isNullOrBlank()) {
-            // Clean up stale key if exists (async, won't block main thread)
-            preferences.edit {
-                remove(key)
-            }
-            return appName
-        }
+        if (savedName.isNullOrBlank()) return appName
 
-        // Clean up if saved name matches package name
-        val packageName = try {
-            componentName.substringBefore("/")
-        } catch (e: Exception) {
-            logger.w("SharedPreferenceManager", "Error parsing component name: $componentName")
-            componentName
-        }
-        if (savedName == packageName || savedName == componentName) {
-            // Clean up stale entry (async, won't block main thread)
-            preferences.edit {
-                remove(key)
-            }
-            return appName
-        }
-
-        return savedName
+        // Clean up if saved name matches package name or the component itself
+        val packageName = componentName.substringBefore("/")
+        return if (savedName == packageName || savedName == componentName) appName else savedName
     }
 
     /**

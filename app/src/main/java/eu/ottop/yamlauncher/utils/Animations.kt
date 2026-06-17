@@ -8,6 +8,8 @@ import android.app.Activity
 import android.content.Context
 import android.graphics.Color
 import android.view.View
+import androidx.core.graphics.toColorInt
+import androidx.core.view.isVisible
 import eu.ottop.yamlauncher.settings.SharedPreferenceManager
 
 /**
@@ -72,75 +74,45 @@ class Animations (context: Context) {
         homeView.fadeOut()
     }
 
-/**
- * Animates semi-transparent overlay appearing on app menu open.
- * Only animates if background is fully transparent and darkening is enabled.
- *
- * @param activity The activity to animate
- */
-fun backgroundIn(activity: Activity) {
-    val originalColor = sharedPreferenceManager.getBgColor()
+    /**
+     * Animates semi-transparent overlay appearing on app menu open.
+     * Only animates if background is fully transparent and darkening is enabled.
+     */
+    fun backgroundIn(activity: Activity) {
+        val originalColor = sharedPreferenceManager.getBgColor()
+        if (!shouldAnimateDim(originalColor)) return
 
-    // Only animate darkness onto the transparent background if enabled
-    // Skip animation if both app drawer and homescreen dimming are enabled (smooth transition)
-    val appDrawerDimming = sharedPreferenceManager.isAppDrawerDarkeningEnabled()
-    val homeDimming = sharedPreferenceManager.isHomescreenDarkeningEnabled()
-    val useAnimation = appDrawerDimming && !(homeDimming && originalColor == Color.parseColor("#00000000"))
+        animateDim(activity, originalColor, DIM_COLOR, sharedPreferenceManager.getAnimationSpeed())
+    }
 
-    if (useAnimation) {
-            val newColor = Color.parseColor("#3F000000")
+    /**
+     * Animates semi-transparent overlay disappearing on return to home.
+     * If homescreen darkening is enabled, keeps the dark background.
+     */
+    fun backgroundOut(activity: Activity, duration: Long) {
+        val originalColor = sharedPreferenceManager.getBgColor()
+        if (!shouldAnimateDim(originalColor)) return
+        if (!sharedPreferenceManager.isAppDrawerDarkeningEnabled()) return
 
-            val backgroundColorAnimator = ValueAnimator.ofObject(ArgbEvaluator(), originalColor, newColor)
-            backgroundColorAnimator.addUpdateListener { animator ->
+        animateDim(activity, DIM_COLOR, originalColor, duration)
+    }
+
+    private fun shouldAnimateDim(originalColor: Int): Boolean {
+        if (!sharedPreferenceManager.isAppDrawerDarkeningEnabled()) return false
+        // Skip animation if both app drawer and homescreen dimming are enabled (smooth transition)
+        val homeDimming = sharedPreferenceManager.isHomescreenDarkeningEnabled()
+        return !(homeDimming && originalColor == TRANSPARENT)
+    }
+
+    private fun animateDim(activity: Activity, from: Int, to: Int, duration: Long) {
+        ValueAnimator.ofObject(ArgbEvaluator(), from, to).apply {
+            addUpdateListener { animator ->
                 activity.window.decorView.setBackgroundColor(animator.animatedValue as Int)
             }
-
-            val duration = sharedPreferenceManager.getAnimationSpeed()
-            backgroundColorAnimator.duration = duration
-
-            backgroundColorAnimator.start()
-        } else {
-            return
+            this.duration = duration
+            start()
         }
     }
-
-/**
- * Animates semi-transparent overlay disappearing on return to home.
- * Only animates if background is fully transparent and darkening is enabled.
- * If homescreen darkening is enabled, keeps the dark background.
- *
- * @param activity The activity to animate
- * @param duration Animation duration in milliseconds
- */
-fun backgroundOut(activity: Activity, duration: Long) {
-    val originalColor = sharedPreferenceManager.getBgColor()
-    val bgColor = sharedPreferenceManager.getBgColor()
-
-    // Skip animation if both app drawer and homescreen dimming are enabled
-    val appDrawerDimming = sharedPreferenceManager.isAppDrawerDarkeningEnabled()
-    val homeDimming = sharedPreferenceManager.isHomescreenDarkeningEnabled()
-    val useAnimation = appDrawerDimming && !(homeDimming && originalColor == Color.parseColor("#00000000"))
-
-    if (!useAnimation) {
-        return
-    }
-
-    // Only animate darkness onto the transparent background if enabled
-    if (originalColor == Color.parseColor("#00000000") && appDrawerDimming) {
-        val darkColor = Color.parseColor("#3F000000")
-
-        val backgroundColorAnimator = ValueAnimator.ofObject(ArgbEvaluator(), darkColor, originalColor)
-        backgroundColorAnimator.addUpdateListener { animator ->
-            activity.window.decorView.setBackgroundColor(animator.animatedValue as Int)
-        }
-
-        backgroundColorAnimator.duration = duration
-
-        backgroundColorAnimator.start()
-    } else {
-        return
-    }
-}
 
     // ============================================
     // Private Animation Extensions
@@ -151,31 +123,19 @@ fun backgroundOut(activity: Activity, duration: Long) {
      * Includes scale and alpha animation for polished entrance.
      */
     private fun View.slideInFromBottom() {
-        if (visibility != View.VISIBLE) {
-            // Start slightly offset and scaled
-            translationY = height.toFloat()/5
-            scaleY = 1.2f
-            alpha = 0f
-            visibility = View.VISIBLE
+        if (isVisible) return
+        // Start slightly offset and scaled
+        translationY = height.toFloat() / 5
+        scaleY = 1.2f
+        alpha = 0f
+        visibility = View.VISIBLE
 
-            val duration = sharedPreferenceManager.getAnimationSpeed()
-
-            animate()
-                    .translationY(0f)
-                    .scaleY(1f)
-                    .alpha(1f)
-                    .setDuration(duration)
-                    .setListener(object : AnimatorListenerAdapter() {
-                        override fun onAnimationEnd(animation: Animator) {
-                            super.onAnimationEnd(animation)
-                            isInAnim = false
-                        }
-                        override fun onAnimationCancel(animation: Animator) {
-                            super.onAnimationCancel(animation)
-                            isInAnim = false
-                        }
-                    })
-        }
+        animate()
+            .translationY(0f)
+            .scaleY(1f)
+            .alpha(1f)
+            .setDuration(sharedPreferenceManager.getAnimationSpeed())
+            .setListener(endCancelReset())
     }
 
     /**
@@ -183,46 +143,31 @@ fun backgroundOut(activity: Activity, duration: Long) {
      * Sets isInAnim flag to prevent concurrent animations.
      */
     private fun View.slideOutToBottom(duration: Long) {
-        if (visibility == View.VISIBLE) {
-            isInAnim = true
-            animate()
-                .translationY(height.toFloat() / 5)
-                .scaleY(1.2f)
-                .alpha(0f)
-                .setDuration(duration/2)
-                .setListener(object : AnimatorListenerAdapter() {
-                    override fun onAnimationEnd(animation: Animator) {
-                        super.onAnimationEnd(animation)
-                        visibility = View.INVISIBLE
-                        isInAnim = false
-                    }
-                    override fun onAnimationCancel(animation: Animator) {
-                        super.onAnimationCancel(animation)
-                        visibility = View.INVISIBLE
-                        isInAnim = false
-                    }
-                })
-        }
+        if (!isVisible) return
+        isInAnim = true
+        animate()
+            .translationY(height.toFloat() / 5)
+            .scaleY(1.2f)
+            .alpha(0f)
+            .setDuration(duration / 2)
+            .setListener(endCancelReset(visibilityAfter = View.INVISIBLE))
     }
 
     /**
      * Fades view in with slight upward motion.
      * Uses configurable animation speed from preferences.
-     *
-     * @param duration Animation duration (defaults to preference value)
      */
     private fun View.fadeIn(duration: Long = sharedPreferenceManager.getAnimationSpeed()) {
-        if (visibility != View.VISIBLE) {
-            alpha = 0f
-            translationY = -height.toFloat()/100
-            visibility = View.VISIBLE
+        if (isVisible) return
+        alpha = 0f
+        translationY = -height.toFloat() / 100
+        visibility = View.VISIBLE
 
-            animate()
-                .alpha(1f)
-                .translationY(0f)
-                .setDuration(duration)
-                .setListener(null)
-        }
+        animate()
+            .alpha(1f)
+            .translationY(0f)
+            .setDuration(duration)
+            .setListener(null)
     }
 
     /**
@@ -230,27 +175,29 @@ fun backgroundOut(activity: Activity, duration: Long) {
      * Sets isInAnim flag to prevent concurrent animations.
      */
     private fun View.fadeOut() {
-        if (visibility == View.VISIBLE) {
-            isInAnim = true
-            val duration = sharedPreferenceManager.getAnimationSpeed()
+        if (!isVisible) return
+        isInAnim = true
+        animate()
+            .alpha(0f)
+            .translationY(-height.toFloat() / 100)
+            .setDuration(sharedPreferenceManager.getAnimationSpeed() / 2)
+            .setListener(endCancelReset(visibilityAfter = View.INVISIBLE))
+    }
 
-            animate()
-                .alpha(0f)
-                .translationY(-height.toFloat()/100)
-                .setDuration(duration/2)
-                .setListener(object : AnimatorListenerAdapter() {
-                    override fun onAnimationEnd(animation: Animator) {
-                        super.onAnimationEnd(animation)
-                        visibility = View.INVISIBLE
-                        isInAnim = false
-                    }
-                    override fun onAnimationCancel(animation: Animator) {
-                        super.onAnimationCancel(animation)
-                        visibility = View.INVISIBLE
-                        isInAnim = false
-                    }
-                })
-
+    private fun View.endCancelReset(visibilityAfter: Int = View.VISIBLE) =
+        object : AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator) {
+                visibility = visibilityAfter
+                isInAnim = false
+            }
+            override fun onAnimationCancel(animation: Animator) {
+                visibility = visibilityAfter
+                isInAnim = false
+            }
         }
+
+    private companion object {
+        val TRANSPARENT = "#00000000".toColorInt()
+        val DIM_COLOR = "#3F000000".toColorInt()
     }
 }

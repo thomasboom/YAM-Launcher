@@ -19,7 +19,6 @@ import android.view.ViewTreeObserver
 import android.view.Window
 import android.view.WindowInsets
 import android.view.WindowInsetsController
-import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Space
@@ -27,6 +26,7 @@ import android.widget.TextClock
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.toColorInt
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.children
@@ -40,14 +40,6 @@ import eu.ottop.yamlauncher.settings.SharedPreferenceManager
 /**
  * UI utility class for managing view styling and layout.
  * Centralizes all UI customization based on user preferences.
- *
- * Handles:
- * - Window insets and keyboard detection
- * - Colors (background, text, images)
- * - Fonts and text styles
- * - Visibility and alignment
- * - Sizes and spacing
- * - Fragment navigation
  */
 class UIUtils(private val context: Context) {
 
@@ -92,8 +84,6 @@ class UIUtils(private val context: Context) {
     /**
      * Applies system bar insets to the view.
      * Ensures content isn't drawn under status/navigation bars.
-     *
-     * @param view Root view to apply insets to
      */
     fun adjustInsets(view: View) {
         // Apply current insets immediately so the first layout pass already accounts
@@ -111,23 +101,15 @@ class UIUtils(private val context: Context) {
     private fun applyInsets(view: View, insets: WindowInsetsCompat?) {
         if (insets == null) return
         val bars = insets.getInsets(
-            WindowInsetsCompat.Type.systemBars()
-                    or WindowInsetsCompat.Type.displayCutout()
+            WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
         )
-        view.updatePadding(
-            left = bars.left,
-            top = bars.top,
-            right = bars.right,
-            bottom = bars.bottom,
-        )
+        view.updatePadding(left = bars.left, top = bars.top, right = bars.right, bottom = bars.bottom)
     }
 
     /**
      * Replicates adjustResize behavior for SDK 35+.
      * The standard adjustResize doesn't work with SDK 35's new keyboard behavior.
      * Manually adjusts layout height based on keyboard visibility.
-     *
-     * @param view Root view to monitor
      */
     fun setLayoutListener(view: View) {
         view.viewTreeObserver.addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener {
@@ -139,23 +121,15 @@ class UIUtils(private val context: Context) {
 
                 val screenHeight = view.rootView.height
                 val keyboardHeight = screenHeight - rect.bottom
-
-                // Keyboard is considered visible if it takes >15% of screen height
                 val isKeyboardVisible = keyboardHeight > screenHeight * 0.15
 
-                // Only respond to state changes to avoid excessive layout passes
                 if (isKeyboardVisible != lastKeyboardState) {
                     lastKeyboardState = isKeyboardVisible
-
-                    if (isKeyboardVisible) {
-                        // Shrink layout to fit above keyboard
-                        val availableHeight = screenHeight - keyboardHeight
-                        view.layoutParams.height = availableHeight
+                    view.layoutParams.height = if (isKeyboardVisible) {
+                        screenHeight - keyboardHeight
                     } else {
-                        // Restore full height when keyboard hidden
-                        view.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
+                        ViewGroup.LayoutParams.MATCH_PARENT
                     }
-
                     view.requestLayout()
                 }
                 return true
@@ -170,20 +144,12 @@ class UIUtils(private val context: Context) {
     /**
      * Sets the window background color from preferences.
      * If background is fully transparent, applies dark overlay for settings panels.
-     *
-     * @param window Window to style
-     * @param applyDarkening Whether to apply dark overlay (settings) for transparent backgrounds
-     * @param applyHomescreenDarkening Whether to apply dark overlay for homescreen
      */
     fun setBackground(window: Window, applyDarkening: Boolean = false, applyHomescreenDarkening: Boolean = false) {
         val bgColor = sharedPreferenceManager.getBgColor()
         val finalColor = when {
-            applyHomescreenDarkening && bgColor == Color.parseColor("#00000000") && sharedPreferenceManager.isHomescreenDarkeningEnabled() -> {
-                Color.parseColor("#3F000000")
-            }
-            applyDarkening && bgColor == Color.parseColor("#00000000") && sharedPreferenceManager.isSettingsDarkeningEnabled() -> {
-                Color.parseColor("#3F000000")
-            }
+            applyHomescreenDarkening && bgColor == TRANSPARENT && sharedPreferenceManager.isHomescreenDarkeningEnabled() -> DIM_COLOR
+            applyDarkening && bgColor == TRANSPARENT && sharedPreferenceManager.isSettingsDarkeningEnabled() -> DIM_COLOR
             else -> bgColor
         }
         window.decorView.setBackgroundColor(finalColor)
@@ -191,63 +157,48 @@ class UIUtils(private val context: Context) {
 
     /**
      * Applies text color filter to an ImageView.
-     * Used to tint icons based on user's text color preference.
-     *
-     * @param view ImageView to tint
+     * Uses mutate() to avoid tinting shared drawable instances used elsewhere.
      */
     fun setImageColor(view: ImageView) {
-        view.setColorFilter(sharedPreferenceManager.getTextColor())
+        val drawable = view.drawable?.mutate() ?: return
+        drawable.setTint(sharedPreferenceManager.getTextColor())
     }
 
     /**
      * Recursively applies text colors to a view and its children.
      * Handles TextViews with their compound drawables.
-     *
-     * @param view Root view to style
      */
     fun setTextColors(view: View) {
         val color = sharedPreferenceManager.getTextColor()
+        val shadowEnabled = sharedPreferenceManager.isTextShadowEnabled()
         when {
-            // Recursively process view groups
-            view is ViewGroup -> {
-                view.children.forEach { child ->
-                    setTextColors(child)
-                }
-            }
-            // Apply to TextViews
-            hasMethod(view, "setTextColor") -> {
-                val textView = view as TextView
-                textView.setTextColor(color)
+            view is ViewGroup -> view.children.forEach { setTextColors(it) }
+            view is TextView -> applyTextColor(view, color, shadowEnabled)
+            else -> view.setBackgroundColor(color)
+        }
+    }
 
-                // Apply color to compound drawables (icons next to text)
-                val drawables = textView.compoundDrawables
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                    drawables.getOrNull(0)?.colorFilter = BlendModeColorFilter(color, BlendMode.SRC_ATOP)
-                    drawables.getOrNull(2)?.colorFilter = BlendModeColorFilter(color, BlendMode.SRC_ATOP)
-                } else {
-                    drawables.getOrNull(0)?.colorFilter = PorterDuffColorFilter(color, PorterDuff.Mode.SRC_ATOP)
-                    drawables.getOrNull(2)?.colorFilter = PorterDuffColorFilter(color, PorterDuff.Mode.SRC_ATOP)
-                }
+    private fun applyTextColor(textView: TextView, color: Int, shadowEnabled: Boolean) {
+        textView.setTextColor(color)
+        val drawables = textView.compoundDrawables
+        val filter = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            BlendModeColorFilter(color, BlendMode.SRC_ATOP)
+        } else {
+            PorterDuffColorFilter(color, PorterDuff.Mode.SRC_ATOP)
+        }
+        drawables.getOrNull(0)?.mutate()?.colorFilter = filter
+        drawables.getOrNull(2)?.mutate()?.colorFilter = filter
 
-                // Apply text shadow if enabled
-                if (sharedPreferenceManager.isTextShadowEnabled()) {
-                    textView.setShadowLayer(4f, 2f, 2f, Color.BLACK)
-                } else {
-                    textView.setShadowLayer(0f, 0f, 0f, Color.TRANSPARENT)
-                }
-            }
-            else -> {
-                // For non-text views, set background color
-                view.setBackgroundColor(color)
-            }
+        if (shadowEnabled) {
+            textView.setShadowLayer(SHADOW_RADIUS, SHADOW_DX, SHADOW_DY, Color.BLACK)
+        } else {
+            textView.setShadowLayer(0f, 0f, 0f, Color.TRANSPARENT)
         }
     }
 
     /**
      * Updates status bar appearance based on text color.
      * Switches between light and dark status bar icons.
-     *
-     * @param window Window to update
      */
     fun setStatusBarColor(window: Window) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
@@ -257,7 +208,6 @@ class UIUtils(private val context: Context) {
                 "#FFF3F3F3" -> insetController?.setSystemBarsAppearance(0, WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS)
                 "#FF0C0C0C" -> insetController?.setSystemBarsAppearance(WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS, WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS)
                 "material" -> {
-                    // Follow system dark mode setting
                     val currentNightMode = context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
                     when (currentNightMode) {
                         Configuration.UI_MODE_NIGHT_YES -> insetController?.setSystemBarsAppearance(0, WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS)
@@ -283,50 +233,26 @@ class UIUtils(private val context: Context) {
     }
 
     /**
-     * Checks if a view has a specific method using reflection.
-     * Used to safely check for methods before calling them.
-     *
-     * @param view View to check
-     * @param methodName Method name to look for
-     * @return true if method exists
-     */
-    private fun hasMethod(view: View, methodName: String): Boolean {
-        return try {
-            view.javaClass.getMethod(methodName, Int::class.java)
-            true
-        } catch (_: NoSuchMethodException) {
-            false
-        }
-    }
-
-    /**
      * Sets colors for menu item TextViews (search bar, title).
      * Applies custom alpha for hint text and icons.
-     *
-     * @param view TextView to style
-     * @param alphaHex Hex alpha value (default "FF" = fully opaque)
      */
     fun setMenuItemColors(view: TextView, alphaHex: String = "FF") {
         val color = sharedPreferenceManager.getTextColor()
         view.setTextColor(setAlpha(color, alphaHex))
-        view.setHintTextColor(setAlpha(color, "A9"))
+        view.setHintTextColor(setAlpha(color, HINT_ALPHA_HEX))
 
         val drawables = view.compoundDrawables
-        // Apply color filter based on API level
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            drawables.getOrNull(0)?.mutate()?.colorFilter = BlendModeColorFilter(color, BlendMode.SRC_ATOP)
-            drawables.getOrNull(2)?.mutate()?.colorFilter = BlendModeColorFilter(color, BlendMode.SRC_ATOP)
+        val filter = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            BlendModeColorFilter(color, BlendMode.SRC_ATOP)
         } else {
-            drawables.getOrNull(0)?.mutate()?.colorFilter = PorterDuffColorFilter(color, PorterDuff.Mode.SRC_ATOP)
-            drawables.getOrNull(2)?.mutate()?.colorFilter = PorterDuffColorFilter(color, PorterDuff.Mode.SRC_ATOP)
+            PorterDuffColorFilter(color, PorterDuff.Mode.SRC_ATOP)
         }
-        // Apply alpha to drawables
-        drawables.getOrNull(0)?.alpha = "A9".toInt(16)
-        drawables.getOrNull(2)?.alpha = "A9".toInt(16)
+        val alpha = HINT_ALPHA_HEX.toInt(16)
+        drawables.getOrNull(0)?.mutate()?.apply { colorFilter = filter; this.alpha = alpha }
+        drawables.getOrNull(2)?.mutate()?.apply { colorFilter = filter; this.alpha = alpha }
 
-        // Apply text shadow if enabled
         if (sharedPreferenceManager.isTextShadowEnabled()) {
-            view.setShadowLayer(4f, 2f, 2f, Color.BLACK)
+            view.setShadowLayer(SHADOW_RADIUS, SHADOW_DX, SHADOW_DY, Color.BLACK)
         } else {
             view.setShadowLayer(0f, 0f, 0f, Color.TRANSPARENT)
         }
@@ -334,47 +260,24 @@ class UIUtils(private val context: Context) {
 
     /**
      * Recursively applies font to all TextViews in a view hierarchy.
-     *
-     * @param view Root view to process
      */
     fun setTextFont(view: View, typeface: Typeface?) {
-        when {
-            view is ViewGroup -> {
-                view.children.forEach { child ->
-                    setTextFont(child, typeface)
-                }
-            }
-            hasMethod(view, "setTextAppearance") -> {
-                setFont(view as TextView, typeface)
-            }
+        when (view) {
+            is ViewGroup -> view.children.forEach { setTextFont(it, typeface) }
+            is TextView -> view.typeface = typeface
         }
     }
 
-    /**
-     * Sets font and style for a specific TextView.
-     *
-     * @param view TextView to style
-     * @param typeface Typeface to apply
-     */
     fun setFont(view: TextView, typeface: Typeface?) {
         view.typeface = typeface
     }
 
     /**
      * Modifies alpha channel of a color.
-     *
-     * @param color Original color
-     * @param alphaHex Hex alpha value (00-FF)
-     * @return Color with new alpha
      */
     private fun setAlpha(color: Int, alphaHex: String): Int {
         val newAlpha = Integer.parseInt(alphaHex, 16)
-
-        val r = Color.red(color)
-        val g = Color.green(color)
-        val b = Color.blue(color)
-
-        return Color.argb(newAlpha, r, g, b)
+        return Color.argb(newAlpha, Color.red(color), Color.green(color), Color.blue(color))
     }
 
     // ============================================
@@ -384,119 +287,47 @@ class UIUtils(private val context: Context) {
     /**
      * Sets clock visibility based on preference.
      * Uses minimal height instead of GONE to preserve layout space.
-     *
-     * @param clock TextClock to update
      */
     fun setClockVisibility(clock: TextClock) {
-        val layoutParams = clock.layoutParams
-
-        if (sharedPreferenceManager.isClockEnabled()) {
-            layoutParams.height = WRAP_CONTENT
-        } else {
-            layoutParams.height = 1 // Minimal height instead of hiding completely
+        clock.layoutParams = clock.layoutParams.apply {
+            height = if (sharedPreferenceManager.isClockEnabled()) WRAP_CONTENT else 1
         }
-        clock.layoutParams = layoutParams
     }
 
-    /**
-     * Sets date text visibility based on preference.
-     *
-     * @param dateText TextClock to update
-     */
     fun setDateVisibility(dateText: TextClock) {
-        dateText.visibility = when (sharedPreferenceManager.isDateEnabled()) {
-            true -> {
-                View.VISIBLE
-            }
-            false -> {
-                View.GONE
-            }
-        }
+        dateText.visibility = if (sharedPreferenceManager.isDateEnabled()) View.VISIBLE else View.GONE
     }
 
-    /**
-     * Sets search bar and layout visibility based on preferences.
-     *
-     * @param searchView Search input field
-     * @param searchLayout Layout containing search UI
-     * @param replacementView Placeholder when search is hidden
-     */
     fun setSearchVisibility(searchView: View, searchLayout: View, replacementView: View) {
         setSearchLayoutVisibility(searchLayout, replacementView)
-        if (sharedPreferenceManager.isSearchEnabled()) {
-            searchView.visibility = View.VISIBLE
-        } else {
-            searchView.visibility = View.GONE
-        }
+        searchView.visibility = if (sharedPreferenceManager.isSearchEnabled()) View.VISIBLE else View.GONE
     }
 
-    /**
-     * Sets contacts toggle visibility.
-     *
-     * @param contactsView Contacts toggle ImageView
-     * @param searchLayout Search layout containing the toggle
-     * @param replacementView Placeholder when contacts are hidden
-     */
     fun setContactsVisibility(contactsView: View, searchLayout: View, replacementView: View) {
         setSearchLayoutVisibility(searchLayout, replacementView)
-        if (sharedPreferenceManager.areContactsEnabled()) {
-            contactsView.visibility = View.VISIBLE
-        } else {
-            contactsView.visibility = View.GONE
-        }
+        contactsView.visibility = if (sharedPreferenceManager.areContactsEnabled()) View.VISIBLE else View.GONE
     }
 
-    /**
-     * Sets web search button visibility.
-     *
-     * @param webSearchButton Web search ImageView
-     */
     fun setWebSearchVisibility(webSearchButton: View) {
-        if (sharedPreferenceManager.isWebSearchEnabled()) {
-            webSearchButton.visibility = View.VISIBLE
-        } else {
-            webSearchButton.visibility = View.GONE
-        }
+        webSearchButton.visibility = if (sharedPreferenceManager.isWebSearchEnabled()) View.VISIBLE else View.GONE
     }
 
-    /**
-     * Helper to manage search layout and replacement visibility.
-     * Shows replacement when both search and contacts are disabled.
-     *
-     * @param searchLayout Search layout container
-     * @param replacementView Placeholder view
-     */
     private fun setSearchLayoutVisibility(searchLayout: View, replacementView: View) {
-        if (!sharedPreferenceManager.isSearchEnabled() && !sharedPreferenceManager.areContactsEnabled()) {
-            searchLayout.visibility = View.GONE
-            replacementView.visibility = View.VISIBLE
-        } else {
-            replacementView.visibility = View.GONE
-            searchLayout.visibility = View.VISIBLE
-        }
+        val showReplacement = !sharedPreferenceManager.isSearchEnabled() && !sharedPreferenceManager.areContactsEnabled()
+        replacementView.visibility = if (showReplacement) View.VISIBLE else View.GONE
+        searchLayout.visibility = if (showReplacement) View.GONE else View.VISIBLE
     }
 
     // ============================================
     // Alignment Methods
     // ============================================
 
-    /**
-     * Sets alignment for clock and date TextClocks.
-     *
-     * @param clock Clock TextClock
-     * @param dateText Date TextClock
-     */
     fun setClockAlignment(clock: TextClock, dateText: TextClock) {
         val alignment = sharedPreferenceManager.getClockAlignment()
         setTextAlignment(clock, alignment)
         setTextAlignment(dateText, alignment)
     }
 
-    /**
-     * Sets alignment for all shortcuts in the home view.
-     *
-     * @param shortcuts LinearLayout containing shortcut TextViews
-     */
     fun setShortcutsAlignment(shortcuts: LinearLayout) {
         val alignment = sharedPreferenceManager.getShortcutAlignment()
         shortcuts.children.forEach {
@@ -507,90 +338,27 @@ class UIUtils(private val context: Context) {
         }
     }
 
-    /**
-     * Sets vertical alignment for shortcuts (top, center, bottom).
-     * Adjusts weight of spacing views above and below shortcuts.
-     *
-     * @param topSpace Space above shortcuts
-     * @param bottomSpace Space below shortcuts
-     */
     fun setShortcutsVAlignment(topSpace: Space, bottomSpace: Space) {
-        val alignment = sharedPreferenceManager.getShortcutVAlignment()
-        val topLayoutParams = topSpace.layoutParams as LinearLayout.LayoutParams
-        val bottomLayoutParams = bottomSpace.layoutParams as LinearLayout.LayoutParams
-
-        // Different weight ratios for each alignment
-        when (alignment) {
-            "top" -> {
-                topLayoutParams.weight = 0.1F
-                bottomLayoutParams.weight = 0.42F
-            }
-            "center" -> {
-                topLayoutParams.weight = 0.22F
-                bottomLayoutParams.weight = 0.3F
-            }
-            "bottom" -> {
-                topLayoutParams.weight = 0.42F
-                bottomLayoutParams.weight = 0.1F
-            }
+        val (topWeight, bottomWeight) = when (sharedPreferenceManager.getShortcutVAlignment()) {
+            "top" -> 0.1F to 0.42F
+            "bottom" -> 0.42F to 0.1F
+            else -> 0.22F to 0.3F
         }
-
-        topSpace.layoutParams = topLayoutParams
-        bottomSpace.layoutParams = bottomLayoutParams
+        topSpace.layoutParams = (topSpace.layoutParams as LinearLayout.LayoutParams).apply { weight = topWeight }
+        bottomSpace.layoutParams = (bottomSpace.layoutParams as LinearLayout.LayoutParams).apply { weight = bottomWeight }
     }
 
-    /**
-     * Sets position of drawable icons based on text alignment.
-     * Icons move to opposite side of text for balanced appearance.
-     *
-     * @param textView TextView with drawables
-     * @param alignment Text alignment (left, center, right)
-     * @param alignments Available alignment options
-     */
     fun setDrawables(textView: TextView, alignment: String?, alignments: Array<String> = arrayOf("left","center","right")) {
-        try {
-            val drawables = textView.compoundDrawables.filterNotNull()
-            val firstDrawable = drawables.firstOrNull() ?: return
-
-            // Position icon opposite to text alignment for visual balance
-            when (alignment) {
-                alignments[0] -> {
-                    textView.setCompoundDrawablesWithIntrinsicBounds(
-                        firstDrawable,
-                        null,
-                        null,
-                        null
-                    )
-                }
-
-                alignments[1] -> {
-                    textView.setCompoundDrawablesWithIntrinsicBounds(
-                        firstDrawable,
-                        null,
-                        firstDrawable,
-                        null
-                    )
-                }
-
-                alignments[2] -> {
-                    textView.setCompoundDrawablesWithIntrinsicBounds(
-                        null,
-                        null,
-                        firstDrawable,
-                        null
-                    )
-                }
-            }
-        } catch (_: Exception) {}
+        val firstDrawable = textView.compoundDrawables.filterNotNull().firstOrNull() ?: return
+        // Place icon on the opposite side of the text for visual balance.
+        val (left, right) = when (alignment) {
+            alignments[1] -> firstDrawable to firstDrawable
+            alignments[2] -> null to firstDrawable
+            else -> firstDrawable to null
+        }
+        textView.setCompoundDrawablesWithIntrinsicBounds(left, null, right, null)
     }
 
-    /**
-     * Sets alignment for app menu items.
-     *
-     * @param textView App name TextView
-     * @param editText Edit field for renaming
-     * @param regionText Region/country subtitle TextView
-     */
     fun setAppAlignment(
         textView: TextView,
         alignment: String?,
@@ -608,321 +376,147 @@ class UIUtils(private val context: Context) {
             setDrawables(textView, alignment)
             setTextGravity(editText, alignment)
         }
-
     }
 
-    /**
-     * Sets search input alignment.
-     *
-     * @param searchView Search TextInputEditText
-     */
     fun setSearchAlignment(searchView: TextInputEditText) {
         setTextAlignment(searchView, sharedPreferenceManager.getSearchAlignment())
     }
 
-    /**
-     * Sets alignment for menu title (during shortcut rename).
-     * Drawable icon positioned opposite to text.
-     *
-     * @param menuTitle Title TextView
-     */
     fun setMenuTitleAlignment(menuTitle: TextView) {
         val alignment = sharedPreferenceManager.getAppAlignment()
         setTextGravity(menuTitle, alignment)
         setDrawables(menuTitle, alignment, arrayOf("right","center","left"))
     }
 
-    /**
-     * Sets text alignment for a TextView.
-     *
-     * @param view TextView to update
-     * @param alignment Alignment string (left, center, right)
-     */
     private fun setTextAlignment(view: TextView, alignment: String?) {
-        try {
-            view.textAlignment = when (alignment) {
-            "left" -> View.TEXT_ALIGNMENT_VIEW_START
-
+        view.textAlignment = when (alignment) {
             "center" -> View.TEXT_ALIGNMENT_CENTER
-
             "right" -> View.TEXT_ALIGNMENT_VIEW_END
-
             else -> View.TEXT_ALIGNMENT_VIEW_START
-            }
-        } catch (_: Exception) {}
+        }
     }
 
-    /**
-     * Sets gravity for a TextView.
-     * Controls both horizontal and vertical positioning.
-     *
-     * @param view TextView to update
-     * @param alignment Alignment string (left, center, right)
-     */
     private fun setTextGravity(view: TextView, alignment: String?) {
-        try {
-            view.gravity = when (alignment) {
-                "left" -> Gravity.CENTER_VERTICAL or Gravity.START
-
-                "center" -> Gravity.CENTER_VERTICAL or Gravity.CENTER_HORIZONTAL
-
-                "right" -> Gravity.CENTER_VERTICAL or Gravity.END
-
-                else -> Gravity.CENTER_VERTICAL or Gravity.START
-            }
-        } catch (_: Exception) {}
+        view.gravity = when (alignment) {
+            "center" -> Gravity.CENTER_VERTICAL or Gravity.CENTER_HORIZONTAL
+            "right" -> Gravity.CENTER_VERTICAL or Gravity.END
+            else -> Gravity.CENTER_VERTICAL or Gravity.START
+        }
     }
 
     // ============================================
     // Size Methods
     // ============================================
 
-    /**
-     * Sets clock text size based on preference.
-     * Uses predefined size presets.
-     *
-     * @param clock TextClock to size
-     */
     fun setClockSize(clock: TextClock) {
-        setTextSize(clock, sharedPreferenceManager.getClockSize(), 48F, 58F, 70F, 78F, 82F, 84F)
+        setTextSize(clock, sharedPreferenceManager.getClockSize(), CLOCK_SIZES)
     }
 
-    /**
-     * Sets date text size based on preference.
-     *
-     * @param dateText TextClock to size
-     */
     fun setDateSize(dateText: TextClock) {
-        setTextSize(dateText, sharedPreferenceManager.getDateSize(), 14F, 17F, 20F, 23F, 26F, 29F)
+        setTextSize(dateText, sharedPreferenceManager.getDateSize(), DATE_SIZES)
     }
 
-    /**
-     * Sets size for all shortcuts in home view.
-     *
-     * @param shortcuts LinearLayout containing shortcuts
-     */
     fun setShortcutsSize(shortcuts: LinearLayout) {
-
         val size = sharedPreferenceManager.getShortcutSize()
-
         shortcuts.children.forEach {
-            if (it is TextView) {
-                setShortcutSize(it, size)
-            }
+            if (it is TextView) setShortcutSize(it, size)
         }
     }
 
-    /**
-     * Sets auto-sizing text for a shortcut.
-     * Falls back to fixed size on older API levels.
-     *
-     * @param shortcut TextView to size
-     * @param size Size preset string
-     */
     private fun setShortcutSize(shortcut: TextView, size: String?) {
-        try {
-            val sizeConfig = getShortcutSizeConfig(size)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                shortcut.setAutoSizeTextTypeUniformWithConfiguration(
-                    5, // Minimum text size in SP
-                    sizeConfig.first, // Maximum text size in SP
-                    2, // Step size in SP
-                    TypedValue.COMPLEX_UNIT_SP
-                )
-            } else {
-                shortcut.setTextSize(TypedValue.COMPLEX_UNIT_SP, sizeConfig.second)
-            }
-        } catch(_: Exception) {}
+        val (maxAuto, fallback) = SHORTCUT_SIZE_CONFIGS[size] ?: SHORTCUT_DEFAULT_SIZE
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            shortcut.setAutoSizeTextTypeUniformWithConfiguration(
+                AUTOSIZE_MIN, maxAuto, AUTOSIZE_STEP, TypedValue.COMPLEX_UNIT_SP
+            )
+        } else {
+            shortcut.setTextSize(TypedValue.COMPLEX_UNIT_SP, fallback)
+        }
     }
 
-    /**
-     * Maps size preset to configuration values.
-     *
-     * @param size Size preset string
-     * @return Pair of (maxAutoSize, fallbackSize)
-     */
-    private fun getShortcutSizeConfig(size: String?): Pair<Int, Float> {
-        // Auto-size maximum values for API 26+
-        val autoSizeMax = mapOf(
-            "tiny" to 20,
-            "small" to 24,
-            "medium" to 28,
-            "large" to 32,
-            "extra" to 36,
-            "huge" to 40
-        )
-        // Fallback fixed sizes for older API levels
-        val fallbackSize = mapOf(
-            "tiny" to 14f,
-            "small" to 18f,
-            "medium" to 22f,
-            "large" to 26f,
-            "extra" to 30f,
-            "huge" to 34f
-        )
-        return Pair(
-            autoSizeMax[size] ?: 20,
-            fallbackSize[size] ?: 14f
-        )
-    }
-
-    /**
-     * Sets size for app menu items.
-     *
-     * @param textView App name TextView
-     * @param editText Edit field (uses same size)
-     * @param regionText Region subtitle (smaller size)
-     */
     fun setAppSize(
         textView: TextView,
         size: String?,
         editText: TextInputEditText? = null,
         regionText: TextView? = null
     ) {
-        setTextSize(textView, size, 21F, 24F, 27F, 30F, 33F, 36F)
-        if (editText != null) {
-            setTextSize(editText, size, 21F, 24F, 27F, 30F, 33F, 36F)
-        }
-        if (regionText != null) {
-            setTextSize(regionText, size, 11F, 14F, 17F, 20F, 23F, 26F)
-        }
+        setTextSize(textView, size, APP_SIZES)
+        editText?.let { setTextSize(it, size, APP_SIZES) }
+        regionText?.let { setTextSize(it, size, REGION_SIZES) }
     }
 
-    /**
-     * Sets search input text size.
-     *
-     * @param searchView TextInputEditText to size
-     */
     fun setSearchSize(searchView: TextInputEditText) {
-        setTextSize(searchView, sharedPreferenceManager.getSearchSize(), 18F, 21F, 25F, 27F, 30F, 33F)
+        setTextSize(searchView, sharedPreferenceManager.getSearchSize(), SEARCH_SIZES)
     }
 
-    /**
-     * Sets menu title text size.
-     *
-     * @param menuTitle Title TextView to size
-     */
     fun setMenuTitleSize(menuTitle: TextView) {
-        setTextSize(menuTitle, sharedPreferenceManager.getAppSize(), 27F, 30F, 33F, 36F, 39F, 42F)
+        setTextSize(menuTitle, sharedPreferenceManager.getAppSize(), MENU_TITLE_SIZES)
     }
 
-    /**
-     * Generic text size setter using preset mappings.
-     * Maps size string to specific SP values.
-     *
-     * @param view TextView to size
-     * @param size Size preset string
-     * @param t,s,m,l,x,h Size values for tiny through huge
-     */
-    private fun setTextSize(view: TextView, size: String?, t: Float, s: Float, m: Float, l: Float, x: Float, h: Float) {
-        try {
-            val sizeMap = mapOf("tiny" to t, "small" to s, "medium" to m, "large" to l, "extra" to x, "huge" to h)
-            view.textSize = sizeMap[size] ?: 0F
-        } catch (_: Exception) {}
+    private fun setTextSize(view: TextView, size: String?, sizes: FloatArray) {
+        view.textSize = sizes[sizeIndex(size)]
+    }
+
+    private fun sizeIndex(size: String?): Int = when (size) {
+        "tiny" -> 0
+        "small" -> 1
+        "medium" -> 2
+        "large" -> 3
+        "extra" -> 4
+        "huge" -> 5
+        else -> 0
     }
 
     // ============================================
     // Spacing Methods
     // ============================================
 
-    /**
-     * Sets spacing between shortcuts in home view.
-     * Adjusts layout weight for even distribution.
-     *
-     * @param shortcuts LinearLayout containing shortcuts
-     */
     fun setShortcutsSpacing(shortcuts: LinearLayout) {
         val shortcutWeight = sharedPreferenceManager.getShortcutWeight()
         shortcuts.children.forEach {
             if (it is TextView) {
-                setShortcutSpacing(it, shortcutWeight)
+                it.layoutParams = (it.layoutParams as LinearLayout.LayoutParams).apply {
+                    weight = shortcutWeight
+                }
             }
         }
     }
 
-    /**
-     * Sets layout weight for a shortcut.
-     *
-     * @param shortcut TextView to adjust
-     * @param shortcutWeight Weight value from preferences
-     */
-    private fun setShortcutSpacing(shortcut: TextView, shortcutWeight: Float?) {
-        val layoutParams = shortcut.layoutParams as LinearLayout.LayoutParams
-
-        if (shortcutWeight != null) {
-            layoutParams.weight = shortcutWeight
-        }
-
-        shortcut.layoutParams = layoutParams
-    }
-
-    /**
-     * Sets vertical padding for app menu items.
-     *
-     * @param item TextView to pad
-     */
     fun setItemSpacing(item: TextView, spacing: Int?) {
-        if (spacing != null) {
-            val spacingPx = dpToPx(spacing)
-            item.setPadding(item.paddingLeft, spacingPx, item.paddingRight, spacingPx)
-        }
+        if (spacing == null) return
+        val spacingPx = dpToPx(spacing)
+        item.setPadding(item.paddingLeft, spacingPx, item.paddingRight, spacingPx)
     }
 
-    /**
-     * Sets vertical padding for location/weather items.
-     *
-     * @param item ConstraintLayout to pad
-     */
     fun setWeatherSpacing(item: ConstraintLayout) {
-        val spacing = sharedPreferenceManager.getAppSpacing()
-        if (spacing != null) {
-            val spacingPx = dpToPx(spacing)
-            item.setPadding(item.paddingLeft, spacingPx, item.paddingRight, spacingPx)
-        }
+        val spacingPx = dpToPx(sharedPreferenceManager.getAppSpacing())
+        item.setPadding(item.paddingLeft, spacingPx, item.paddingRight, spacingPx)
     }
 
-    /**
-     * Converts DP to pixels using display density.
-     *
-     * @param dp Density-independent pixels
-     * @return Actual pixel value
-     */
-    private fun dpToPx(dp: Int): Int {
-        val density = context.resources.displayMetrics.density
-        return (dp * density).toInt()
-    }
+    private fun dpToPx(dp: Int): Int = (dp * context.resources.displayMetrics.density).toInt()
 
     // ============================================
     // Status Bar Methods
     // ============================================
 
-    /**
-     * Shows or hides status bar based on preference.
-     * Uses appropriate API for Android version.
-     *
-     * @param window Window to update
-     */
     fun setStatusBar(window: Window) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             val windowInsetsController = window.insetsController
-
             windowInsetsController?.let {
                 if (sharedPreferenceManager.isBarVisible()) {
                     it.show(WindowInsets.Type.statusBars())
-                }
-                else {
+                } else {
                     it.hide(WindowInsets.Type.statusBars())
-                    it.systemBarsBehavior =
-                        WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+                    it.systemBarsBehavior = WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
                 }
             }
         } else {
             @Suppress("DEPRECATION")
             val decorView = window.decorView
-            if (sharedPreferenceManager.isBarVisible()) {
-                decorView.systemUiVisibility = decorView.systemUiVisibility and View.SYSTEM_UI_FLAG_FULLSCREEN.inv()
+            decorView.systemUiVisibility = if (sharedPreferenceManager.isBarVisible()) {
+                decorView.systemUiVisibility and View.SYSTEM_UI_FLAG_FULLSCREEN.inv()
             } else {
-                decorView.systemUiVisibility = decorView.systemUiVisibility or View.SYSTEM_UI_FLAG_FULLSCREEN
+                decorView.systemUiVisibility or View.SYSTEM_UI_FLAG_FULLSCREEN
             }
         }
     }
@@ -931,18 +525,40 @@ class UIUtils(private val context: Context) {
     // Fragment Navigation
     // ============================================
 
-    /**
-     * Switches to a new fragment in the settings activity.
-     * Adds to back stack for back navigation.
-     *
-     * @param activity Activity hosting the fragment
-     * @param fragment Fragment to display
-     */
     fun switchFragment(activity: FragmentActivity, fragment: Fragment) {
         activity.supportFragmentManager
             .beginTransaction()
             .replace(R.id.settingsLayout, fragment)
             .addToBackStack(null)
             .commit()
+    }
+
+    private companion object {
+        const val HINT_ALPHA_HEX = "A9"
+        const val SHADOW_RADIUS = 4f
+        const val SHADOW_DX = 2f
+        const val SHADOW_DY = 2f
+        const val AUTOSIZE_MIN = 5
+        const val AUTOSIZE_STEP = 2
+
+        val TRANSPARENT = "#00000000".toColorInt()
+        val DIM_COLOR = "#3F000000".toColorInt()
+
+        val CLOCK_SIZES = floatArrayOf(48F, 58F, 70F, 78F, 82F, 84F)
+        val DATE_SIZES = floatArrayOf(14F, 17F, 20F, 23F, 26F, 29F)
+        val APP_SIZES = floatArrayOf(21F, 24F, 27F, 30F, 33F, 36F)
+        val REGION_SIZES = floatArrayOf(11F, 14F, 17F, 20F, 23F, 26F)
+        val SEARCH_SIZES = floatArrayOf(18F, 21F, 25F, 27F, 30F, 33F)
+        val MENU_TITLE_SIZES = floatArrayOf(27F, 30F, 33F, 36F, 39F, 42F)
+
+        val SHORTCUT_SIZE_CONFIGS: Map<String, Pair<Int, Float>> = mapOf(
+            "tiny" to (20 to 14f),
+            "small" to (24 to 18f),
+            "medium" to (28 to 22f),
+            "large" to (32 to 26f),
+            "extra" to (36 to 30f),
+            "huge" to (40 to 34f),
+        )
+        val SHORTCUT_DEFAULT_SIZE = 20 to 14f
     }
 }

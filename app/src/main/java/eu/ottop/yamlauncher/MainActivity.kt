@@ -45,7 +45,6 @@ import android.provider.AlarmClock
 import android.provider.ContactsContract
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.GestureDetector
 import android.view.KeyEvent
 import android.view.MotionEvent
@@ -62,7 +61,6 @@ import android.widget.Toast
 import android.widget.ViewSwitcher
 import androidx.appcompat.widget.AppCompatButton
 import androidx.activity.OnBackPressedCallback
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.edit
@@ -71,6 +69,7 @@ import androidx.core.database.getStringOrNull
 import androidx.core.view.ViewCompat
 import androidx.core.view.isVisible
 import androidx.core.view.marginLeft
+import androidx.core.net.toUri
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -115,7 +114,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
      * These correspond to TextViews in the layout that can be configured to launch apps or contacts.
      */
     companion object {
-        private val SHORTCUT_IDS = listOf(
+        val SHORTCUT_IDS = listOf(
             R.id.app1, R.id.app2, R.id.app3, R.id.app4, R.id.app5,
             R.id.app6, R.id.app7, R.id.app8, R.id.app9, R.id.app10,
             R.id.app11, R.id.app12, R.id.app13, R.id.app14, R.id.app15
@@ -350,7 +349,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         SHORTCUT_IDS.forEachIndexed { index, shortcutId ->
             val textView = findViewById<TextView>(shortcutId)
 
-            if (index >= shortcutNo!!) {
+            if (index >= shortcutNo) {
                 textView.visibility = View.GONE
             } else {
                 textView.visibility = View.VISIBLE
@@ -471,7 +470,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         }
     }
 
-    private fun toAppMenu() {
+    private fun toAppMenu(showKeyboard: Boolean = false) {
         uiUtils.setContactsVisibility(searchSwitcher, binding.searchLayout, binding.searchReplacement)
 
         try {
@@ -492,11 +491,12 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         isDrawerOpen = true
         animations.showApps(binding.homeView, binding.appView)
         animations.backgroundIn(this@MainActivity)
-        if (sharedPreferenceManager.isAutoKeyboardEnabled()) {
-            isInitialOpen = true
-            val imm =
-                getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+
+        val shouldShowKeyboard = showKeyboard || sharedPreferenceManager.isAutoKeyboardEnabled()
+        if (shouldShowKeyboard) {
+            if (!showKeyboard) isInitialOpen = true
             searchView.requestFocus()
+            val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
             imm.showSoftInput(searchView, InputMethodManager.SHOW_IMPLICIT)
         }
     }
@@ -679,67 +679,21 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
             }
         }
 
-        clock.setOnClickListener { _ ->
+        clock.setOnClickListener {
             if (sharedPreferenceManager.isClockGestureEnabled()) {
-                if (sharedPreferenceManager.isGestureEnabled("clock") && clockApp.first != null && clockApp.second != null) {
-                    try {
-                        launcherApps.startMainActivity(clockApp.first!!.componentName, launcherApps.profiles[clockApp.second!!], null, null)
-                    } catch (e: SecurityException) {
-                        try {
-                            val intent = Intent(Intent.ACTION_MAIN).apply {
-                                addCategory(Intent.CATEGORY_LAUNCHER)
-                                component = clockApp.first!!.componentName
-                                flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                            }
-                            startActivity(intent)
-                        } catch (e2: Exception) {
-                            logger.e("MainActivity", "Failed to launch clock gesture app via Intent fallback", e2)
-                            Toast.makeText(this@MainActivity, getString(R.string.launch_error), Toast.LENGTH_SHORT).show()
-                        }
-                    } catch (e: Exception) {
-                        logger.e("MainActivity", "Failed to launch clock gesture app", e)
-                        Toast.makeText(this@MainActivity, getString(R.string.launch_error), Toast.LENGTH_SHORT).show()
-                    }
-                } else {
+                handleLaunchOrFallback(clockApp, "clock") {
                     val intent = Intent(AlarmClock.ACTION_SHOW_ALARMS)
-                    if (intent.resolveActivity(packageManager) != null) {
-                        startActivity(intent)
-                    }
+                    if (intent.resolveActivity(packageManager) != null) startActivity(intent)
                 }
             }
         }
 
-        dateText.setOnClickListener { _ ->
+        dateText.setOnClickListener {
             if (sharedPreferenceManager.isDateGestureEnabled()) {
-
-                if (sharedPreferenceManager.isGestureEnabled("date") && dateApp.first != null && dateApp.second != null) {
-                    try {
-                        launcherApps.startMainActivity(dateApp.first!!.componentName, launcherApps.profiles[dateApp.second!!], null, null)
-                    } catch (e: SecurityException) {
-                        try {
-                            val intent = Intent(Intent.ACTION_MAIN).apply {
-                                addCategory(Intent.CATEGORY_LAUNCHER)
-                                component = dateApp.first!!.componentName
-                                flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                            }
-                            startActivity(intent)
-                        } catch (e2: Exception) {
-                            logger.e("MainActivity", "Failed to launch date gesture app via Intent fallback", e2)
-                            Toast.makeText(this@MainActivity, getString(R.string.launch_error), Toast.LENGTH_SHORT).show()
-                        }
-                    } catch (e: Exception) {
-                        logger.e("MainActivity", "Failed to launch date gesture app", e)
-                        Toast.makeText(this@MainActivity, getString(R.string.launch_error), Toast.LENGTH_SHORT).show()
-                    }
-                } else {
+                handleLaunchOrFallback(dateApp, "date") {
                     try {
                         startActivity(
-                            Intent(
-                                Intent.makeMainSelectorActivity(
-                                    Intent.ACTION_MAIN,
-                                    Intent.CATEGORY_APP_CALENDAR
-                                )
-                            )
+                            Intent(Intent.makeMainSelectorActivity(Intent.ACTION_MAIN, Intent.CATEGORY_APP_CALENDAR))
                         )
                     } catch (e: ActivityNotFoundException) {
                         logger.w("MainActivity", "No calendar app found when clicking date")
@@ -775,6 +729,39 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
                 backToHome()
             }
         })
+    }
+
+    /**
+     * Attempts to launch the configured gesture app, falling back to a default action if
+     * the gesture isn't configured or the launch fails.
+     */
+    private fun handleLaunchOrFallback(
+        target: Pair<LauncherActivityInfo?, Int?>,
+        gestureKey: String,
+        fallback: () -> Unit
+    ) {
+        if (sharedPreferenceManager.isGestureEnabled(gestureKey) && target.first != null && target.second != null) {
+            try {
+                launcherApps.startMainActivity(target.first!!.componentName, launcherApps.profiles[target.second!!], null, null)
+            } catch (e: SecurityException) {
+                try {
+                    val intent = Intent(Intent.ACTION_MAIN).apply {
+                        addCategory(Intent.CATEGORY_LAUNCHER)
+                        component = target.first!!.componentName
+                        flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                    }
+                    startActivity(intent)
+                } catch (e2: Exception) {
+                    logger.e("MainActivity", "Failed to launch $gestureKey gesture app via Intent fallback", e2)
+                    Toast.makeText(this, getString(R.string.launch_error), Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: Exception) {
+                logger.e("MainActivity", "Failed to launch $gestureKey gesture app", e)
+                Toast.makeText(this, getString(R.string.launch_error), Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            fallback()
+        }
     }
 
     private fun trySettings() {
@@ -1156,22 +1143,14 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
     }
 
     private fun buildAlphabetIndexLetters(apps: List<Triple<LauncherActivityInfo, UserHandle, Int>>): Set<String> {
-        val availableLetters = mutableSetOf<String>()
-        for (app in apps) {
-            try {
-                val name = sharedPreferenceManager.getAppName(
-                    app.first.componentName.flattenToString(),
-                    app.third,
-                    AppNameResolver.resolveBaseLabel(this, app.first)
-                ).toString()
-                if (name.isNotEmpty()) {
-                    availableLetters.add(getAlphabetIndexKey(name))
-                }
-            } catch (e: Exception) {
-                logger.w("MainActivity", "Error getting app name for alphabet index: ${app.first.componentName.packageName}")
-            }
+        if (appSearchIndexDirty || appSearchIndex.size != apps.size) {
+            appSearchIndex = buildAppSearchIndex(apps)
+            appSearchIndexDirty = false
         }
-        return availableLetters
+        return appSearchIndex.asSequence()
+            .map { getAlphabetIndexKey(it.cleaned) }
+            .filter { it.isNotEmpty() }
+            .toSet()
     }
 
     private fun getAlphabetIndexKey(name: String): String {
@@ -1186,42 +1165,21 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         val layoutParams = alphabetIndex.layoutParams as android.widget.FrameLayout.LayoutParams
 
         when (position) {
-            "left" -> {
-                layoutParams.gravity = android.view.Gravity.START
-            }
-            "right" -> {
-                layoutParams.gravity = android.view.Gravity.END
-            }
+            "left" -> layoutParams.gravity = android.view.Gravity.START
+            "right" -> layoutParams.gravity = android.view.Gravity.END
         }
         alphabetIndex.layoutParams = layoutParams
     }
 
     private fun scrollToLetter(letter: String, apps: List<Triple<LauncherActivityInfo, UserHandle, Int>>) {
-        val targetLetter = if (letter == "#") null else letter
-
-        var targetPosition = -1
-        for (i in apps.indices) {
-            val app = apps.getOrNull(i) ?: continue
-            try {
-                val name = sharedPreferenceManager.getAppName(
-                    app.first.componentName.flattenToString(),
-                    app.third,
-                    AppNameResolver.resolveBaseLabel(this, app.first)
-                ).toString()
-
-                val letterKey = getAlphabetIndexKey(name)
-                if (targetLetter == null) {
-                    if (letterKey == "#") {
-                        targetPosition = i
-                        break
-                    }
-                } else if (letterKey == targetLetter) {
-                    targetPosition = i
-                    break
-                }
-            } catch (e: Exception) {
-                logger.w("MainActivity", "Error in scrollToLetter for app at position $i")
-            }
+        if (appSearchIndexDirty || appSearchIndex.size != apps.size) {
+            appSearchIndex = buildAppSearchIndex(apps)
+            appSearchIndexDirty = false
+        }
+        val isNonLetter = letter == "#"
+        val targetPosition = appSearchIndex.indexOfFirst {
+            val key = getAlphabetIndexKey(it.cleaned)
+            if (isNonLetter) key == "#" else key == letter
         }
 
         if (targetPosition >= 0) {
@@ -1594,33 +1552,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         searchView.setText(char)
         searchView.setSelection(searchView.text?.length ?: 0)
 
-        toAppMenuWithKeyboard()
-    }
-
-    private fun toAppMenuWithKeyboard() {
-        uiUtils.setContactsVisibility(searchSwitcher, binding.searchLayout, binding.searchReplacement)
-
-        try {
-            if (::appRecycler.isInitialized) {
-                appRecycler.scrollToPosition(0)
-            }
-            if (::menuView.isInitialized) {
-                menuView.displayedChild = 0
-            }
-            if (::searchSwitcher.isInitialized && searchSwitcher.isVisible && ::contactRecycler.isInitialized) {
-                contactRecycler.scrollToPosition(0)
-                setAppViewDetails()
-            }
-        } catch (e: Exception) {
-            logger.w("MainActivity", "Error in toAppMenuWithKeyboard: ${e.message}")
-        }
-        isDrawerOpen = true
-        animations.showApps(binding.homeView, binding.appView)
-        animations.backgroundIn(this@MainActivity)
-
-        searchView.requestFocus()
-        val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.showSoftInput(searchView, InputMethodManager.SHOW_IMPLICIT)
+        toAppMenu(showKeyboard = true)
     }
 
     override fun onDestroy() {
@@ -1635,6 +1567,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
             logger.w("MainActivity", "Error during onDestroy cleanup: ${e.message}")
         }
         logger.i("MainActivity", "MainActivity destroyed")
+        Logger.getInstance(this).shutdown()
     }
 
     private fun registerNotificationReceiver() {
@@ -1671,48 +1604,28 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         }
 
         val packagesWithNotifications = notificationListener.getPackagesWithNotifications()
-        val shortcuts = arrayOf(
-            R.id.app1, R.id.app2, R.id.app3, R.id.app4, R.id.app5,
-            R.id.app6, R.id.app7, R.id.app8, R.id.app9, R.id.app10,
-            R.id.app11, R.id.app12, R.id.app13, R.id.app14, R.id.app15
-        )
+        val textColor = sharedPreferenceManager.getTextColor()
 
-        for (i in shortcuts.indices) {
-            val textView = findViewById<TextView>(shortcuts[i])
+        for ((i, id) in SHORTCUT_IDS.withIndex()) {
+            val textView = findViewById<TextView>(id) ?: continue
             val savedView = sharedPreferenceManager.getShortcut(i)
 
-            if (savedView != null && savedView.getOrNull(3)?.toBoolean() != true) {
-                val componentName = savedView.getOrNull(0)
-                if (componentName != null && componentName != "e") {
-                    val packageName = if (componentName.contains("/")) {
-                        componentName.substringBefore("/")
-                    } else {
-                        componentName
-                    }
+            if (savedView == null || savedView.getOrNull(3)?.toBoolean() == true) continue
+            val componentName = savedView.getOrNull(0) ?: continue
+            if (componentName == "e") continue
 
-                    val hasNotification = packagesWithNotifications.contains(packageName)
-                    val dotDrawable = if (hasNotification) {
-                        ResourcesCompat.getDrawable(resources, R.drawable.notification_dot, null)
-                    } else {
-                        null
-                    }
+            val packageName = if (componentName.contains("/")) componentName.substringBefore("/") else componentName
+            val dotDrawable = if (packagesWithNotifications.contains(packageName)) {
+                ResourcesCompat.getDrawable(resources, R.drawable.notification_dot, null)?.mutate()
+            } else null
 
-                    // Guard against null tint calls
-                    if (dotDrawable != null) {
-                        try {
-                            dotDrawable.setTint(sharedPreferenceManager.getTextColor())
-                        } catch (_: Exception) {
-                            // Older Android versions may not support setTint
-                        }
-                    }
-                    textView.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                        textView.compoundDrawablesRelative.getOrNull(0),
-                        null,
-                        dotDrawable,
-                        null
-                    )
-                }
-            }
+            dotDrawable?.setTint(textColor)
+            textView.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                textView.compoundDrawablesRelative.getOrNull(0),
+                null,
+                dotDrawable,
+                null
+            )
         }
     }
 
@@ -1880,7 +1793,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
     override fun onUninstallApp(appActivity: LauncherActivityInfo, userHandle: UserHandle) {
         logger.i("MainActivity", "Uninstalling app: ${appActivity.applicationInfo.packageName}")
         val intent = Intent(Intent.ACTION_DELETE)
-        intent.data = Uri.parse("package:${appActivity.applicationInfo.packageName}")
+        intent.data = "package:${appActivity.applicationInfo.packageName}".toUri()
         intent.putExtra(Intent.EXTRA_USER, userHandle)
         startActivity(intent)
         returnAllowed = false
@@ -1934,7 +1847,6 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         editText.requestFocus()
 
         // Open keyboard
-        val handler = Handler(Looper.getMainLooper())
         handler.postDelayed({
             val imm =
                 getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -2051,7 +1963,6 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
      */
     open inner class GestureListener : GestureDetector.SimpleOnGestureListener() {
 
-        @RequiresApi(Build.VERSION_CODES.TIRAMISU)
         @SuppressLint("WrongConstant")
         override fun onFling(
             e1: MotionEvent?,

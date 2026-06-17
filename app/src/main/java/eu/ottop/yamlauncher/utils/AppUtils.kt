@@ -26,6 +26,10 @@ class AppUtils(private val context: Context, private val launcherApps: LauncherA
     private val sharedPreferenceManager = SharedPreferenceManager(context)
     private val logger = Logger.getInstance(context)
 
+    // Cache the installed-state check to avoid repeated LauncherApps calls
+    // during list binding; cleared on the next getInstalledApps() refresh.
+    private val installedCache = HashMap<Pair<String, Int>, Boolean>()
+
     /**
      * Gets list of installed launchable apps.
      * Includes apps from all user profiles (personal and work).
@@ -38,18 +42,17 @@ class AppUtils(private val context: Context, private val launcherApps: LauncherA
     suspend fun getInstalledApps(showApps: Boolean = false): List<Triple<LauncherActivityInfo, UserHandle, Int>> {
         val allApps = mutableListOf<Triple<LauncherActivityInfo, UserHandle, Int>>()
         var sortedApps = listOf<Triple<LauncherActivityInfo, UserHandle, Int>>()
+        installedCache.clear()
         withContext(Dispatchers.Default) {
             // Iterate through all user profiles (normal and work)
             for (i in launcherApps.profiles.indices) {
                 launcherApps.getActivityList(null, launcherApps.profiles[i]).forEach { app ->
+                    val component = app.componentName.flattenToString()
                     // Include app if not hidden OR if showing hidden apps for shortcut selection
                     // Also exclude the launcher itself from the list
-                    if ((!sharedPreferenceManager.isAppHidden(
-                            app.componentName.flattenToString(),
-                            i
-                        ) or showApps)&& app.applicationInfo.packageName != context.applicationInfo.packageName
+                    if ((!sharedPreferenceManager.isAppHidden(component, i) || showApps) &&
+                        app.applicationInfo.packageName != context.applicationInfo.packageName
                     ) {
-                        // Store app info with profile index (i) to identify personal vs work profile
                         allApps.add(Triple(app, launcherApps.profiles[i], i))
                     }
                 }
@@ -61,17 +64,15 @@ class AppUtils(private val context: Context, private val launcherApps: LauncherA
                     // Invert pinned status so pinned apps come first
                     !sharedPreferenceManager.isAppPinned(it.first.componentName.flattenToString(), it.third)
                 }.thenBy {
-                // Then sort alphabetically (case-insensitive)
-                sharedPreferenceManager.getAppName(
-                    it.first.componentName.flattenToString(),
-                    it.third,
-                    AppNameResolver.resolveBaseLabel(context, it.first)
-                ).toString().lowercase()
+                    sharedPreferenceManager.getAppName(
+                        it.first.componentName.flattenToString(),
+                        it.third,
+                        AppNameResolver.resolveBaseLabel(context, it.first)
+                    ).toString().lowercase()
                 }
             )
         }
         return sortedApps
-
     }
 
     /**
@@ -85,23 +86,23 @@ class AppUtils(private val context: Context, private val launcherApps: LauncherA
         val allApps = mutableListOf<Triple<LauncherActivityInfo, UserHandle, Int>>()
         var sortedApps = listOf<Triple<LauncherActivityInfo, UserHandle, Int>>()
         withContext(Dispatchers.Default) {
-        for (i in launcherApps.profiles.indices) {
-            launcherApps.getActivityList(null, launcherApps.profiles[i]).forEach { app ->
-                // Only include apps that are marked as hidden
-                if (sharedPreferenceManager.isAppHidden(app.componentName.flattenToString(), i)) {
-                    allApps.add(Triple(app, launcherApps.profiles[i], i))
+            for (i in launcherApps.profiles.indices) {
+                launcherApps.getActivityList(null, launcherApps.profiles[i]).forEach { app ->
+                    // Only include apps that are marked as hidden
+                    if (sharedPreferenceManager.isAppHidden(app.componentName.flattenToString(), i)) {
+                        allApps.add(Triple(app, launcherApps.profiles[i], i))
+                    }
                 }
             }
-        }
 
-        // Sort hidden apps alphabetically
-        sortedApps = allApps.sortedBy {
-        sharedPreferenceManager.getAppName(
-            it.first.componentName.flattenToString(),
-            it.third,
-            AppNameResolver.resolveBaseLabel(context, it.first)
-        ).toString().lowercase()
-        }
+            // Sort hidden apps alphabetically
+            sortedApps = allApps.sortedBy {
+                sharedPreferenceManager.getAppName(
+                    it.first.componentName.flattenToString(),
+                    it.third,
+                    AppNameResolver.resolveBaseLabel(context, it.first)
+                ).toString().lowercase()
+            }
         }
         return sortedApps
     }
@@ -109,14 +110,23 @@ class AppUtils(private val context: Context, private val launcherApps: LauncherA
     /**
      * Checks whether a package is still installed and launchable in the given profile.
      * Treats archived apps (Android 15+) as installed since their launch stub remains.
+     * Results are cached for the current binding pass to avoid repeated PackageManager
+     * lookups; [getInstalledApps] invalidates the cache.
      */
     fun isAppInstalled(packageName: String, profile: Int): Boolean {
-        return try {
-            if (profile !in launcherApps.profiles.indices) return false
-            launcherApps.getActivityList(packageName, launcherApps.profiles[profile]).isNotEmpty()
+        val key = packageName to profile
+        installedCache[key]?.let { return it }
+        val installed = try {
+            if (profile !in launcherApps.profiles.indices) {
+                false
+            } else {
+                launcherApps.getActivityList(packageName, launcherApps.profiles[profile]).isNotEmpty()
+            }
         } catch (_: Exception) {
             false
         }
+        installedCache[key] = installed
+        return installed
     }
 
     /**

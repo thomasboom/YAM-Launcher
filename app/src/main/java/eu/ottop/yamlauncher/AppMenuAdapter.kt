@@ -1,13 +1,13 @@
 package eu.ottop.yamlauncher
 
 import android.annotation.SuppressLint
-import android.content.pm.ApplicationInfo
 import android.content.pm.LauncherActivityInfo
 import android.content.pm.LauncherApps
 import android.graphics.BlendMode
 import android.graphics.BlendModeColorFilter
 import android.graphics.Rect
 import android.graphics.Typeface
+import android.graphics.drawable.Drawable
 import android.os.UserHandle
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -100,10 +100,10 @@ class AppMenuAdapter(
     private var cachedStrictClick: Boolean = sharedPreferenceManager.isAppStrictClickEnabled()
     private var cachedTypeface: Typeface? = uiUtils.resolveTypeface()
 
-    private val drawableEmpty = ResourcesCompat.getDrawable(activity.resources, R.drawable.ic_empty, null)
-    private val drawablePinFilled = ResourcesCompat.getDrawable(activity.resources, R.drawable.keep_filled_15px, null)
-    private val drawablePin = ResourcesCompat.getDrawable(activity.resources, R.drawable.keep_15px, null)
-    private val drawableWork = ResourcesCompat.getDrawable(activity.resources, R.drawable.ic_work_app, null)
+    private val drawableEmpty: Drawable? = ResourcesCompat.getDrawable(activity.resources, R.drawable.ic_empty, null)
+    private val drawablePinFilled: Drawable? = ResourcesCompat.getDrawable(activity.resources, R.drawable.keep_filled_15px, null)
+    private val drawablePin: Drawable? = ResourcesCompat.getDrawable(activity.resources, R.drawable.keep_15px, null)
+    private val drawableWork: Drawable? = ResourcesCompat.getDrawable(activity.resources, R.drawable.ic_work_app, null)
 
     fun onPreferencesChanged() {
         cachedTextColor = sharedPreferenceManager.getTextColor()
@@ -214,7 +214,6 @@ class AppMenuAdapter(
                 val localShortcut = shortcutTextView
                 if (localShortcut != null) {
                     shortcutListener.onShortcut(app, entry.second, textView, entry.third, localShortcut, shortcutIndex)
-                    return@setOnLongClickListener true
                 } else {
                     // Normal mode: show action menu
                     itemLongClickListener.onItemLongClick(
@@ -222,8 +221,18 @@ class AppMenuAdapter(
                         entry.second,
                         entry.third
                     )
-                    return@setOnLongClickListener true
                 }
+                true
+            }
+
+            // Accessibility actions are stable across the holder lifetime; add them once.
+            ViewCompat.addAccessibilityAction(textView, activity.getString(R.string.close_app_menu)) { _, _ ->
+                activity.backToHome()
+                true
+            }
+            ViewCompat.addAccessibilityAction(textView, activity.getString(R.string.switch_to_contacts)) { _, _ ->
+                activity.switchMenus()
+                true
             }
         }
     }
@@ -244,29 +253,20 @@ class AppMenuAdapter(
             return
         }
         val app = apps[position]
+        val appComponent = app.first.componentName.flattenToString()
+        val isPinned = sharedPreferenceManager.isAppPinned(appComponent, app.third)
 
-        // Show pin icon for pinned apps
-        if (sharedPreferenceManager.isAppPinned(app.first.componentName.flattenToString(), app.third)) {
-            if (app.third != 0) {
-                // Pinned work profile app
-                holder.textView.setCompoundDrawablesWithIntrinsicBounds(drawablePinFilled, null, drawableEmpty, null)
-            }
-            else {
-                // Pinned personal profile app
-                holder.textView.setCompoundDrawablesWithIntrinsicBounds(drawablePin, null, drawableEmpty, null)
-            }
-            holder.textView.compoundDrawables.getOrNull(0)?.colorFilter = BlendModeColorFilter(cachedTextColor, BlendMode.SRC_ATOP)
-        }
-        // Show work profile icon for non-pinned work apps
-        else if (app.third != 0) {
-            holder.textView.setCompoundDrawablesWithIntrinsicBounds(drawableWork, null, drawableEmpty, null)
-            holder.textView.compoundDrawables.getOrNull(0)?.colorFilter =
-                BlendModeColorFilter(cachedTextColor, BlendMode.SRC_ATOP)
-        }
-        // Empty drawable for personal profile non-pinned apps
-        else {
-            holder.textView.setCompoundDrawablesWithIntrinsicBounds(drawableEmpty, null, drawableEmpty, null)
-        }
+        // mutate() each drawable to avoid cross-item colorFilter leakage since
+        // ResourcesCompat.getDrawable returns shared instances.
+        val tint = BlendModeColorFilter(cachedTextColor, BlendMode.SRC_ATOP)
+        val leftDrawable = when {
+            isPinned && app.third != 0 -> drawablePinFilled
+            isPinned -> drawablePin
+            app.third != 0 -> drawableWork
+            else -> drawableEmpty
+        }?.mutate()?.apply { colorFilter = tint }
+
+        holder.textView.setCompoundDrawablesWithIntrinsicBounds(leftDrawable, null, drawableEmpty, null)
 
         // Apply styling from preferences
         uiUtils.setAppAlignment(holder.textView, cachedAlignment, holder.editText)
@@ -281,40 +281,20 @@ class AppMenuAdapter(
             holder.textView.setShadowLayer(0f, 0f, 0f, android.graphics.Color.TRANSPARENT)
         }
 
-        // Check if app is still installed (treats archived apps as installed)
-        val isAppInstalled = appUtils.isAppInstalled(
-            app.first.applicationInfo.packageName,
-            app.third
-        )
-
         // Set app name or removal placeholder
-        if (isAppInstalled) {
-            holder.textView.text = sharedPreferenceManager.getAppName(
-                app.first.componentName.flattenToString(),
+        if (appUtils.isAppInstalled(app.first.applicationInfo.packageName, app.third)) {
+            val displayName = sharedPreferenceManager.getAppName(
+                appComponent,
                 app.third,
                 AppNameResolver.resolveBaseLabel(activity, app.first)
             )
-            // Pre-fill edit text for rename mode
-            holder.editText.setText(holder.textView.text)
-        }
-        else {
+            holder.textView.text = displayName
+            holder.editText.setText(displayName)
+        } else {
             holder.textView.text = activity.getString(R.string.removing)
         }
 
         holder.textView.visibility = View.VISIBLE
-
-        // Accessibility actions
-        ViewCompat.addAccessibilityAction(holder.textView, activity.getString(R.string.close_app_menu)) { _, _ ->
-            activity.backToHome()
-            true
-        }
-
-        if (cachedContactsEnabled) {
-            ViewCompat.addAccessibilityAction(holder.textView, activity.getString(R.string.switch_to_contacts)) { _, _ ->
-                activity.switchMenus()
-                true
-            }
-        }
     }
 
     override fun getItemCount(): Int {

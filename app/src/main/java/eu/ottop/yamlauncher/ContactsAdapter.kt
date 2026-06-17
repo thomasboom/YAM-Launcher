@@ -121,6 +121,16 @@ class ContactsAdapter(
                     contactClickListener.onContactClick(contact.second)
                 }
             }
+
+            // Accessibility actions are stable across the holder lifetime; add them once.
+            ViewCompat.addAccessibilityAction(textView, activity.getString(R.string.close_app_menu)) { _, _ ->
+                activity.backToHome()
+                true
+            }
+            ViewCompat.addAccessibilityAction(textView, activity.getString(R.string.switch_to_apps)) { _, _ ->
+                activity.switchMenus()
+                true
+            }
         }
     }
 
@@ -137,8 +147,10 @@ class ContactsAdapter(
     override fun onBindViewHolder(holder: AppViewHolder, position: Int) {
         val contact = contacts[position]
 
-        // Clear any app icons (contacts don't have them)
-        holder.textView.setCompoundDrawablesWithIntrinsicBounds(drawableEmpty, null, drawableEmpty, null)
+        // Clear any app icons (contacts don't have them); mutate() avoids cross-item leakage
+        // of colorFilter since the drawable is shared.
+        val empty = drawableEmpty?.mutate()
+        holder.textView.setCompoundDrawablesWithIntrinsicBounds(empty, null, empty, null)
 
         // Apply styling from preferences
         uiUtils.setAppAlignment(holder.textView, cachedAlignment)
@@ -154,19 +166,6 @@ class ContactsAdapter(
 
         holder.textView.text = contact.first
         holder.textView.visibility = View.VISIBLE
-
-        // Accessibility actions
-        ViewCompat.addAccessibilityAction(holder.textView, activity.getString(R.string.close_app_menu)) { _, _ ->
-            activity.backToHome()
-            true
-        }
-
-        if (cachedContactsEnabled) {
-            ViewCompat.addAccessibilityAction(holder.textView, activity.getString(R.string.switch_to_apps)) { _, _ ->
-                activity.switchMenus()
-                true
-            }
-        }
     }
 
     override fun getItemCount(): Int {
