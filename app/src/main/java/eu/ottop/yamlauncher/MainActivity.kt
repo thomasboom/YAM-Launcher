@@ -239,10 +239,21 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
         biometricUtils = BiometricUtils(this)
         setSupportActionBar(null)
+
+        // Apply the background and orientation before `setContentView` so the very
+        // first frame already matches the user's configuration. Setting them
+        // after inflation caused a visible flash and a relayout once the
+        // decoration was repainted.
+        val earlyPrefs = SharedPreferenceManager(this)
+        if (earlyPrefs.isAutoRotationBlocked()) {
+            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LOCKED
+        }
+        UIUtils(this).setBackground(window, applyHomescreenDarkening = true)
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         setMainVariables()
 
@@ -254,12 +265,15 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
 
         setHomeListeners()
 
-        // Task to update the app menu every 5 seconds to detect newly installed/removed apps
+        // Task to update the app menu every 5 seconds to detect newly installed/removed apps.
+        // The first launch already populates `installedApps` via `setupApps()`; the initial
+        // tick would only re-do that work and trigger an early alphabet-index shift, so we
+        // skip it to avoid a post-launch layout shift.
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 while (true) {
-                    refreshAppMenu()
                     delay(5000)
+                    refreshAppMenu()
                 }
             }
         }
@@ -595,14 +609,8 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
     }
 
     private fun setPreferences() {
-        if (sharedPreferenceManager.isAutoRotationBlocked()) {
-            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LOCKED
-        } else {
-            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
-        }
-
-        uiUtils.setBackground(window, applyHomescreenDarkening = true)
-
+        // Orientation and window background are set in onCreate before
+        // setContentView so the first frame already reflects the user's prefs.
         val typeface = uiUtils.resolveTypeface()
         uiUtils.setTextFont(binding.homeView, typeface)
         uiUtils.setFont(searchView, typeface)
@@ -625,12 +633,9 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
 
         uiUtils.setShortcutsSpacing(binding.homeView)
 
-        // This didn't work and somehow delaying it by 0 makes it work
-        handler.postDelayed({
-            uiUtils.setStatusBar(window)
-            uiUtils.setMenuItemColors(searchView)
-            uiUtils.setMenuItemColors(menuTitle, "A9")
-        }, 100)
+        uiUtils.setStatusBar(window)
+        uiUtils.setMenuItemColors(searchView)
+        uiUtils.setMenuItemColors(menuTitle, "A9")
 
         clockApp = gestureUtils.getSwipeInfo(launcherApps, "clock")
         dateApp = gestureUtils.getSwipeInfo(launcherApps, "date")

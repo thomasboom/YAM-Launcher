@@ -96,21 +96,30 @@ class UIUtils(private val context: Context) {
      * @param view Root view to apply insets to
      */
     fun adjustInsets(view: View) {
+        // Apply current insets immediately so the first layout pass already accounts
+        // for status bar / navigation bar / cutout padding. This avoids an early
+        // layout shift where the first frame is drawn edge-to-edge and then a second
+        // pass pushes content in once insets arrive.
+        applyInsets(view, ViewCompat.getRootWindowInsets(view))
+
         ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
-            // Get system bars and display cutout insets
-            val bars = insets.getInsets(
-                WindowInsetsCompat.Type.systemBars()
-                        or WindowInsetsCompat.Type.displayCutout()
-            )
-            // Apply padding to all sides
-            v.updatePadding(
-                left = bars.left,
-                top = bars.top,
-                right = bars.right,
-                bottom = bars.bottom,
-            )
+            applyInsets(v, insets)
             WindowInsetsCompat.CONSUMED
         }
+    }
+
+    private fun applyInsets(view: View, insets: WindowInsetsCompat?) {
+        if (insets == null) return
+        val bars = insets.getInsets(
+            WindowInsetsCompat.Type.systemBars()
+                    or WindowInsetsCompat.Type.displayCutout()
+        )
+        view.updatePadding(
+            left = bars.left,
+            top = bars.top,
+            right = bars.right,
+            bottom = bars.bottom,
+        )
     }
 
     /**
