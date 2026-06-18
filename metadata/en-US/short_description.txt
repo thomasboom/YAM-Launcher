@@ -1,1 +1,1 @@
-YAM (Yet Another Minimalist) Launcher is a minimalist, open, customisable and text-based launcher for Android.
+Ainimalist, open, customisable and text-based Android launcher.
