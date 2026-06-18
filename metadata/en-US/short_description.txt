@@ -1,1 +1,1 @@
-Ainimalist, open, customisable and text-based Android launcher.
+A minimalist, open, customisable and text-based Android launcher.
