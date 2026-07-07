@@ -98,8 +98,9 @@ You can optionally enable accessibility services for YAM Launcher if you choose 
 
 ## Repositories
 
-[Codeberg](https://codeberg.org/thomasboom/YAM-Launcher/)
+[Codeberg (main)](https://codeberg.org/thomasboom/YAM-Launcher/)
 
+[GitHub (mirror)](https://github.com/thomasboom/YAM-Launcher/)
 ## Support
 
 If YAM Launcher brings you joy, consider buying me a coffee:
