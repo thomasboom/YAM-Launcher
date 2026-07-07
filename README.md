@@ -76,7 +76,7 @@ To fix (only if you want to enable the double tap to lock feature):
 
 ## Privacy
 
-Read the full privacy policy [here](https://codeberg.org/thomasboom/YAM-Launcher/src/branch/main/PrivacyPolicy.md).
+Read the full privacy policy [here](https://codeberg.org/thomasboom/YAM-Launcher/src/branch/main/PRIVACY_POLICY.md).
 
 No data leaves your device by default and no data is sent to the developer, ever. 
 
