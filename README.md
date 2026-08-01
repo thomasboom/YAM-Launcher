@@ -3,7 +3,7 @@
 </p>
 
 > [!NOTE]
-> YAM Launcher's Git history has been a mess. First, we where at Codeberg. Since my account got banned there, I moved all code hosting to Codeberg. Now, they introduced anti-AI rules in their ToS. I do not agree with that stance and am looking for a better alternative.
+> YAM Launcher's Git history has been a mess. First, we where at GitHub. Since my account got banned there, I moved all code hosting to Codeberg. Now, they introduced anti-AI rules in their ToS. I do not agree with that stance and am looking for a better alternative.
 # YAM Launcher
 
 YAM (Yet Another Minimalist) Launcher is a minimalist, open, customisable and text-based launcher for Android.
