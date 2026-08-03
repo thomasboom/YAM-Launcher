@@ -15,10 +15,11 @@
     </style>
 
     <style name="SettingsTheme" parent="Theme.Material3.DynamicColors.DayNight">
-        <item name="android:windowBackground">@color/settings_bg</item>
-        <item name="android:windowShowWallpaper">true</item>
-        <item name="android:navigationBarColor">@android:color/transparent</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowBackground">?attr/colorSurface</item>
+        <item name="android:colorBackground">?attr/colorSurface</item>
+        <item name="android:windowShowWallpaper">false</item>
+        <item name="android:navigationBarColor">?attr/colorSurface</item>
+        <item name="android:statusBarColor">?attr/colorSurface</item>
         <item name="android:windowLightStatusBar">?attr/isLightTheme</item>
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
@@ -28,8 +29,12 @@
     </style>
 
     <style name="TransparentActionBar" parent="Widget.AppCompat.ActionBar">
-        <!-- Transparent background for ActionBar -->
-        <item name="background">@android:color/transparent</item>
+        <item name="background">?attr/colorSurface</item>
+        <item name="titleTextStyle">@style/SettingsActionBarTitle</item>
+    </style>
+
+    <style name="SettingsActionBarTitle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">?attr/colorOnSurface</item>
     </style>
 
     <style name="Theme.YamLauncher" parent="Base.Theme.YamLauncher" />

@@ -55,6 +55,7 @@
     </string-array>
 
     <string-array name="size_options">
+        <item>Minuscolo</item>
         <item>Piccolo</item>
         <item>Medio</item>
         <item>Grande</item>
@@ -63,6 +64,7 @@
     </string-array>
 
     <string-array name="shortcut_spacing_options">
+        <item>Minuscolo</item>
         <item>Piccolo</item>
         <item>Medio</item>
         <item>Grande</item>
@@ -72,6 +74,7 @@
     </string-array>
 
     <string-array name="app_spacing_options">
+        <item>Minuscolo</item>
         <item>Piccolo</item>
         <item>Medio</item>
         <item>Grande</item>

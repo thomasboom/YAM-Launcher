@@ -145,11 +145,10 @@ class UIUtils(private val context: Context) {
      * Sets the window background color from preferences.
      * If background is fully transparent, applies dark overlay for settings panels.
      */
-    fun setBackground(window: Window, applyDarkening: Boolean = false, applyHomescreenDarkening: Boolean = false) {
+    fun setBackground(window: Window, applyHomescreenDarkening: Boolean = false) {
         val bgColor = sharedPreferenceManager.getBgColor()
         val finalColor = when {
             applyHomescreenDarkening && bgColor == TRANSPARENT && sharedPreferenceManager.isHomescreenDarkeningEnabled() -> DIM_COLOR
-            applyDarkening && bgColor == TRANSPARENT && sharedPreferenceManager.isSettingsDarkeningEnabled() -> DIM_COLOR
             else -> bgColor
         }
         window.decorView.setBackgroundColor(finalColor)
@@ -171,10 +170,32 @@ class UIUtils(private val context: Context) {
     fun setTextColors(view: View) {
         val color = sharedPreferenceManager.getTextColor()
         val shadowEnabled = sharedPreferenceManager.isTextShadowEnabled()
-        when {
-            view is ViewGroup -> view.children.forEach { setTextColors(it) }
-            view is TextView -> applyTextColor(view, color, shadowEnabled)
-            else -> view.setBackgroundColor(color)
+        applyColorsRecursively(view, color, shadowEnabled)
+    }
+
+    /**
+     * Uses the settings theme's contrast-safe foreground instead of launcher
+     * customization. Settings must remain readable over every wallpaper and
+     * with every home-screen color combination.
+     */
+    fun setSettingsTextColors(view: View) {
+        val typedValue = TypedValue()
+        val resolved = context.theme.resolveAttribute(
+            com.google.android.material.R.attr.colorOnSurface,
+            typedValue,
+            true,
+        )
+        val color = if (resolved) typedValue.data else Color.WHITE
+        applyColorsRecursively(view, color, false)
+    }
+
+    private fun applyColorsRecursively(view: View, color: Int, shadowEnabled: Boolean) {
+        when (view) {
+            is TextView -> applyTextColor(view, color, shadowEnabled)
+            is ImageView -> view.drawable?.mutate()?.setTint(color)
+            is ViewGroup -> view.children.forEach { child ->
+                applyColorsRecursively(child, color, shadowEnabled)
+            }
         }
     }
 

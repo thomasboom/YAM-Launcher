@@ -1,32 +1,11 @@
 package eu.ottop.yamlauncher.settings
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.util.TypedValue
-import android.view.ContextThemeWrapper
 import androidx.core.content.edit
 import androidx.core.graphics.toColorInt
 import androidx.preference.PreferenceManager
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import eu.ottop.yamlauncher.R
 import eu.ottop.yamlauncher.utils.Logger
-
-// Extension functions for safe typed access to SharedPreferences
-private fun SharedPreferences.getStringAsInt(key: String, default: Int): Int {
-    return getString(key, default.toString())?.toInt() ?: default
-}
-
-private fun SharedPreferences.getStringAsLong(key: String, default: Long): Long {
-    return getString(key, default.toString())?.toLong() ?: default
-}
-
-private fun SharedPreferences.getStringAsFloat(key: String, default: Float): Float {
-    return getString(key, default.toString())?.toFloat() ?: default
-}
-
-private fun SharedPreferences.getBooleanOrDefault(key: String, default: Boolean): Boolean {
-    return getBoolean(key, default)
-}
 
 /**
  * Centralized manager for all app preferences.
@@ -35,7 +14,17 @@ private fun SharedPreferences.getBooleanOrDefault(key: String, default: Boolean)
 class SharedPreferenceManager(private val context: Context) {
 
     private val preferences = PreferenceManager.getDefaultSharedPreferences(context)
+    private val store = SafePreferences(preferences)
     private val logger = Logger.getInstance(context)
+
+    init {
+        store.repairKnownTypes()
+    }
+
+    /** Revalidates values after an external restore operation. */
+    fun repairPreferences() {
+        store.repairKnownTypes()
+    }
 
     // ============================================
     // UI Preferences
@@ -46,12 +35,12 @@ class SharedPreferenceManager(private val context: Context) {
      * Returns material theme color or parsed hex value.
      */
     fun getBgColor(): Int {
-        val bgColor = preferences.getString("bgColor", "#00000000")
+        val bgColor = store.string("bgColor", "#00000000")
         if (bgColor == "material") {
             return getThemeColor(com.google.android.material.R.attr.colorOnPrimary)
         }
         return try {
-            bgColor?.toColorInt() ?: 0x00000000.toInt()
+            bgColor.toColorInt()
         } catch (e: Exception) {
             logger.e("SharedPreferenceManager", "Error parsing bgColor: $bgColor", e)
             0x00000000.toInt()
@@ -68,7 +57,7 @@ class SharedPreferenceManager(private val context: Context) {
             return getThemeColor(androidx.appcompat.R.attr.colorPrimary)
         }
         return try {
-            textColor?.toColorInt() ?: 0xFFF3F3F3.toInt()
+            textColor.toColorInt()
         } catch (e: Exception) {
             logger.e("SharedPreferenceManager", "Error parsing textColor: $textColor", e)
             0xFFF3F3F3.toInt()
@@ -78,8 +67,8 @@ class SharedPreferenceManager(private val context: Context) {
     /**
      * Gets raw text color string (for status bar logic).
      */
-    fun getTextString(): String? {
-        return preferences.getString("textColor", "#FFF3F3F3")
+    fun getTextString(): String {
+        return store.string("textColor", "#FFF3F3F3")
     }
 
     /**
@@ -95,77 +84,72 @@ class SharedPreferenceManager(private val context: Context) {
     /**
      * Gets selected font family.
      */
-    fun getTextFont(): String? {
-        return preferences.getString("textFont", "system")
+    fun getTextFont(): String {
+        return store.string("textFont", "system")
     }
 
     /**
      * Gets text style (normal, bold, italic, bold-italic).
      */
-    fun getTextStyle(): String? {
-        return preferences.getString("textStyle", "normal")
+    fun getTextStyle(): String {
+        return store.string("textStyle", "normal")
     }
 
     /**
      * Checks if text shadow is enabled.
      */
-    fun isTextShadowEnabled(): Boolean = preferences.getBooleanOrDefault("textShadow", false)
+    fun isTextShadowEnabled(): Boolean = store.boolean("textShadow", false)
 
     /**
      * Checks if status bar is visible.
      */
-    fun isBarVisible(): Boolean = preferences.getBooleanOrDefault("barVisibility", false)
+    fun isBarVisible(): Boolean = store.boolean("barVisibility", false)
 
     /**
      * Checks if app drawer darkening is enabled.
      */
-    fun isAppDrawerDarkeningEnabled(): Boolean = preferences.getBooleanOrDefault("appDrawerDarkening", true)
-
-    /**
-     * Checks if settings panel darkening is enabled.
-     */
-    fun isSettingsDarkeningEnabled(): Boolean = preferences.getBooleanOrDefault("settingsDarkening", true)
+    fun isAppDrawerDarkeningEnabled(): Boolean = store.boolean("appDrawerDarkening", true)
 
     /**
      * Checks if homescreen darkening is enabled.
      */
-    fun isHomescreenDarkeningEnabled(): Boolean = preferences.getBooleanOrDefault("homescreenDarkening", false)
+    fun isHomescreenDarkeningEnabled(): Boolean = store.boolean("homescreenDarkening", false)
 
     /**
      * Gets animation speed in milliseconds.
      */
     fun getAnimationSpeed(): Long {
-        return preferences.getStringAsLong("animationSpeed", 200)
+        return store.longFromString("animationSpeed", 200, 0L..10_000L)
     }
 
     /**
      * Gets swipe detection threshold in pixels.
      */
     fun getSwipeThreshold(): Int {
-        return preferences.getStringAsInt("swipeThreshold", 100)
+        return store.intFromString("swipeThreshold", 100, 1..10_000)
     }
 
     /**
      * Gets swipe velocity threshold.
      */
     fun getSwipeVelocity(): Int {
-        return preferences.getStringAsInt("swipeVelocity", 100)
+        return store.intFromString("swipeVelocity", 100, 1..100_000)
     }
 
     /**
      * Checks if launch confirmation dialog is enabled.
      */
-    fun isConfirmationEnabled(): Boolean = preferences.getBooleanOrDefault("enableConfirmation", false)
+    fun isConfirmationEnabled(): Boolean = store.boolean("enableConfirmation", false)
 
     /**
      * Checks if auto rotation is blocked.
      */
-    fun isAutoRotationBlocked(): Boolean = preferences.getBooleanOrDefault("blockAutoRotation", false)
+    fun isAutoRotationBlocked(): Boolean = store.boolean("blockAutoRotation", false)
 
     /**
      * Checks if settings require biometric authentication.
      */
-    fun isSettingsLocked(): Boolean = preferences.getBooleanOrDefault("lockSettings", false)
+    fun isSettingsLocked(): Boolean = store.boolean("lockSettings", false)
 
     // ============================================
     // Clock/Date Preferences
@@ -174,32 +158,32 @@ class SharedPreferenceManager(private val context: Context) {
     /**
      * Checks if clock widget is enabled.
      */
-    fun isClockEnabled(): Boolean = preferences.getBooleanOrDefault("clockEnabled", true)
+    fun isClockEnabled(): Boolean = store.boolean("clockEnabled", true)
 
     /**
      * Gets clock text alignment.
      */
-    fun getClockAlignment(): String? {
-        return preferences.getString("clockAlignment", "left")
+    fun getClockAlignment(): String {
+        return store.string("clockAlignment", "left")
     }
 
     /**
      * Gets clock text size preset.
      */
-    fun getClockSize(): String? {
-        return preferences.getString("clockSize", "medium")
+    fun getClockSize(): String {
+        return store.string("clockSize", "medium")
     }
 
     /**
      * Checks if date display is enabled.
      */
-    fun isDateEnabled(): Boolean = preferences.getBooleanOrDefault("dateEnabled", true)
+    fun isDateEnabled(): Boolean = store.boolean("dateEnabled", true)
 
     /**
      * Gets date text size preset.
      */
-    fun getDateSize(): String? {
-        return preferences.getString("dateSize", "medium")
+    fun getDateSize(): String {
+        return store.string("dateSize", "medium")
     }
 
     // ============================================
@@ -211,9 +195,9 @@ class SharedPreferenceManager(private val context: Context) {
      * Format: componentName§splitter§profile§splitter§text§splitter§isContact
      */
     fun setShortcut(index: Int, text: CharSequence, componentName: String, profile: Int, isContact: Boolean = false) {
-        preferences.edit {
-            putString("shortcut${index}", "$componentName§splitter§$profile§splitter§${text}§splitter§${isContact}")
-        }
+        if (index < 0 || profile < 0 || componentName.isBlank()) return
+        val setting = ShortcutSetting(componentName, profile, text.toString(), isContact)
+        store.putString("shortcut$index", setting.encode())
     }
 
     /**
@@ -221,59 +205,64 @@ class SharedPreferenceManager(private val context: Context) {
      * Returns null if not set (uses "e" as empty marker).
      */
     fun getShortcut(index: Int): List<String>? {
-        val value = preferences.getString("shortcut${index}", "e§splitter§e§splitter§e§splitter§e")
-        return value?.split("§splitter§")
+        val setting = getShortcutSetting(index) ?: return null
+        return listOf(setting.componentName, setting.profile.toString(), setting.label, setting.isContact.toString())
+    }
+
+    internal fun getShortcutSetting(index: Int): ShortcutSetting? {
+        if (index < 0) return null
+        return ShortcutSetting.decode(store.string("shortcut$index", ""))
     }
 
     /**
      * Gets number of enabled shortcuts.
      */
     fun getShortcutNumber(): Int {
-        return preferences.getStringAsInt("shortcutNo", 4)
+        return store.intFromString("shortcutNo", 4, 0..8)
     }
 
     /**
      * Gets shortcut alignment.
      */
-    fun getShortcutAlignment(): String? {
-        return preferences.getString("shortcutAlignment", "left")
+    fun getShortcutAlignment(): String {
+        return store.string("shortcutAlignment", "left")
     }
 
     /**
      * Gets shortcut vertical alignment.
      */
-    fun getShortcutVAlignment(): String? {
-        return preferences.getString("shortcutVAlignment", "center")
+    fun getShortcutVAlignment(): String {
+        return store.string("shortcutVAlignment", "center")
     }
 
     /**
      * Gets shortcut size preset.
      */
-    fun getShortcutSize(): String? {
-        return preferences.getString("shortcutSize", "medium")
+    fun getShortcutSize(): String {
+        return store.string("shortcutSize", "medium")
     }
 
     /**
      * Gets shortcut layout weight.
      */
     fun getShortcutWeight(): Float {
-        return preferences.getStringAsFloat("shortcutWeight", 0.09f)
+        return store.floatFromString("shortcutWeight", 0.11f, 0.01f..1f)
     }
 
     /**
      * Checks if shortcuts are locked (can't be changed).
      */
-    fun areShortcutsLocked(): Boolean = preferences.getBooleanOrDefault("lockShortcuts", false)
+    fun areShortcutsLocked(): Boolean = store.boolean("lockShortcuts", false)
 
     /**
      * Checks if notification dots are enabled.
      */
-    fun isNotificationDotsEnabled(): Boolean = preferences.getBooleanOrDefault("notificationDots", false)
+    fun isNotificationDotsEnabled(): Boolean = store.boolean("notificationDots", false)
 
     /**
      * Checks if hidden apps should be shown in shortcut selection.
      */
-    fun showHiddenShortcuts(): Boolean = preferences.getBooleanOrDefault("showHiddenShortcuts", true)
+    fun showHiddenShortcuts(): Boolean = store.boolean("showHiddenShortcuts", true)
 
     // ============================================
     // Pinned Apps Preferences
@@ -284,53 +273,34 @@ class SharedPreferenceManager(private val context: Context) {
      * Uses string manipulation to add/remove from pinned list.
      */
     fun setPinnedApp(componentName: String, profile: Int) {
-        preferences.edit {
-
-            val pinnedAppString = when (isAppPinned(componentName, profile)) {
-                true -> {
-                    // Remove from list
-                    getPinnedAppString()?.replace("§section§$componentName§splitter§$profile", "")
-                }
-
-                false -> {
-                    // Add to list
-                    "${getPinnedAppString()}§section§$componentName§splitter§$profile"
-                }
-            }
-
-            putString(
-                "pinnedApps",
-                pinnedAppString
-            )
+        if (componentName.isBlank() || profile < 0) return
+        val app = componentName to profile
+        val pinnedApps = getPinnedApps().toMutableSet()
+        if (!pinnedApps.add(app)) pinnedApps.remove(app)
+        val encoded = pinnedApps.joinToString("§section§") { (component, profileIndex) ->
+            "$component§splitter§$profileIndex"
         }
+        store.putString("pinnedApps", encoded)
     }
 
-    private fun getPinnedAppString(): String? {
-        return preferences.getString("pinnedApps", "")
-    }
-
-    private fun getPinnedApps(): List<Pair<String, Int?>> {
-        val pinnedApps = mutableListOf<Pair<String, Int?>>()
-        val pinnedAppString = getPinnedAppString() ?: return pinnedApps
-        val pinnedAppList = pinnedAppString.split("§section§")
-
-        for (item in pinnedAppList) {
-            if (item.isBlank()) continue
-            val app = item.split("§splitter§")
-            if (app.size > 1) {
-                val profile = app.getOrNull(1)?.toIntOrNull()
-                pinnedApps.add(Pair(app[0], profile))
+    private fun getPinnedApps(): Set<Pair<String, Int>> {
+        return store.string("pinnedApps", "")
+            .split("§section§")
+            .mapNotNull { item ->
+                val parts = item.split("§splitter§", limit = 2)
+                val profile = parts.getOrNull(1)?.toIntOrNull()?.takeIf { it >= 0 }
+                parts.firstOrNull()?.takeIf { it.isNotBlank() }?.let { component ->
+                    profile?.let { component to it }
+                }
             }
-        }
-
-        return pinnedApps
+            .toSet()
     }
 
     /**
      * Checks if an app is pinned.
      */
     fun isAppPinned(componentName: String, profile: Int): Boolean {
-        return getPinnedApps().contains(Pair(componentName, profile))
+        return componentName to profile in getPinnedApps()
     }
 
     // ============================================
@@ -340,7 +310,7 @@ class SharedPreferenceManager(private val context: Context) {
     /**
      * Checks if battery display is enabled.
      */
-    fun isBatteryEnabled(): Boolean = preferences.getBooleanOrDefault("batteryEnabled", false)
+    fun isBatteryEnabled(): Boolean = store.boolean("batteryEnabled", false)
 
     // ============================================
     // Weather Preferences
@@ -349,20 +319,18 @@ class SharedPreferenceManager(private val context: Context) {
     /**
      * Checks if weather display is enabled.
      */
-    fun isWeatherEnabled(): Boolean = preferences.getBooleanOrDefault("weatherEnabled", false)
+    fun isWeatherEnabled(): Boolean = store.boolean("weatherEnabled", false)
 
     /**
      * Checks if GPS location is enabled for weather.
      */
-    fun isWeatherGPS(): Boolean = preferences.getBooleanOrDefault("gpsLocation", false)
+    fun isWeatherGPS(): Boolean = store.boolean("gpsLocation", false)
 
     /**
      * Sets GPS location preference.
      */
     fun setWeatherGPS(isEnabled: Boolean) {
-        preferences.edit {
-            putBoolean("gpsLocation", isEnabled)
-        }
+        store.putBoolean("gpsLocation", isEnabled)
     }
 
     /**
@@ -378,22 +346,22 @@ class SharedPreferenceManager(private val context: Context) {
     /**
      * Gets weather location string.
      */
-    fun getWeatherLocation(): String? {
-        return preferences.getString("location", "")
+    fun getWeatherLocation(): String {
+        return store.string("location", "")
     }
 
     /**
      * Gets weather region/city name.
      */
-    fun getWeatherRegion(): String? {
-        return preferences.getString("locationRegion", "")
+    fun getWeatherRegion(): String {
+        return store.string("locationRegion", "")
     }
 
     /**
      * Gets temperature unit preference.
      */
-    fun getTempUnits(): String? {
-        return preferences.getString("tempUnits", "celsius")
+    fun getTempUnits(): String {
+        return store.string("tempUnits", "celsius")
     }
 
     /**
@@ -401,44 +369,7 @@ class SharedPreferenceManager(private val context: Context) {
      * Parses strings like "15m", "1h", "1d".
      */
     fun getWeatherUpdateIntervalMs(): Long {
-        val defaultMs = 15 * 60_000L
-        val raw = preferences.getString("weatherUpdateInterval", "15m")
-        val ms = parseUpdateIntervalMs(raw, defaultMs)
-        return ms.coerceAtLeast(60_000L)
-    }
-
-    /**
-     * Parses update interval string to milliseconds.
-     * Supports: "15" (minutes), "15m", "1h", "1d"
-     */
-    private fun parseUpdateIntervalMs(raw: String?, defaultMs: Long): Long {
-        val s = raw?.trim()?.lowercase().orEmpty()
-        if (s.isEmpty()) return defaultMs
-
-        // Bare numbers are treated as minutes
-        if (s.all { it.isDigit() }) {
-            val minutes = s.toLongOrNull() ?: return defaultMs
-            if (minutes <= 0L) return defaultMs
-            return minutes * 60_000L
-        }
-
-        // Parse with unit suffix
-        val match = Regex("^(\\d+)\\s*([mhd])$").find(s) ?: return defaultMs
-        val value = match.groupValues[1].toLongOrNull() ?: return defaultMs
-        if (value <= 0L) return defaultMs
-
-        val multiplier = when (match.groupValues[2]) {
-            "m" -> 60_000L
-            "h" -> 60 * 60_000L
-            "d" -> 24 * 60 * 60_000L
-            else -> return defaultMs
-        }
-
-        return try {
-            Math.multiplyExact(value, multiplier)
-        } catch (_: ArithmeticException) {
-            Long.MAX_VALUE
-        }
+        return WeatherIntervalParser.parse(store.string("weatherUpdateInterval", "15m"))
     }
 
     // ============================================
@@ -448,19 +379,22 @@ class SharedPreferenceManager(private val context: Context) {
     /**
      * Checks if clock click gesture is enabled.
      */
-    fun isClockGestureEnabled(): Boolean = preferences.getBooleanOrDefault("clockClick", true)
+    fun isClockGestureEnabled(): Boolean = store.boolean("clockClick", true)
 
     /**
      * Checks if date click gesture is enabled.
      */
-    fun isDateGestureEnabled(): Boolean = preferences.getBooleanOrDefault("dateClick", true)
+    fun isDateGestureEnabled(): Boolean = store.boolean("dateClick", true)
 
     /**
      * Saves gesture app configuration.
      */
     fun setGestures(direction: String, appInfo: String?) {
-        preferences.edit {
-            putString("${direction}SwipeApp", appInfo)
+        val key = gestureAppKey(direction) ?: return
+        if (appInfo == null) {
+            store.remove(key)
+        } else if (GestureSetting.decode(appInfo) != null) {
+            store.putString(key, appInfo)
         }
     }
 
@@ -468,39 +402,51 @@ class SharedPreferenceManager(private val context: Context) {
      * Gets gesture app display name.
      */
     fun getGestureName(direction: String): String? {
-        val name = preferences.getString("${direction}SwipeApp", "")?.split("§splitter§")
-        return name?.get(0)
+        return getGestureSetting(direction)?.name
     }
 
     /**
      * Gets full gesture configuration.
      */
     fun getGestureInfo(direction: String): List<String>? {
-        return preferences.getString("${direction}SwipeApp", "")?.split("§splitter§")
+        val setting = getGestureSetting(direction) ?: return null
+        return listOf(setting.name, setting.componentName, setting.profile.toString())
+    }
+
+    internal fun getGestureSetting(direction: String): GestureSetting? {
+        val key = gestureAppKey(direction) ?: return null
+        return GestureSetting.decode(store.string(key, ""))
     }
 
     /**
      * Checks if a gesture direction is enabled.
      */
-    fun isGestureEnabled(direction: String): Boolean = preferences.getBooleanOrDefault("${direction}Swipe", false)
+    fun isGestureEnabled(direction: String): Boolean {
+        if (direction !in GESTURE_DIRECTIONS) return false
+        return store.boolean("${direction}Swipe", false)
+    }
+
+    private fun gestureAppKey(direction: String): String? {
+        return direction.takeIf { it in GESTURE_DIRECTIONS }?.let { "${it}SwipeApp" }
+    }
 
     /**
      * Checks if double tap is enabled.
      */
-    fun isDoubleTapEnabled(): Boolean = preferences.getBooleanOrDefault("doubleTap", false)
+    fun isDoubleTapEnabled(): Boolean = store.boolean("doubleTap", false)
 
     /**
      * Gets double tap action (app or lock).
      * Handles migration from old preference format.
      */
     fun getDoubleTapAction(): String {
-        val action = preferences.getString("doubleTapAction", null)
-        if (action != null) {
+        val action = store.string("doubleTapAction", "")
+        if (action == "app" || action == "lock") {
             return action
         }
 
         // Migrate from old boolean preference
-        val migratedAction = if (preferences.getBooleanOrDefault("doubleTapSwipe", false)) "app" else "lock"
+        val migratedAction = if (store.boolean("doubleTapSwipe", false)) "app" else "lock"
         preferences.edit {
             putString("doubleTapAction", migratedAction)
             remove("doubleTapSwipe")
@@ -515,106 +461,104 @@ class SharedPreferenceManager(private val context: Context) {
     /**
      * Gets app menu text alignment.
      */
-    fun getAppAlignment(): String? {
-        return preferences.getString("appMenuAlignment", "left")
+    fun getAppAlignment(): String {
+        return store.string("appMenuAlignment", "left")
     }
 
     /**
      * Gets app menu text size preset.
      */
-    fun getAppSize(): String? {
-        return preferences.getString("appMenuSize", "medium")
+    fun getAppSize(): String {
+        return store.string("appMenuSize", "medium")
     }
 
     /**
      * Checks if pin action is enabled.
      */
-    fun isPinEnabled(): Boolean = preferences.getBooleanOrDefault("pinEnabled", true)
+    fun isPinEnabled(): Boolean = store.boolean("pinEnabled", true)
 
     /**
      * Checks if info action is enabled.
      */
-    fun isInfoEnabled(): Boolean = preferences.getBooleanOrDefault("infoEnabled", true)
+    fun isInfoEnabled(): Boolean = store.boolean("infoEnabled", true)
 
     /**
      * Checks if uninstall action is enabled.
      */
-    fun isUninstallEnabled(): Boolean = preferences.getBooleanOrDefault("uninstallEnabled", true)
+    fun isUninstallEnabled(): Boolean = store.boolean("uninstallEnabled", true)
 
     /**
      * Checks if rename action is enabled.
      */
-    fun isRenameEnabled(): Boolean = preferences.getBooleanOrDefault("renameEnabled", true)
+    fun isRenameEnabled(): Boolean = store.boolean("renameEnabled", true)
 
     /**
      * Checks if hide action is enabled.
      */
-    fun isHideEnabled(): Boolean = preferences.getBooleanOrDefault("hideEnabled", true)
+    fun isHideEnabled(): Boolean = store.boolean("hideEnabled", true)
 
     /**
      * Checks if close action is enabled.
      */
-    fun isCloseEnabled(): Boolean = preferences.getBooleanOrDefault("closeEnabled", true)
+    fun isCloseEnabled(): Boolean = store.boolean("closeEnabled", true)
 
     /**
      * Checks if search bar is enabled.
      */
-    fun isSearchEnabled(): Boolean = preferences.getBooleanOrDefault("searchEnabled", true)
+    fun isSearchEnabled(): Boolean = store.boolean("searchEnabled", true)
 
     /**
      * Gets search bar alignment.
      */
-    fun getSearchAlignment(): String? {
-        return preferences.getString("searchAlignment", "left")
+    fun getSearchAlignment(): String {
+        return store.string("searchAlignment", "left")
     }
 
     /**
      * Gets search bar text size preset.
      */
-    fun getSearchSize(): String? {
-        return preferences.getString("searchSize", "medium")
+    fun getSearchSize(): String {
+        return store.string("searchSize", "medium")
     }
 
     /**
      * Checks if fuzzy search is enabled.
      */
-    fun isFuzzySearchEnabled(): Boolean = preferences.getBooleanOrDefault("fuzzySearchEnabled", false)
+    fun isFuzzySearchEnabled(): Boolean = store.boolean("fuzzySearchEnabled", false)
 
     /**
      * Gets app item spacing in DP.
      */
     fun getAppSpacing(): Int {
-        return preferences.getStringAsInt("appSpacing", 20)
+        return store.intFromString("appSpacing", 20, 0..200)
     }
 
     /**
      * Checks if strict text clicking is enabled.
      * When enabled, only clicking directly on the text triggers the app launch.
      */
-    fun isAppStrictClickEnabled(): Boolean = preferences.getBooleanOrDefault("appStrictClick", false)
+    fun isAppStrictClickEnabled(): Boolean = store.boolean("appStrictClick", false)
 
     /**
      * Checks if keyboard should auto-open on menu open.
      */
-    fun isAutoKeyboardEnabled(): Boolean = preferences.getBooleanOrDefault("autoKeyboard", false)
+    fun isAutoKeyboardEnabled(): Boolean = store.boolean("autoKeyboard", false)
 
     /**
      * Checks if single result should auto-launch.
      */
-    fun isAutoLaunchEnabled(): Boolean = preferences.getBooleanOrDefault("autoLaunch", false)
+    fun isAutoLaunchEnabled(): Boolean = store.boolean("autoLaunch", false)
 
     /**
      * Checks if contacts are enabled.
      */
-    fun areContactsEnabled(): Boolean = preferences.getBooleanOrDefault("contactsEnabled", false)
+    fun areContactsEnabled(): Boolean = store.boolean("contactsEnabled", false)
 
     /**
      * Sets contacts enabled state.
      */
     fun setContactsEnabled(isEnabled: Boolean) {
-        preferences.edit {
-            putBoolean("contactsEnabled", isEnabled)
-        }
+        store.putBoolean("contactsEnabled", isEnabled)
     }
 
     /**
@@ -622,19 +566,19 @@ class SharedPreferenceManager(private val context: Context) {
      * Only available when search is on and auto-launch is off.
      */
     fun isWebSearchEnabled(): Boolean {
-        return preferences.getBooleanOrDefault("webSearchEnabled", false) && isSearchEnabled() && !isAutoLaunchEnabled()
+        return store.boolean("webSearchEnabled", false) && isSearchEnabled() && !isAutoLaunchEnabled()
     }
 
     /**
      * Checks if alphabet index is enabled.
      */
-    fun isAlphabetIndexEnabled(): Boolean = preferences.getBooleanOrDefault("alphabetIndexEnabled", false)
+    fun isAlphabetIndexEnabled(): Boolean = store.boolean("alphabetIndexEnabled", false)
 
     /**
      * Gets alphabet index position (left/right).
      */
-    fun getAlphabetIndexPosition(): String? {
-        return preferences.getString("alphabetIndexPosition", "right")
+    fun getAlphabetIndexPosition(): String {
+        return store.string("alphabetIndexPosition", "right")
     }
 
     // ============================================
@@ -654,7 +598,7 @@ class SharedPreferenceManager(private val context: Context) {
      * Checks if app is hidden.
      */
     fun isAppHidden(componentName: String, profile: Int): Boolean {
-        return preferences.getBoolean("hidden$componentName-$profile", false)
+        return store.boolean("hidden$componentName-$profile", false)
     }
 
     /**
@@ -685,7 +629,7 @@ class SharedPreferenceManager(private val context: Context) {
      */
     fun getAppName(componentName: String, profile: Int, appName: CharSequence): CharSequence? {
         val key = "name$componentName-$profile"
-        val savedName = preferences.getString(key, null)
+        val savedName = store.string(key, "")
         if (savedName.isNullOrBlank()) return appName
 
         // Clean up if saved name matches package name or the component itself
@@ -706,37 +650,13 @@ class SharedPreferenceManager(private val context: Context) {
     // Reset Preferences
     // ============================================
 
-    /**
-     * Shows confirmation dialog for full reset.
-     * Clears all preferences after confirmation.
-     */
-    fun resetAllPreferences() {
-        MaterialAlertDialogBuilder(
-            ContextThemeWrapper(
-                context,
-                com.google.android.material.R.style.Theme_MaterialComponents_DayNight_NoActionBar
-            )
-        ).apply {
-            setTitle(context.getString(R.string.confirm_title))
-            setMessage(context.getString(R.string.reset_confirm_text))
-            setPositiveButton(context.getString(R.string.confirm_yes)) { _, _ ->
-                performReset()
-            }
-
-            setNegativeButton(context.getString(R.string.confirm_no)) { _, _ ->
-            }
-        }.create().show()
+    /** Clears settings after the UI has obtained user confirmation. */
+    fun clearAllPreferences() {
+        logger.i("SharedPreferenceManager", "Resetting all preferences")
+        store.clear("isRestored")
     }
 
-    /**
-     * Performs the actual preference reset.
-     * Sets isRestored flag to trigger UI refresh.
-     */
-    private fun performReset() {
-        logger.i("SharedPreferenceManager", "Resetting all preferences")
-        preferences.edit {
-            clear()
-            putBoolean("isRestored", true)
-        }
+    private companion object {
+        val GESTURE_DIRECTIONS = setOf("clock", "date", "left", "right", "doubleTap")
     }
 }

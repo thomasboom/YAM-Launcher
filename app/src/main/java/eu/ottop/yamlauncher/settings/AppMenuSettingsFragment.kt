@@ -40,7 +40,8 @@ class AppMenuSettingsFragment : PreferenceFragmentCompat(), TitleProvider {
         // Contacts permission handling
         contactPref?.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue ->
 
-            if (newValue as Boolean && !permissionUtils.hasPermission(requireContext(), Manifest.permission.READ_CONTACTS)) {
+            val enabled = newValue as? Boolean ?: return@OnPreferenceChangeListener false
+            if (enabled && !permissionUtils.hasPermission(requireContext(), Manifest.permission.READ_CONTACTS)) {
                     (requireActivity() as SettingsActivity).requestContactsPermission()
                     return@OnPreferenceChangeListener false
                 } else {
@@ -61,14 +62,14 @@ class AppMenuSettingsFragment : PreferenceFragmentCompat(), TitleProvider {
             updateWebSearchSummary(searchEnabledPref?.isChecked == true, autoLaunchPref?.isChecked == true)
 
             webSearchPref?.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue ->
-                val enabled = newValue as Boolean
+                val enabled = newValue as? Boolean ?: return@OnPreferenceChangeListener false
                 autoLaunchPref?.isEnabled = !enabled
                 updateAutoLaunchSummary(enabled)
                 updateWebSearchSummary(searchEnabledPref?.isChecked == true, autoLaunchPref?.isChecked == true)
                 return@OnPreferenceChangeListener true
             }
             autoLaunchPref?.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue ->
-                val enabled = newValue as Boolean
+                val enabled = newValue as? Boolean ?: return@OnPreferenceChangeListener false
                 webSearchPref?.isEnabled = !enabled
                 updateAutoLaunchSummary(webSearchPref?.isChecked == true)
                 updateWebSearchSummary(searchEnabledPref?.isChecked == true, enabled)
@@ -78,7 +79,7 @@ class AppMenuSettingsFragment : PreferenceFragmentCompat(), TitleProvider {
 
         // Update web search summary based on search enabled state
         searchEnabledPref?.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue ->
-            val enabled = newValue as Boolean
+            val enabled = newValue as? Boolean ?: return@OnPreferenceChangeListener false
             updateWebSearchSummary(enabled, autoLaunchPref?.isChecked == true)
             return@OnPreferenceChangeListener true
         }
@@ -93,7 +94,7 @@ class AppMenuSettingsFragment : PreferenceFragmentCompat(), TitleProvider {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val uiUtils = UIUtils(requireContext())
-        uiUtils.setTextColors(view)
+        uiUtils.setSettingsTextColors(view)
     }
 
     override fun getTitle(): String {

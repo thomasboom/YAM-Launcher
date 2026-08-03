@@ -30,8 +30,11 @@ import kotlinx.coroutines.launch
  *
  * @param direction Which gesture is being configured
  */
-class GestureAppsFragment(private val direction: String) : Fragment(),
+class GestureAppsFragment : Fragment(),
     GestureAppsAdapter.OnItemClickListener, TitleProvider {
+
+    private val direction: String
+        get() = requireArguments().getString(ARG_DIRECTION).orEmpty()
 
     private var adapter: GestureAppsAdapter? = null
     private lateinit var sharedPreferenceManager: SharedPreferenceManager
@@ -65,7 +68,7 @@ class GestureAppsFragment(private val direction: String) : Fragment(),
             val recyclerView = view.findViewById<RecyclerView>(R.id.gestureAppRecycler)
             val appMenuEdgeFactory = AppMenuEdgeFactory(requireActivity())
             val uiUtils = UIUtils(requireContext())
-            uiUtils.setTextColors(view)
+        uiUtils.setSettingsTextColors(view)
 
             recyclerView.edgeEffectFactory = appMenuEdgeFactory
             recyclerView.adapter = adapter
@@ -202,6 +205,16 @@ class GestureAppsFragment(private val direction: String) : Fragment(),
 
     override fun getTitle(): String {
         return getString(R.string.select_an_app)
+    }
+
+    companion object {
+        private const val ARG_DIRECTION = "direction"
+
+        fun newInstance(direction: String): GestureAppsFragment {
+            return GestureAppsFragment().apply {
+                arguments = Bundle().apply { putString(ARG_DIRECTION, direction) }
+            }
+        }
     }
 
 }

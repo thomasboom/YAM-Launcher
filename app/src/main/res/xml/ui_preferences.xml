@@ -96,12 +96,6 @@
         <SwitchPreference
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:defaultValue="true"
-            android:title="@string/settings_darkening"
-            app:key="settingsDarkening" />
-        <SwitchPreference
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:defaultValue="false"
             android:title="@string/block_auto_rotation"
             android:summary="@string/block_auto_rotation_summary"

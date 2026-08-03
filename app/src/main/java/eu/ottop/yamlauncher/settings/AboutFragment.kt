@@ -34,7 +34,7 @@ class AboutFragment : Fragment(), TitleProvider {
 
         val launcherApps = requireActivity().getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
         val uiUtils = UIUtils(requireContext())
-        uiUtils.setTextColors(view)
+        uiUtils.setSettingsTextColors(view)
 
         // Set up clickable links
         stringUtils.setLink(requireActivity().findViewById(R.id.githubLink), getString(R.string.github_link))

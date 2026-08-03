@@ -78,6 +78,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputEditText
 import eu.ottop.yamlauncher.databinding.ActivityMainBinding
 import eu.ottop.yamlauncher.settings.SettingsActivity
+import eu.ottop.yamlauncher.settings.ShortcutSetting
 import eu.ottop.yamlauncher.settings.SharedPreferenceManager
 import eu.ottop.yamlauncher.tasks.BatteryReceiver
 import eu.ottop.yamlauncher.tasks.NotificationEventBus
@@ -354,13 +355,13 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
             } else {
                 textView.visibility = View.VISIBLE
 
-                val savedView = sharedPreferenceManager.getShortcut(index)
+                val savedView = sharedPreferenceManager.getShortcutSetting(index)
 
                 textView.setCompoundDrawablesWithIntrinsicBounds(ResourcesCompat.getDrawable(resources, R.drawable.ic_empty, null), null, null, null)
 
                 shortcutListeners(index, textView, savedView)
 
-                if (savedView?.get(1) != "e") {
+                if (savedView != null) {
                     setShortcutSetup(textView, savedView)
                 } else {
                     unsetShortcutSetup(textView)
@@ -372,7 +373,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    private fun shortcutListeners(index: Int, textView: TextView, savedView: List<String>?) {
+    private fun shortcutListeners(index: Int, textView: TextView, savedView: ShortcutSetting?) {
         // Don't go to settings on long click, but keep other gestures functional
         textView.setOnTouchListener { _, event ->
             shortcutGestureDetector.onTouchEvent(event)
@@ -398,7 +399,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         }
     }
 
-    private fun launchShortcutSelection(index: Int, textView: TextView, savedView: List<String>?): Boolean {
+    private fun launchShortcutSelection(index: Int, textView: TextView, savedView: ShortcutSetting?): Boolean {
 
         if (!sharedPreferenceManager.areShortcutsLocked()) {
             uiUtils.setMenuTitleAlignment(menuTitle)
@@ -444,25 +445,20 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
                 val imm =
                     getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(menuTitle.windowToken, 0)
-                val savedView = sharedPreferenceManager.getShortcut(index)
-                textView.text = menuTitle.text
-                try {
-                    sharedPreferenceManager.setShortcut(
-                        index,
-                        textView.text,
-                        savedView!![0],
-                        savedView[1].toInt(),
-                        savedView.getOrNull(3)?.toBoolean() ?: false
-                    )
-                } catch (_: NumberFormatException) {
-                    sharedPreferenceManager.setShortcut(
-                        index,
-                        textView.text,
-                        savedView!![0],
-                        0,
-                        savedView.getOrNull(3)?.toBoolean() ?: false
-                    )
+                val savedView = sharedPreferenceManager.getShortcutSetting(index)
+                if (savedView == null) {
+                    logger.w("MainActivity", "Cannot rename an invalid shortcut at index $index")
+                    unsetShortcutSetup(textView)
+                    return@setOnEditorActionListener true
                 }
+                textView.text = menuTitle.text
+                sharedPreferenceManager.setShortcut(
+                    index,
+                    textView.text,
+                    savedView.componentName,
+                    savedView.profile,
+                    savedView.isContact
+                )
                 backToHome()
                 return@setOnEditorActionListener true
             }
@@ -514,27 +510,24 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         }
     }
 
-    private fun setShortcutSetup(textView: TextView, savedView: List<String>?) {
-        textView.text = savedView?.getOrNull(2) ?: getString(R.string.shortcut_default)
+    private fun setShortcutSetup(textView: TextView, savedView: ShortcutSetting) {
+        textView.text = savedView.label.ifBlank { getString(R.string.shortcut_default) }
 
-        if (savedView?.getOrNull(3)?.toBoolean() == true) {
-            val contactId = savedView.getOrNull(1)?.toIntOrNull()
-            if (contactId != null) {
-                setShortcutContactListeners(textView, contactId)
-            }
+        if (savedView.isContact) {
+            setShortcutContactListeners(textView, savedView.profile)
             return
         }
 
-        if (savedView?.getOrNull(1) != "0") {
+        if (savedView.profile != 0) {
             textView.setCompoundDrawablesWithIntrinsicBounds(ResourcesCompat.getDrawable(resources, R.drawable.ic_work_app, null), null, null, null)
         }
 
         setShortcutListeners(textView, savedView)
     }
 
-    private fun setShortcutListeners(textView: TextView, savedView: List<String>?) {
+    private fun setShortcutListeners(textView: TextView, savedView: ShortcutSetting) {
         textView.setOnClickListener {
-            if (savedView != null && canLaunchShortcut) {
+            if (canLaunchShortcut) {
                 val profileIndex = validateProfileIndex(savedView) ?: return@setOnClickListener
                 val componentName = resolveComponentName(savedView, profileIndex) ?: return@setOnClickListener
                 // Double-check profile is valid before access
@@ -548,9 +541,9 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         }
     }
 
-    private fun validateProfileIndex(savedView: List<String>): Int? {
-        val profileIndex = savedView.getOrNull(1)?.toIntOrNull()
-        if (profileIndex == null || profileIndex !in launcherApps.profiles.indices) {
+    private fun validateProfileIndex(savedView: ShortcutSetting): Int? {
+        val profileIndex = savedView.profile
+        if (profileIndex !in launcherApps.profiles.indices) {
             logger.w("MainActivity", "Failed to launch shortcut: invalid profile index")
             Toast.makeText(this, getString(R.string.launch_error), Toast.LENGTH_SHORT).show()
             return null
@@ -558,11 +551,11 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         return profileIndex
     }
 
-    private fun resolveComponentName(savedView: List<String>, profileIndex: Int): ComponentName? {
+    private fun resolveComponentName(savedView: ShortcutSetting, profileIndex: Int): ComponentName? {
         val userHandle = launcherApps.profiles[profileIndex]
-        val componentString = savedView.getOrNull(0)
+        val componentString = savedView.componentName
 
-        if (componentString.isNullOrEmpty()) {
+        if (componentString.isEmpty()) {
             logger.w("MainActivity", "Failed to launch shortcut: empty component")
             Toast.makeText(this, getString(R.string.launch_error), Toast.LENGTH_SHORT).show()
             return null
@@ -740,14 +733,20 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         gestureKey: String,
         fallback: () -> Unit
     ) {
-        if (sharedPreferenceManager.isGestureEnabled(gestureKey) && target.first != null && target.second != null) {
+        val (activity, profileIndex) = target
+        if (
+            sharedPreferenceManager.isGestureEnabled(gestureKey) &&
+            activity != null &&
+            profileIndex != null &&
+            profileIndex in launcherApps.profiles.indices
+        ) {
             try {
-                launcherApps.startMainActivity(target.first!!.componentName, launcherApps.profiles[target.second!!], null, null)
+                launcherApps.startMainActivity(activity.componentName, launcherApps.profiles[profileIndex], null, null)
             } catch (e: SecurityException) {
                 try {
                     val intent = Intent(Intent.ACTION_MAIN).apply {
                         addCategory(Intent.CATEGORY_LAUNCHER)
-                        component = target.first!!.componentName
+                        component = activity.componentName
                         flags = Intent.FLAG_ACTIVITY_NEW_TASK
                     }
                     startActivity(intent)
@@ -1985,10 +1984,16 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
 
                 // Swipe down
                 else if (deltaY > swipeThreshold && abs(velocityY) > swipeVelocityThreshold) {
-                    val statusBarService = getSystemService(STATUS_BAR_SERVICE)
-                    val statusBarManager: Class<*> = Class.forName("android.app.StatusBarManager")
-                    val expandMethod: Method = statusBarManager.getMethod("expandNotificationsPanel")
-                    expandMethod.invoke(statusBarService)
+                    try {
+                        val statusBarService = getSystemService(STATUS_BAR_SERVICE)
+                        val statusBarManager: Class<*> = Class.forName("android.app.StatusBarManager")
+                        val expandMethod: Method = statusBarManager.getMethod("expandNotificationsPanel")
+                        expandMethod.invoke(statusBarService)
+                    } catch (e: ReflectiveOperationException) {
+                        logger.w("MainActivity", "Unable to expand the notification panel: ${e.message}")
+                    } catch (e: SecurityException) {
+                        logger.w("MainActivity", "Notification panel access denied: ${e.message}")
+                    }
                 }
 
                 // Swipe left
@@ -1996,10 +2001,11 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
                         "left"
                     )
                 ) {
-                    if (leftSwipeActivity.first != null && leftSwipeActivity.second != null && leftSwipeActivity.second!! in launcherApps.profiles.indices) {
+                    val (activity, profileIndex) = leftSwipeActivity
+                    if (activity != null && profileIndex != null && profileIndex in launcherApps.profiles.indices) {
                         canLaunchShortcut = false
                         try {
-                            appUtils.launchApp(leftSwipeActivity.first!!.componentName, launcherApps.profiles[leftSwipeActivity.second!!])
+                            appUtils.launchApp(activity.componentName, launcherApps.profiles[profileIndex])
                         } catch (e: Exception) {
                             logger.e("MainActivity", "Failed to launch left swipe app", e)
                             Toast.makeText(this@MainActivity, getString(R.string.launch_error), Toast.LENGTH_SHORT).show()
@@ -2016,10 +2022,11 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
                         "right"
                     )
                 ) {
-                    if (rightSwipeActivity.first != null && rightSwipeActivity.second != null && rightSwipeActivity.second!! in launcherApps.profiles.indices) {
+                    val (activity, profileIndex) = rightSwipeActivity
+                    if (activity != null && profileIndex != null && profileIndex in launcherApps.profiles.indices) {
                         canLaunchShortcut = false
                         try {
-                            appUtils.launchApp(rightSwipeActivity.first!!.componentName, launcherApps.profiles[rightSwipeActivity.second!!])
+                            appUtils.launchApp(activity.componentName, launcherApps.profiles[profileIndex])
                         } catch (e: Exception) {
                             logger.e("MainActivity", "Failed to launch right swipe app", e)
                             Toast.makeText(this@MainActivity, getString(R.string.launch_error), Toast.LENGTH_SHORT).show()
@@ -2042,9 +2049,10 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
             if (sharedPreferenceManager.isDoubleTapEnabled()) {
                 when (sharedPreferenceManager.getDoubleTapAction()) {
                     "app" -> {
-                        if (doubleTapApp.first != null && doubleTapApp.second != null && doubleTapApp.second!! in launcherApps.profiles.indices) {
+                        val (activity, profileIndex) = doubleTapApp
+                        if (activity != null && profileIndex != null && profileIndex in launcherApps.profiles.indices) {
                             try {
-                                appUtils.launchApp(doubleTapApp.first!!.componentName, launcherApps.profiles[doubleTapApp.second!!])
+                                appUtils.launchApp(activity.componentName, launcherApps.profiles[profileIndex])
                             } catch (e: Exception) {
                                 logger.e("MainActivity", "Failed to launch double tap app", e)
                                 Toast.makeText(this@MainActivity, getString(R.string.launch_error), Toast.LENGTH_SHORT).show()

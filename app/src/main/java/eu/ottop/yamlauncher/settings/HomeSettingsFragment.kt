@@ -56,11 +56,12 @@ class HomeSettingsFragment : PreferenceFragmentCompat(), TitleProvider {
 
             gpsLocationPref?.onPreferenceChangeListener =
                 Preference.OnPreferenceChangeListener { _, newValue ->
-                    if (newValue as Boolean && !permissionUtils.hasPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION)) {
+                    val enabled = newValue as? Boolean ?: return@OnPreferenceChangeListener false
+                    if (enabled && !permissionUtils.hasPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION)) {
                         (requireActivity() as SettingsActivity).requestLocationPermission()
                         return@OnPreferenceChangeListener false
                     } else {
-                        manualLocationPref?.isEnabled = !newValue
+                        manualLocationPref?.isEnabled = !enabled
                         return@OnPreferenceChangeListener true
                     }
                 }
@@ -75,13 +76,13 @@ class HomeSettingsFragment : PreferenceFragmentCompat(), TitleProvider {
         // Gesture app selection listeners
         leftSwipePref?.onPreferenceClickListener =
             Preference.OnPreferenceClickListener {
-                uiUtils.switchFragment(requireActivity(), GestureAppsFragment("left"))
+                uiUtils.switchFragment(requireActivity(), GestureAppsFragment.newInstance("left"))
                 true
             }
 
         rightSwipePref?.onPreferenceClickListener =
             Preference.OnPreferenceClickListener {
-                uiUtils.switchFragment(requireActivity(), GestureAppsFragment("right"))
+                uiUtils.switchFragment(requireActivity(), GestureAppsFragment.newInstance("right"))
                 true
             }
 
@@ -89,38 +90,41 @@ class HomeSettingsFragment : PreferenceFragmentCompat(), TitleProvider {
         doubleTapTogglePref?.onPreferenceChangeListener =
             Preference.OnPreferenceChangeListener { _, newValue ->
                 val launchesApp = sharedPreferenceManager.getDoubleTapAction() == "app"
-                doubleTapAppPref?.isEnabled = (newValue as Boolean) && launchesApp
+                val enabled = newValue as? Boolean ?: return@OnPreferenceChangeListener false
+                doubleTapAppPref?.isEnabled = enabled && launchesApp
                 true
             }
 
         doubleTapActionPref?.onPreferenceChangeListener =
             Preference.OnPreferenceChangeListener { _, newValue ->
-                doubleTapAppPref?.isEnabled = (doubleTapTogglePref?.isChecked == true) && (newValue as String == "app")
+                val action = newValue as? String ?: return@OnPreferenceChangeListener false
+                doubleTapAppPref?.isEnabled = (doubleTapTogglePref?.isChecked == true) && action == "app"
                 true
             }
 
         doubleTapAppPref?.onPreferenceClickListener =
             Preference.OnPreferenceClickListener {
-                uiUtils.switchFragment(requireActivity(), GestureAppsFragment("doubleTap"))
+                uiUtils.switchFragment(requireActivity(), GestureAppsFragment.newInstance("doubleTap"))
                 true
             }
 
         clockApp?.onPreferenceClickListener =
             Preference.OnPreferenceClickListener {
-                uiUtils.switchFragment(requireActivity(), GestureAppsFragment("clock"))
+                uiUtils.switchFragment(requireActivity(), GestureAppsFragment.newInstance("clock"))
                 true
             }
 
         dateApp?.onPreferenceClickListener =
             Preference.OnPreferenceClickListener {
-                uiUtils.switchFragment(requireActivity(), GestureAppsFragment("date"))
+                uiUtils.switchFragment(requireActivity(), GestureAppsFragment.newInstance("date"))
                 true
             }
 
         // Notification dots permission handling
         notificationDotsPref?.onPreferenceChangeListener =
             Preference.OnPreferenceChangeListener { _, newValue ->
-                if (newValue as Boolean && !NotificationListener.isEnabled(requireContext())) {
+                val enabled = newValue as? Boolean ?: return@OnPreferenceChangeListener false
+                if (enabled && !NotificationListener.isEnabled(requireContext())) {
                     NotificationListener.requestPermission(requireContext())
                     false
                 } else {
@@ -134,7 +138,7 @@ class HomeSettingsFragment : PreferenceFragmentCompat(), TitleProvider {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val uiUtils = UIUtils(requireContext())
-        uiUtils.setTextColors(view)
+        uiUtils.setSettingsTextColors(view)
     }
 
     override fun onResume() {

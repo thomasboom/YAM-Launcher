@@ -3,10 +3,12 @@ package eu.ottop.yamlauncher.settings
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
+import android.view.ContextThemeWrapper
 import android.view.View
 import android.widget.Toast
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import eu.ottop.yamlauncher.R
 import eu.ottop.yamlauncher.utils.Logger
 import eu.ottop.yamlauncher.utils.UIUtils
@@ -97,7 +99,7 @@ class SettingsFragment : PreferenceFragmentCompat(), TitleProvider {
 
         resetPref?.onPreferenceClickListener =
             Preference.OnPreferenceClickListener {
-                sharedPreferenceManager.resetAllPreferences()
+                showResetConfirmation()
                 true }
 
         exportLogsPref?.onPreferenceClickListener =
@@ -115,11 +117,27 @@ class SettingsFragment : PreferenceFragmentCompat(), TitleProvider {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val uiUtils = UIUtils(requireContext())
-        uiUtils.setTextColors(view)
+        uiUtils.setSettingsTextColors(view)
     }
 
     override fun getTitle(): String {
         return getString(R.string.settings_title)
+    }
+
+    private fun showResetConfirmation() {
+        MaterialAlertDialogBuilder(
+            ContextThemeWrapper(
+                requireContext(),
+                com.google.android.material.R.style.Theme_MaterialComponents_DayNight_NoActionBar,
+            ),
+        )
+            .setTitle(R.string.confirm_title)
+            .setMessage(R.string.reset_confirm_text)
+            .setPositiveButton(R.string.confirm_yes) { _, _ ->
+                sharedPreferenceManager.clearAllPreferences()
+            }
+            .setNegativeButton(R.string.confirm_no, null)
+            .show()
     }
 
 }

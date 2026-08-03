@@ -18,7 +18,7 @@ class ContextMenuSettingsFragment : PreferenceFragmentCompat(), TitleProvider {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val uiUtils = eu.ottop.yamlauncher.utils.UIUtils(requireContext())
-        uiUtils.setTextColors(view)
+        uiUtils.setSettingsTextColors(view)
     }
 
     override fun getTitle(): String {

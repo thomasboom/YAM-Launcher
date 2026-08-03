@@ -31,7 +31,7 @@ import java.util.Locale
  * Settings activity hosting all settings fragments.
  * Handles backup/restore, permissions, and app restart.
  */
-class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
+class SettingsActivity : AppCompatActivity() {
 
     private companion object {
         private const val BACKUP_SCHEMA_VERSION = 2
@@ -62,8 +62,6 @@ class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferen
         setContentView(binding.root)
 
         // Set up UI
-        uiUtils.setBackground(window, true)
-        preferences.registerOnSharedPreferenceChangeListener(this)
 
         // Configure action bar
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -71,7 +69,7 @@ class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferen
         supportActionBar?.setDisplayShowTitleEnabled(true)
 
         uiUtils.adjustInsets(binding.root)
-        uiUtils.setTextColors(binding.root)
+        uiUtils.setSettingsTextColors(binding.root)
 
         // Load initial fragment if none exists
         if (supportFragmentManager.backStackEntryCount == 0) {
@@ -263,6 +261,10 @@ class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferen
                     putBoolean(TRANSIENT_PREF_KEY_RESTORED, true)
                 }
 
+                // Backups from older versions may contain different primitive
+                // types. Normalize them before any Preference UI reads them.
+                sharedPreferenceManager.repairPreferences()
+
                 logger.i("SettingsActivity", "Settings restored successfully")
                 Toast.makeText(this, getString(R.string.restore_success), Toast.LENGTH_SHORT).show()
             } catch(e: IllegalArgumentException) {
@@ -421,17 +423,4 @@ class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferen
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        preferences.unregisterOnSharedPreferenceChangeListener(this)
-    }
-
-    override fun onSharedPreferenceChanged(preferences: SharedPreferences?, key: String?) {
-        // Update background color or darkening setting when changed
-        if (key == "bgColor" || key == "settingsDarkening" || key == "textColor" || key == "textShadow") {
-            val uiUtils = UIUtils(this@SettingsActivity)
-            uiUtils.setBackground(window, true)
-            uiUtils.setTextColors(binding.root)
-        }
-    }
 }

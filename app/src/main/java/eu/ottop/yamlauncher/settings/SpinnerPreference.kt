@@ -1,8 +1,6 @@
 package eu.ottop.yamlauncher.settings
 
 import android.content.Context
-import android.os.Handler
-import android.os.Looper
 import android.util.AttributeSet
 import android.view.View
 import android.widget.AdapterView
@@ -21,7 +19,7 @@ import eu.ottop.yamlauncher.R
  * - android:entryValues - Internal values for options
  * - android:defaultValue - Default selection
  */
-class SpinnerPreference (context: Context, attrs: AttributeSet? = null): Preference(context, attrs) {
+class SpinnerPreference(context: Context, attrs: AttributeSet? = null) : Preference(context, attrs) {
 
     private var entries: Array<CharSequence>? = null
     private var entryValues: Array<CharSequence>? = null
@@ -49,39 +47,49 @@ class SpinnerPreference (context: Context, attrs: AttributeSet? = null): Prefere
             } finally {
                 recycle()
             }
-        }}
+        }
+    }
 
     override fun onBindViewHolder(holder: PreferenceViewHolder) {
         super.onBindViewHolder(holder)
-        spinner = holder.findViewById(R.id.preferenceOptions) as Spinner
-
-        // Set up adapter with entries
-        if (entries != null) {
-            val adapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, entries!!)
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            spinner?.adapter = adapter
+        spinner = holder.findViewById(R.id.preferenceOptions) as? Spinner
+        val boundSpinner = spinner ?: return
+        val labels = entries.orEmpty()
+        val values = entryValues.orEmpty()
+        val optionCount = minOf(labels.size, values.size)
+        if (optionCount == 0) {
+            boundSpinner.isEnabled = false
+            return
         }
 
-        // Set current selection
-        val selectedIndex = entryValues?.indexOf(currentValue as? CharSequence) ?:  entryValues?.indexOf(defaultNo as CharSequence) ?: 0
-        spinner?.setSelection(selectedIndex)
+        // Set up adapter with entries
+        val adapter = ArrayAdapter(
+            context,
+            android.R.layout.simple_spinner_item,
+            labels.take(optionCount),
+        )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        boundSpinner.adapter = adapter
 
-        // Update summary asynchronously to prevent issues
-        val handler = Handler(Looper.getMainLooper())
-        handler.postDelayed({
-            if (selectedIndex >= 0) {
-                summary = entries?.get(selectedIndex)
-            }
-        }, 0)
+        // Set current selection
+        val selectedIndex = values.indexOfFirst { it.toString() == currentValue }
+            .takeIf { it in 0 until optionCount }
+            ?: values.indexOfFirst { it.toString() == defaultNo }
+                .takeIf { it in 0 until optionCount }
+            ?: 0
+        boundSpinner.setSelection(selectedIndex, false)
+        summary = labels[selectedIndex]
 
         // Handle selection changes
-        spinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        boundSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                val newValue = entryValues?.get(position).toString()
+                if (position !in 0 until optionCount) return
+                val newValue = values[position].toString()
+                if (newValue == currentValue) return
                 if (callChangeListener(newValue)) {
                     currentValue = newValue
                     persistString(newValue)
-                    summary = entries?.get(position)
+                    summary = labels[position]
                 }
             }
 
@@ -97,7 +105,7 @@ class SpinnerPreference (context: Context, attrs: AttributeSet? = null): Prefere
     override fun onAttached() {
         super.onAttached()
         // Load persisted value
-        currentValue = getPersistedString(defaultNo)
-        persistString(getPersistedString(defaultNo))
+        val fallback = defaultNo.orEmpty()
+        currentValue = runCatching { getPersistedString(fallback) }.getOrDefault(fallback)
     }
 }
