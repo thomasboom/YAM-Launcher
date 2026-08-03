@@ -132,6 +132,7 @@ internal object PreferenceSchema {
     val booleanDefaults = mapOf(
         "textShadow" to false, "barVisibility" to false,
         "appDrawerDarkening" to true,
+        "settingsDarkening" to true,
         "homescreenDarkening" to false, "enableConfirmation" to false,
         "blockAutoRotation" to false, "lockSettings" to false,
         "clockEnabled" to true, "dateEnabled" to true,

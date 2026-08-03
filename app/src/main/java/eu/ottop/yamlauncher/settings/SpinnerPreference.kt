@@ -78,7 +78,6 @@ class SpinnerPreference(context: Context, attrs: AttributeSet? = null) : Prefere
                 .takeIf { it in 0 until optionCount }
             ?: 0
         boundSpinner.setSelection(selectedIndex, false)
-        summary = labels[selectedIndex]
 
         // Handle selection changes
         boundSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -107,5 +106,11 @@ class SpinnerPreference(context: Context, attrs: AttributeSet? = null) : Prefere
         // Load persisted value
         val fallback = defaultNo.orEmpty()
         currentValue = runCatching { getPersistedString(fallback) }.getOrDefault(fallback)
+        val values = entryValues.orEmpty()
+        val selectedIndex = values.indexOfFirst { it.toString() == currentValue }
+            .takeIf { it in entries.orEmpty().indices }
+            ?: values.indexOfFirst { it.toString() == fallback }
+                .takeIf { it in entries.orEmpty().indices }
+        summary = selectedIndex?.let { entries?.get(it) }
     }
 }
