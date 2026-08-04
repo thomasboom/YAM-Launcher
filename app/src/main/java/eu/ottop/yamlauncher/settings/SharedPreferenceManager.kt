@@ -321,6 +321,9 @@ class SharedPreferenceManager(private val context: Context) {
      */
     fun isWeatherEnabled(): Boolean = store.boolean("weatherEnabled", false)
 
+    /** Checks if Curbox screen time is displayed below the clock. */
+    fun isScreenTimeEnabled(): Boolean = store.boolean("screenTimeEnabled", false)
+
     /**
      * Checks if GPS location is enabled for weather.
      */

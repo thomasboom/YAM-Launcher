@@ -17,6 +17,12 @@
         <intent>
             <action android:name="android.intent.action.MAIN" />
         </intent>
+        <intent>
+            <action android:name="neth.iecal.curbox.api.BIND" />
+        </intent>
+        <intent>
+            <action android:name="neth.iecal.curbox.api.REQUEST_PERMISSION" />
+        </intent>
     </queries>
 
     <application

@@ -90,6 +90,7 @@ import eu.ottop.yamlauncher.utils.AppMenuLinearLayoutManager
 import eu.ottop.yamlauncher.utils.AppNameResolver
 import eu.ottop.yamlauncher.utils.AppUtils
 import eu.ottop.yamlauncher.utils.BiometricUtils
+import eu.ottop.yamlauncher.utils.CurboxApiClient
 import eu.ottop.yamlauncher.utils.GestureUtils
 import eu.ottop.yamlauncher.utils.Logger
 import eu.ottop.yamlauncher.utils.PermissionUtils
@@ -124,6 +125,8 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
 
     /** Handles weather data fetching and temperature display */
     private lateinit var weatherSystem: WeatherSystem
+    /** Reads today's screen time from Curbox's local API. */
+    private lateinit var curboxApiClient: CurboxApiClient
     /** Utilities for launching apps and managing installed applications */
     private lateinit var appUtils: AppUtils
     /** Manages biometric authentication for locked settings */
@@ -288,6 +291,15 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
             }
         }
 
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                while (true) {
+                    updateScreenTime()
+                    delay(60_000)
+                }
+            }
+        }
+
         setupApps()
 
         // Check if default launcher banner should be shown
@@ -309,6 +321,9 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         logger.i("MainActivity", "MainActivity started")
 
         weatherSystem = WeatherSystem(this@MainActivity)
+        curboxApiClient = CurboxApiClient(this@MainActivity) {
+            lifecycleScope.launch { updateScreenTime() }
+        }
         appUtils = AppUtils(this@MainActivity, launcherApps)
         uiUtils = UIUtils(this@MainActivity)
         gestureUtils = GestureUtils(this@MainActivity)
@@ -324,7 +339,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
 
         dateText = binding.textDate
 
-        dateElements = mutableListOf(dateText.format12Hour.toString(), dateText.format24Hour.toString(), "", "")
+        dateElements = mutableListOf(dateText.format12Hour.toString(), dateText.format24Hour.toString(), "", "", "")
 
         menuTitle = binding.menuTitle
 
@@ -874,6 +889,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
 
             "clockEnabled" -> uiUtils.setClockVisibility(clock)
             "dateEnabled" -> uiUtils.setDateVisibility(dateText)
+            "screenTimeEnabled" -> lifecycleScope.launch { updateScreenTime() }
             "searchEnabled" -> uiUtils.setSearchVisibility(searchView, binding.searchLayout, binding.searchReplacement)
             "barVisibility" -> uiUtils.setStatusBar(window)
 
@@ -965,20 +981,23 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         0 = 12h time
         1 = 24h time
         2 = Weather
-        3 = Battery level*/
+        3 = Battery level
+        4 = Screen time*/
         dateElements[index] = value
-        dateText.format12Hour = "${dateElements[0]}${stringUtils.addStartTextIfNotEmpty(dateElements[2], " | ")}${
-            stringUtils.addStartTextIfNotEmpty(
-                dateElements[3],
-                " | "
-            )
-        }"
-        dateText.format24Hour = "${dateElements[1]}${stringUtils.addStartTextIfNotEmpty(dateElements[2], " | ")}${
-            stringUtils.addStartTextIfNotEmpty(
-                dateElements[3],
-                " | "
-            )
-        }"
+        dateText.format12Hour = buildDateLine(0)
+        dateText.format24Hour = buildDateLine(1)
+    }
+
+    private fun buildDateLine(dateIndex: Int): String {
+        val dateFormat = dateElements[dateIndex]
+        val extraText = listOf(dateElements[2], dateElements[3], dateElements[4])
+            .filter { it.isNotEmpty() }
+            .joinToString(" | ")
+            .replace("'", "''")
+
+        // TextClock treats its value as a date/time pattern. Quote dynamic text so letters such
+        // as the h and m in "2h 20m" are displayed literally instead of being reformatted.
+        return if (extraText.isEmpty()) dateFormat else "$dateFormat' | $extraText'"
     }
 
     fun backToHome(animSpeed: Long = sharedPreferenceManager.getAnimationSpeed()) {
@@ -1089,6 +1108,31 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         withContext(Dispatchers.Main) {
             modifyDate(temp, 2)
         }
+    }
+
+    private suspend fun updateScreenTime() {
+        if (!sharedPreferenceManager.isScreenTimeEnabled()) {
+            curboxApiClient.disconnect()
+            modifyDate("", 4)
+            return
+        }
+
+        if (!curboxApiClient.connect()) {
+            modifyDate("", 4)
+            return
+        }
+
+        val minutes = curboxApiClient.getTodayScreenTimeMinutes()
+        if (minutes == null) {
+            modifyDate("", 4)
+            return
+        }
+        val duration = if (minutes >= 60) {
+            getString(R.string.screen_time_hours_minutes, minutes / 60, minutes % 60)
+        } else {
+            getString(R.string.screen_time_minutes, minutes)
+        }
+        modifyDate(getString(R.string.screen_time_display, duration), 4)
     }
 
     private fun setupApps() {
@@ -1562,6 +1606,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
             unregisterNotificationReceiver()
             preferences.unregisterOnSharedPreferenceChangeListener(this)
             searchJob?.cancel()
+            curboxApiClient.disconnect()
         } catch (e: Exception) {
             logger.w("MainActivity", "Error during onDestroy cleanup: ${e.message}")
         }

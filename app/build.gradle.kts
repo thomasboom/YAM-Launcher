@@ -53,6 +53,7 @@ android {
         jvmToolchain(17)
     }
     buildFeatures {
+        aidl = true
         viewBinding = true
         buildConfig = false
         resValues = true

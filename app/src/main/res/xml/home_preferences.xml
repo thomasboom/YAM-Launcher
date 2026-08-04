@@ -104,6 +104,18 @@
             app:title="@string/set_calendar_app" />
     </PreferenceCategory>
     <PreferenceCategory
+        android:title="@string/screen_time"
+        app:allowDividerAbove="false"
+        app:allowDividerBelow="false">
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:summary="@string/screen_time_summary"
+            android:title="@string/show_screen_time"
+            app:dependency="dateEnabled"
+            app:key="screenTimeEnabled" />
+    </PreferenceCategory>
+    <PreferenceCategory
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:allowDividerAbove="false"

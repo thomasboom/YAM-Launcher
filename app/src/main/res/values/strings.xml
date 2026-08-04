@@ -101,6 +101,14 @@
     <string name="custom_clock_gesture">Custom Clock</string>
     <string name="set_clock_app">Set Clock App</string>
 
+    <string name="screen_time">Screen Time</string>
+    <string name="show_screen_time">Show Screen Time</string>
+    <string name="screen_time_summary">Shows today’s screen time from Curbox</string>
+    <string name="curbox_not_installed">Curbox is not installed or does not support its local API</string>
+    <string name="screen_time_display">Screen time: %1$s</string>
+    <string name="screen_time_hours_minutes">%1$dh %2$dm</string>
+    <string name="screen_time_minutes">%1$dm</string>
+
     <string name="date">Date</string>
     <string name="show_date">Show Date</string>
     <string name="date_size">Date Size</string>

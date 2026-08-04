@@ -1,13 +1,17 @@
 package eu.ottop.yamlauncher.settings
 
 import android.Manifest
+import android.app.Activity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreference
 import eu.ottop.yamlauncher.R
 import eu.ottop.yamlauncher.tasks.NotificationListener
+import eu.ottop.yamlauncher.utils.CurboxApiClient
 import eu.ottop.yamlauncher.utils.PermissionUtils
 import eu.ottop.yamlauncher.utils.UIUtils
 
@@ -30,6 +34,13 @@ class HomeSettingsFragment : PreferenceFragmentCompat(), TitleProvider {
     private var clockApp: Preference? = null
     private var dateApp: Preference? = null
     private var notificationDotsPref: SwitchPreference? = null
+    private var screenTimePref: SwitchPreference? = null
+
+    private val curboxPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            findPreference<SwitchPreference>("screenTimeEnabled")?.isChecked =
+                result.resultCode == Activity.RESULT_OK
+        }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.home_preferences, rootKey)
@@ -48,6 +59,25 @@ class HomeSettingsFragment : PreferenceFragmentCompat(), TitleProvider {
         doubleTapActionPref = findPreference("doubleTapAction")
         doubleTapAppPref = findPreference("doubleTapSwipeApp")
         notificationDotsPref = findPreference("notificationDots")
+        screenTimePref = findPreference("screenTimeEnabled")
+
+        screenTimePref?.onPreferenceChangeListener =
+            Preference.OnPreferenceChangeListener { _, newValue ->
+                val enabled = newValue as? Boolean ?: return@OnPreferenceChangeListener false
+                if (!enabled) return@OnPreferenceChangeListener true
+
+                val permissionIntent = CurboxApiClient.createPermissionIntent(requireContext())
+                if (permissionIntent == null) {
+                    Toast.makeText(requireContext(), R.string.curbox_not_installed, Toast.LENGTH_LONG).show()
+                } else {
+                    try {
+                        curboxPermissionLauncher.launch(permissionIntent)
+                    } catch (_: Exception) {
+                        Toast.makeText(requireContext(), R.string.curbox_not_installed, Toast.LENGTH_LONG).show()
+                    }
+                }
+                false
+            }
 
         // Location preference logic
         if (gpsLocationPref != null && manualLocationPref != null) {
