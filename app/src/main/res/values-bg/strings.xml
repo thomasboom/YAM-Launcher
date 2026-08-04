@@ -95,6 +95,14 @@
     <string name="custom_clock_gesture">Персонализиран часовник</string>
     <string name="set_clock_app">Задаване на приложение за часовник</string>
 
+  	<string name="screen_time">Време на екрана</string>
+	<string name="show_screen_time">Показване на времето на екрана</string>
+	<string name="screen_time_summary">Показва днешното време на екрана от Curbox</string>
+	<string name="curbox_not_installed">Curbox не е инсталиран или не поддържа локалния си API</string>
+	<string name="screen_time_display">Време на екрана: %1$s</string>
+	<string name="screen_time_hours_minutes">%1$dh %2$dm</string>
+	<string name="screen_time_minutes">%1$dm</string>
+
     <string name="date">Дата</string>
     <string name="show_date">Показване на датата</string>
     <string name="date_size">Размер на датата</string>
