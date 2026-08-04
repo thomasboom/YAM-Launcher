@@ -168,7 +168,7 @@ class HiddenAppsFragment : Fragment(), HiddenAppsAdapter.OnItemClickListener, Ti
             setTitle(getString(R.string.confirm_title))
             setMessage("${getString(R.string.hidden_confirm_text)} $appName?")
             setPositiveButton(getString(R.string.confirm_yes)) { _, _ ->
-                lifecycleScope.launch {
+                viewLifecycleOwner.lifecycleScope.launch {
                     performConfirmedAction(appInfo, profile)
                 }
             }
@@ -183,10 +183,12 @@ class HiddenAppsFragment : Fragment(), HiddenAppsAdapter.OnItemClickListener, Ti
      */
     private suspend fun performConfirmedAction(appInfo: LauncherActivityInfo, profile: Int) {
         sharedPreferenceManager.setAppVisible(appInfo.componentName.flattenToString(), profile)
+        if (view == null) return
         adapter?.updateApps(appUtils.getHiddenApps())
     }
 
     override fun onItemClick(appInfo: LauncherActivityInfo, profile: Int) {
+        if (!isAdded || view == null) return
         showConfirmationDialog(appInfo, sharedPreferenceManager.getAppName(
             appInfo.componentName.flattenToString(),
             profile,

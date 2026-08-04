@@ -191,11 +191,14 @@ class GestureAppsFragment : Fragment(),
         sharedPreferenceManager.setGestures(
             direction, "$appName§splitter§${appInfo.componentName.flattenToString()}§splitter§$profile"
         )
-        requireActivity().supportFragmentManager.popBackStack()
+        if (isAdded) {
+            parentFragmentManager.popBackStack()
+        }
     }
 
 
     override fun onItemClick(appInfo: LauncherActivityInfo, profile: Int) {
+        if (!isAdded || view == null) return
         showConfirmationDialog(appInfo, sharedPreferenceManager.getAppName(
             appInfo.componentName.flattenToString(),
             profile,
