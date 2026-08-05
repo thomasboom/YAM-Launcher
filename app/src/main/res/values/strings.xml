@@ -120,6 +120,8 @@
     <string name="set_calendar_app">Set Calendar App</string>
 
     <string name="weather">Weather</string>
+    <string name="set_weather_app">Set Weather App</string>
+    <string name="no_weather_app">No Weather app found</string>
     <string name="gps_location">GPS Location</string>
     <string name="latest_location">Latest GPS location</string>
     <string name="set_manual_location">Set Manual Location</string>

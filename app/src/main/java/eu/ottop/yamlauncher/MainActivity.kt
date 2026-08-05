@@ -43,6 +43,7 @@ import android.os.Looper
 import android.os.UserHandle
 import android.provider.AlarmClock
 import android.provider.ContactsContract
+import android.provider.Settings
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.GestureDetector
@@ -223,6 +224,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
 
     private lateinit var clockApp: Pair<LauncherActivityInfo?, Int?>
     private lateinit var dateApp: Pair<LauncherActivityInfo?, Int?>
+    private lateinit var weatherApp: Pair<LauncherActivityInfo?, Int?>
 
     private lateinit var leftSwipeActivity: Pair<LauncherActivityInfo?, Int?>
     private lateinit var rightSwipeActivity: Pair<LauncherActivityInfo?, Int?>
@@ -230,6 +232,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
 
     private lateinit var gestureDetector: GestureDetector
     private lateinit var shortcutGestureDetector: GestureDetector
+    private lateinit var dateGestureDetector: GestureDetector
 
     var returnAllowed = true
 
@@ -332,6 +335,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
 
         gestureDetector = GestureDetector(this, GestureListener())
         shortcutGestureDetector = GestureDetector(this, TextGestureListener())
+        dateGestureDetector = GestureDetector(this, DateGestureListener())
 
         clock = binding.textClock
 
@@ -651,6 +655,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         leftSwipeActivity = gestureUtils.getSwipeInfo(launcherApps, "left")
         rightSwipeActivity = gestureUtils.getSwipeInfo(launcherApps, "right")
         doubleTapApp = gestureUtils.getSwipeInfo(launcherApps, "doubleTap")
+        weatherApp = gestureUtils.getSwipeInfo(launcherApps, "weather")
 
         swipeThreshold = sharedPreferenceManager.getSwipeThreshold()
         swipeVelocityThreshold = sharedPreferenceManager.getSwipeVelocity()
@@ -696,27 +701,9 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
             }
         }
 
-        dateText.setOnClickListener {
-            if (sharedPreferenceManager.isDateGestureEnabled()) {
-                handleLaunchOrFallback(dateApp, "date") {
-                    try {
-                        startActivity(
-                            Intent(Intent.makeMainSelectorActivity(Intent.ACTION_MAIN, Intent.CATEGORY_APP_CALENDAR))
-                        )
-                    } catch (e: ActivityNotFoundException) {
-                        logger.w("MainActivity", "No calendar app found when clicking date")
-                        Toast.makeText(this, getString(R.string.no_calendar_app), Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }
-        }
+        dateText.setOnTouchListener { _, event -> dateGestureDetector.onTouchEvent(event) }
 
         clock.setOnLongClickListener { _ ->
-            trySettings()
-            true
-        }
-
-        dateText.setOnLongClickListener { _ ->
             trySettings()
             true
         }
@@ -746,11 +733,12 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
     private fun handleLaunchOrFallback(
         target: Pair<LauncherActivityInfo?, Int?>,
         gestureKey: String,
-        fallback: () -> Unit
+        fallback: () -> Unit,
+        requireGestureEnabled: Boolean = true
     ) {
         val (activity, profileIndex) = target
         if (
-            sharedPreferenceManager.isGestureEnabled(gestureKey) &&
+            (!requireGestureEnabled || sharedPreferenceManager.isGestureEnabled(gestureKey)) &&
             activity != null &&
             profileIndex != null &&
             profileIndex in launcherApps.profiles.indices
@@ -775,6 +763,72 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
             }
         } else {
             fallback()
+        }
+    }
+
+    private enum class DateSection { WEATHER, BATTERY }
+
+    /** Finds the logical section under a tap, including sections that wrap to another line. */
+    private fun dateSectionAt(event: MotionEvent): DateSection? {
+        val layout = dateText.layout ?: return null
+        if (layout.lineCount == 0) return null
+
+        val vertical = (event.y - dateText.totalPaddingTop).toInt()
+            .coerceIn(0, (layout.height - 1).coerceAtLeast(0))
+        val line = layout.getLineForVertical(vertical)
+        val offset = layout.getOffsetForHorizontal(
+            line,
+            event.x - dateText.totalPaddingLeft
+        )
+        val rendered = dateText.text?.toString().orEmpty()
+        var cursor = 0
+
+        // The rendered date/time is followed by each non-empty dynamic section.
+        val sections = listOf(
+            DateSection.WEATHER to dateElements[2],
+            DateSection.BATTERY to dateElements[3]
+        ).filter { it.second.isNotEmpty() }
+        for ((section, value) in sections) {
+            val separatorStart = rendered.indexOf(" | ", cursor)
+            if (separatorStart < 0) return null
+            val start = separatorStart + 3
+            val end = (start + value.length).coerceAtMost(rendered.length)
+            if (offset in start until end) return section
+            cursor = end
+        }
+        return null
+    }
+
+    private fun openDateApp() {
+        if (!sharedPreferenceManager.isDateGestureEnabled()) return
+        handleLaunchOrFallback(dateApp, "date") {
+            try {
+                startActivity(Intent(Intent.makeMainSelectorActivity(Intent.ACTION_MAIN, Intent.CATEGORY_APP_CALENDAR)))
+            } catch (_: ActivityNotFoundException) {
+                logger.w("MainActivity", "No calendar app found when clicking date")
+                Toast.makeText(this, getString(R.string.no_calendar_app), Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun openWeatherApp() {
+        handleLaunchOrFallback(weatherApp, "weather", {
+            val intent = Intent(Intent.makeMainSelectorActivity(Intent.ACTION_MAIN, Intent.CATEGORY_APP_WEATHER))
+            if (intent.resolveActivity(packageManager) != null) {
+                startActivity(intent)
+            } else {
+                Toast.makeText(this, getString(R.string.no_weather_app), Toast.LENGTH_SHORT).show()
+            }
+        }, requireGestureEnabled = false)
+    }
+
+    private fun openBatterySettings() {
+        val intent = Intent(Settings.ACTION_BATTERY_SAVER_SETTINGS)
+        try {
+            startActivity(intent)
+        } catch (_: ActivityNotFoundException) {
+            logger.w("MainActivity", "No battery settings activity found")
+            Toast.makeText(this, getString(R.string.unable_to_launch_settings), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -914,6 +968,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
 
             "clockSwipe", "clockSwipeApp" -> clockApp = gestureUtils.getSwipeInfo(launcherApps, "clock")
             "dateSwipe", "dateSwipeApp" -> dateApp = gestureUtils.getSwipeInfo(launcherApps, "date")
+            "weatherSwipeApp" -> weatherApp = gestureUtils.getSwipeInfo(launcherApps, "weather")
             "leftSwipe", "leftSwipeApp" -> leftSwipeActivity = gestureUtils.getSwipeInfo(launcherApps, "left")
             "rightSwipe", "rightSwipeApp" -> rightSwipeActivity = gestureUtils.getSwipeInfo(launcherApps, "right")
             "doubleTapAction", "doubleTapSwipeApp" -> doubleTapApp = gestureUtils.getSwipeInfo(launcherApps, "doubleTap")
@@ -2136,6 +2191,17 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
     inner class TextGestureListener : GestureListener() {
         override fun onLongPress(e: MotionEvent) {
 
+        }
+    }
+
+    private inner class DateGestureListener : GestureListener() {
+        override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
+            when (dateSectionAt(e)) {
+                DateSection.WEATHER -> openWeatherApp()
+                DateSection.BATTERY -> openBatterySettings()
+                null -> openDateApp()
+            }
+            return true
         }
     }
 

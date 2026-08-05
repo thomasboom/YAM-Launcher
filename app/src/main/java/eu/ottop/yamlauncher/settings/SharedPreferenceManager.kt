@@ -660,6 +660,6 @@ class SharedPreferenceManager(private val context: Context) {
     }
 
     private companion object {
-        val GESTURE_DIRECTIONS = setOf("clock", "date", "left", "right", "doubleTap")
+        val GESTURE_DIRECTIONS = setOf("clock", "date", "left", "right", "doubleTap", "weather")
     }
 }
