@@ -128,6 +128,13 @@
             android:title="@string/weather"
             app:dependency="dateEnabled"
             app:key="weatherEnabled" />
+        <Preference
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:dependency="weatherEnabled"
+            app:key="weatherSwipeApp"
+            app:selectable="true"
+            app:title="@string/set_weather_app" />
         <SwitchPreference
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -121,6 +121,7 @@ internal object PreferenceSchema {
         "shortcutSize" to "medium",
         "shortcutWeight" to "0.11",
         "doubleTapAction" to "lock",
+        "weatherSwipeApp" to "",
         "appMenuAlignment" to "left",
         "appMenuSize" to "medium",
         "searchAlignment" to "left",
