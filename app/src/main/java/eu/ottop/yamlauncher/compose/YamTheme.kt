@@ -1,8 +1,10 @@
 package eu.ottop.yamlauncher.compose
 
+import androidx.compose.foundation.LocalIndication
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
@@ -108,5 +110,10 @@ fun YamTheme(p: UiPrefs, content: @Composable () -> Unit) {
         surfaceVariant = Color(p.bgColor),
         onSurfaceVariant = textColor.copy(alpha = 0.7f),
     )
-    MaterialTheme(colorScheme = scheme, content = content)
+    MaterialTheme(colorScheme = scheme) {
+        // Text-only launcher: taps launch directly with no ripple/box highlight.
+        CompositionLocalProvider(LocalIndication provides null) {
+            content()
+        }
+    }
 }
