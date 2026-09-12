@@ -55,6 +55,7 @@ import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withLink
 import androidx.compose.ui.unit.dp
@@ -1090,7 +1091,7 @@ private fun LocationScreen(vm: SettingsViewModel, nav: NavController) {
 }
 
 @Composable
-private fun HtmlLinkText(html: String, modifier: Modifier = Modifier) {
+private fun HtmlLinkText(html: String, modifier: Modifier = Modifier, textAlign: TextAlign = TextAlign.Start) {
     val annotated = remember(html) {
         buildAnnotatedString {
             val linkStyle = TextLinkStyles(
@@ -1116,7 +1117,7 @@ private fun HtmlLinkText(html: String, modifier: Modifier = Modifier) {
             if (length == 0 && stripped.isNotBlank()) append(stripped)
         }
     }
-    Text(text = annotated, modifier = modifier, style = MaterialTheme.typography.bodySmall)
+    Text(text = annotated, modifier = modifier, style = MaterialTheme.typography.bodySmall, textAlign = textAlign)
 }
 
 private fun donateLink(label: String, url: String): String =
@@ -1152,22 +1153,24 @@ private fun AboutScreen() {
         Text(
             text = stringResource(R.string.app_name),
             style = MaterialTheme.typography.headlineMedium,
+            textAlign = TextAlign.Center,
         )
         Text(
             text = stringResource(R.string.creditName),
             style = MaterialTheme.typography.bodyLarge,
+            textAlign = TextAlign.Center,
         )
         Spacer(Modifier.height(32.dp))
-        HtmlLinkText(html = stringResource(R.string.github_link))
+        HtmlLinkText(html = stringResource(R.string.github_link), textAlign = TextAlign.Center)
         Spacer(Modifier.height(16.dp))
-        HtmlLinkText(html = stringResource(R.string.fdroid_link))
+        HtmlLinkText(html = stringResource(R.string.fdroid_link), textAlign = TextAlign.Center)
         Spacer(Modifier.height(16.dp))
-        HtmlLinkText(html = stringResource(R.string.izzy_link))
+        HtmlLinkText(html = stringResource(R.string.izzy_link), textAlign = TextAlign.Center)
         Spacer(Modifier.height(16.dp))
-        HtmlLinkText(html = stringResource(R.string.play_link))
+        HtmlLinkText(html = stringResource(R.string.play_link), textAlign = TextAlign.Center)
         Spacer(Modifier.height(16.dp))
-        HtmlLinkText(html = donateLink(stringResource(R.string.donate), stringResource(R.string.ko_fi_link)))
+        HtmlLinkText(html = donateLink(stringResource(R.string.donate), stringResource(R.string.ko_fi_link)), textAlign = TextAlign.Center)
         Spacer(Modifier.weight(1f))
-        Text(text = version, style = MaterialTheme.typography.bodyMedium)
+        Text(text = version, style = MaterialTheme.typography.bodyMedium, textAlign = TextAlign.Center)
     }
 }
