@@ -202,6 +202,7 @@ private fun RootSettingsScreen(vm: SettingsViewModel, nav: NavController) {
         remember(tick) { tick }.let {
             ActionRow(
                 title = stringResource(R.string.default_home),
+                summary = stringResource(R.string.default_home_summary),
                 onClick = {
                     try {
                         context.startActivity(Intent(Settings.ACTION_HOME_SETTINGS))
@@ -212,6 +213,7 @@ private fun RootSettingsScreen(vm: SettingsViewModel, nav: NavController) {
             )
             SwitchRow(
                 title = stringResource(R.string.lock_settings),
+                summary = stringResource(R.string.lock_settings_summary),
                 checked = p.isSettingsLocked(),
                 onCheckedChange = { p.putBoolean("lockSettings", it) },
             )
@@ -270,10 +272,22 @@ private fun RootSettingsScreen(vm: SettingsViewModel, nav: NavController) {
                 onClick = vm::clearLogs,
             )
             PrefSection(stringResource(R.string.about))
-            NavRow(title = stringResource(R.string.about_title), onClick = { nav.navigate(Routes.ABOUT) })
+            NavRow(
+                title = stringResource(R.string.about_title),
+                summary = stringResource(R.string.about_summary),
+                onClick = { nav.navigate(Routes.ABOUT) },
+            )
             PrefSection(stringResource(R.string.reset))
-            ActionRow(title = stringResource(R.string.restart_text), onClick = vm::restart)
-            ActionRow(title = stringResource(R.string.reset_text), onClick = { showResetConfirm = true })
+            ActionRow(
+                title = stringResource(R.string.restart_text),
+                summary = stringResource(R.string.restart_summary),
+                onClick = vm::restart,
+            )
+            ActionRow(
+                title = stringResource(R.string.reset_text),
+                summary = stringResource(R.string.reset_summary),
+                onClick = { showResetConfirm = true },
+            )
         }
     }
     if (showResetConfirm) {
@@ -300,6 +314,7 @@ private fun UiSettingsScreen(vm: SettingsViewModel) {
             PrefSection(stringResource(R.string.appearance))
             ListRow(
                 title = stringResource(R.string.background_color),
+                summary = stringResource(R.string.background_color_summary),
                 entries = arrayEntries(R.array.bg_options),
                 values = arrayEntries(R.array.bg_values),
                 current = p.getBgColorString(),
@@ -307,6 +322,7 @@ private fun UiSettingsScreen(vm: SettingsViewModel) {
             )
             ListRow(
                 title = stringResource(R.string.text_color),
+                summary = stringResource(R.string.text_color_summary),
                 entries = arrayEntries(R.array.color_options),
                 values = arrayEntries(R.array.color_values),
                 current = p.getTextString(),
@@ -314,6 +330,7 @@ private fun UiSettingsScreen(vm: SettingsViewModel) {
             )
             ListRow(
                 title = stringResource(R.string.text_font),
+                summary = stringResource(R.string.text_font_summary),
                 entries = arrayEntries(R.array.font_options),
                 values = arrayEntries(R.array.font_values),
                 current = p.getTextFont(),
@@ -321,6 +338,7 @@ private fun UiSettingsScreen(vm: SettingsViewModel) {
             )
             ListRow(
                 title = stringResource(R.string.text_style),
+                summary = stringResource(R.string.text_style_summary),
                 entries = arrayEntries(R.array.style_options),
                 values = arrayEntries(R.array.style_values),
                 current = p.getTextStyle(),
@@ -328,12 +346,14 @@ private fun UiSettingsScreen(vm: SettingsViewModel) {
             )
             SwitchRow(
                 title = stringResource(R.string.text_shadow),
+                summary = stringResource(R.string.text_shadow_summary),
                 checked = p.isTextShadowEnabled(),
                 onCheckedChange = { p.putBoolean("textShadow", it) },
             )
             PrefSection(stringResource(R.string.operation))
             ListRow(
                 title = stringResource(R.string.animation_speed),
+                summary = stringResource(R.string.animation_speed_summary),
                 entries = arrayEntries(R.array.animation_options),
                 values = arrayEntries(R.array.animation_values),
                 current = p.getAnimationSpeedString(),
@@ -341,6 +361,7 @@ private fun UiSettingsScreen(vm: SettingsViewModel) {
             )
             ListRow(
                 title = stringResource(R.string.swipe_threshold),
+                summary = stringResource(R.string.swipe_threshold_summary),
                 entries = arrayEntries(R.array.animation_options),
                 values = arrayEntries(R.array.swipe_values),
                 current = p.getSwipeThresholdString(),
@@ -348,6 +369,7 @@ private fun UiSettingsScreen(vm: SettingsViewModel) {
             )
             ListRow(
                 title = stringResource(R.string.swipe_velocity_threshold),
+                summary = stringResource(R.string.swipe_velocity_threshold_summary),
                 entries = arrayEntries(R.array.animation_options),
                 values = arrayEntries(R.array.swipe_values),
                 current = p.getSwipeVelocityString(),
@@ -355,11 +377,13 @@ private fun UiSettingsScreen(vm: SettingsViewModel) {
             )
             SwitchRow(
                 title = stringResource(R.string.homescreen_darkening),
+                summary = stringResource(R.string.homescreen_darkening_summary),
                 checked = p.isHomescreenDarkeningEnabled(),
                 onCheckedChange = { p.putBoolean("homescreenDarkening", it) },
             )
             SwitchRow(
                 title = stringResource(R.string.app_drawer_darkening),
+                summary = stringResource(R.string.app_drawer_darkening_summary),
                 checked = p.isAppDrawerDarkeningEnabled(),
                 onCheckedChange = { p.putBoolean("appDrawerDarkening", it) },
             )
@@ -371,6 +395,7 @@ private fun UiSettingsScreen(vm: SettingsViewModel) {
             )
             SwitchRow(
                 title = stringResource(R.string.show_status_bar),
+                summary = stringResource(R.string.show_status_bar_summary),
                 checked = p.isBarVisible(),
                 onCheckedChange = { p.putBoolean("barVisibility", it) },
             )
@@ -406,11 +431,13 @@ private fun HomeSettingsScreen(vm: SettingsViewModel, nav: NavController) {
             PrefSection(stringResource(R.string.clock))
             SwitchRow(
                 title = stringResource(R.string.show_clock),
+                summary = stringResource(R.string.show_clock_summary),
                 checked = p.isClockEnabled(),
                 onCheckedChange = { p.putBoolean("clockEnabled", it) },
             )
             ListRow(
                 title = stringResource(R.string.clock_alignment),
+                summary = stringResource(R.string.clock_alignment_summary),
                 entries = arrayEntries(R.array.h_alignment_options),
                 values = arrayEntries(R.array.h_alignment_values),
                 current = p.getClockAlignment(),
@@ -419,6 +446,7 @@ private fun HomeSettingsScreen(vm: SettingsViewModel, nav: NavController) {
             )
             ListRow(
                 title = stringResource(R.string.clock_size),
+                summary = stringResource(R.string.clock_size_summary),
                 entries = arrayEntries(R.array.size_options),
                 values = arrayEntries(R.array.size_values),
                 current = p.getClockSize(),
@@ -427,19 +455,22 @@ private fun HomeSettingsScreen(vm: SettingsViewModel, nav: NavController) {
             )
             SwitchRow(
                 title = stringResource(R.string.clicking_time_opens_clock),
+                summary = stringResource(R.string.clicking_time_opens_clock_summary),
                 checked = p.isClockGestureEnabled(),
                 enabled = p.isClockEnabled(),
                 onCheckedChange = { p.putBoolean("clockClick", it) },
             )
             SwitchRow(
                 title = stringResource(R.string.custom_clock_gesture),
+                summary = stringResource(R.string.custom_clock_gesture_summary),
                 checked = p.isGestureEnabled("clock"),
                 enabled = p.isClockEnabled() && p.isClockGestureEnabled(),
                 onCheckedChange = { p.putBoolean("clockSwipe", it) },
             )
             NavRow(
                 title = stringResource(R.string.set_clock_app),
-                summary = p.getGestureName("clock"),
+                summary = stringResource(R.string.set_clock_app_summary),
+                value = p.getGestureName("clock"),
                 enabled = p.isClockEnabled() && p.isGestureEnabled("clock"),
                 onClick = { nav.navigate(Routes.gesture("clock")) },
             )
@@ -447,11 +478,13 @@ private fun HomeSettingsScreen(vm: SettingsViewModel, nav: NavController) {
             PrefSection(stringResource(R.string.date))
             SwitchRow(
                 title = stringResource(R.string.show_date),
+                summary = stringResource(R.string.show_date_summary),
                 checked = p.isDateEnabled(),
                 onCheckedChange = { p.putBoolean("dateEnabled", it) },
             )
             ListRow(
                 title = stringResource(R.string.date_size),
+                summary = stringResource(R.string.date_size_summary),
                 entries = arrayEntries(R.array.size_options),
                 values = arrayEntries(R.array.size_values),
                 current = p.getDateSize(),
@@ -460,25 +493,29 @@ private fun HomeSettingsScreen(vm: SettingsViewModel, nav: NavController) {
             )
             SwitchRow(
                 title = stringResource(R.string.battery_indicator),
+                summary = stringResource(R.string.battery_indicator_summary),
                 checked = p.isBatteryEnabled(),
                 enabled = p.isDateEnabled(),
                 onCheckedChange = { p.putBoolean("batteryEnabled", it) },
             )
             SwitchRow(
                 title = stringResource(R.string.clicking_date_opens_calendar),
+                summary = stringResource(R.string.clicking_date_opens_calendar_summary),
                 checked = p.isDateGestureEnabled(),
                 enabled = p.isDateEnabled(),
                 onCheckedChange = { p.putBoolean("dateClick", it) },
             )
             SwitchRow(
                 title = stringResource(R.string.custom_date_gesture),
+                summary = stringResource(R.string.custom_date_gesture_summary),
                 checked = p.isGestureEnabled("date"),
                 enabled = p.isDateEnabled() && p.isDateGestureEnabled(),
                 onCheckedChange = { p.putBoolean("dateSwipe", it) },
             )
             NavRow(
                 title = stringResource(R.string.set_calendar_app),
-                summary = p.getGestureName("date"),
+                summary = stringResource(R.string.set_calendar_app_summary),
+                value = p.getGestureName("date"),
                 enabled = p.isDateEnabled() && p.isGestureEnabled("date"),
                 onClick = { nav.navigate(Routes.gesture("date")) },
             )
@@ -506,18 +543,21 @@ private fun HomeSettingsScreen(vm: SettingsViewModel, nav: NavController) {
             PrefSection(stringResource(R.string.weather))
             SwitchRow(
                 title = stringResource(R.string.weather),
+                summary = stringResource(R.string.weather_enabled_summary),
                 checked = p.isWeatherEnabled(),
                 enabled = p.isDateEnabled(),
                 onCheckedChange = { p.putBoolean("weatherEnabled", it) },
             )
             NavRow(
                 title = stringResource(R.string.set_weather_app),
-                summary = p.getGestureName("weather"),
+                summary = stringResource(R.string.set_weather_app_summary),
+                value = p.getGestureName("weather"),
                 enabled = p.isDateEnabled() && p.isWeatherEnabled(),
                 onClick = { nav.navigate(Routes.gesture("weather")) },
             )
             SwitchRow(
                 title = stringResource(R.string.gps_location),
+                summary = stringResource(R.string.gps_location_summary),
                 checked = p.isWeatherGPS(),
                 enabled = p.isDateEnabled() && p.isWeatherEnabled(),
                 onCheckedChange = { enable ->
@@ -530,12 +570,14 @@ private fun HomeSettingsScreen(vm: SettingsViewModel, nav: NavController) {
             )
             NavRow(
                 title = stringResource(R.string.set_manual_location),
-                summary = p.getWeatherRegion().ifEmpty { null },
+                summary = stringResource(R.string.set_manual_location_summary),
+                value = p.getWeatherRegion().ifEmpty { null },
                 enabled = p.isDateEnabled() && p.isWeatherEnabled() && !p.isWeatherGPS(),
                 onClick = { nav.navigate(Routes.LOCATION) },
             )
             ListRow(
                 title = stringResource(R.string.units),
+                summary = stringResource(R.string.units_summary),
                 entries = arrayEntries(R.array.temp_units),
                 values = arrayEntries(R.array.unit_values),
                 current = p.getTempUnits(),
@@ -553,6 +595,7 @@ private fun HomeSettingsScreen(vm: SettingsViewModel, nav: NavController) {
             PrefSection(stringResource(R.string.shortcuts))
             ListRow(
                 title = stringResource(R.string.number_of_shortcuts),
+                summary = stringResource(R.string.number_of_shortcuts_summary),
                 entries = arrayEntries(R.array.shortcut_options),
                 values = arrayEntries(R.array.shortcut_options),
                 current = p.getShortcutNumber().toString(),
@@ -560,6 +603,7 @@ private fun HomeSettingsScreen(vm: SettingsViewModel, nav: NavController) {
             )
             ListRow(
                 title = stringResource(R.string.horizontal_alignment),
+                summary = stringResource(R.string.horizontal_alignment_summary),
                 entries = arrayEntries(R.array.h_alignment_options),
                 values = arrayEntries(R.array.h_alignment_values),
                 current = p.getShortcutAlignment(),
@@ -567,6 +611,7 @@ private fun HomeSettingsScreen(vm: SettingsViewModel, nav: NavController) {
             )
             ListRow(
                 title = stringResource(R.string.vertical_alignment),
+                summary = stringResource(R.string.vertical_alignment_summary),
                 entries = arrayEntries(R.array.v_alignment_options),
                 values = arrayEntries(R.array.v_alignment_values),
                 current = p.getShortcutVAlignment(),
@@ -574,6 +619,7 @@ private fun HomeSettingsScreen(vm: SettingsViewModel, nav: NavController) {
             )
             ListRow(
                 title = stringResource(R.string.shortcut_size),
+                summary = stringResource(R.string.shortcut_size_summary),
                 entries = arrayEntries(R.array.size_options),
                 values = arrayEntries(R.array.size_values),
                 current = p.getShortcutSize(),
@@ -581,6 +627,7 @@ private fun HomeSettingsScreen(vm: SettingsViewModel, nav: NavController) {
             )
             ListRow(
                 title = stringResource(R.string.shortcut_spacing),
+                summary = stringResource(R.string.shortcut_spacing_summary),
                 entries = arrayEntries(R.array.shortcut_spacing_options),
                 values = arrayEntries(R.array.shortcut_spacing_values),
                 current = p.getShortcutWeight().toString(),
@@ -588,6 +635,7 @@ private fun HomeSettingsScreen(vm: SettingsViewModel, nav: NavController) {
             )
             SwitchRow(
                 title = stringResource(R.string.lock_shortcuts),
+                summary = stringResource(R.string.lock_shortcuts_summary),
                 checked = p.areShortcutsLocked(),
                 onCheckedChange = { p.putBoolean("lockShortcuts", it) },
             )
@@ -613,33 +661,39 @@ private fun HomeSettingsScreen(vm: SettingsViewModel, nav: NavController) {
             PrefSection(stringResource(R.string.gestures))
             SwitchRow(
                 title = stringResource(R.string.swipe_left),
+                summary = stringResource(R.string.swipe_left_summary),
                 checked = p.isGestureEnabled("left"),
                 onCheckedChange = { p.putBoolean("leftSwipe", it) },
             )
             NavRow(
                 title = stringResource(R.string.left_swipe_app),
-                summary = p.getGestureName("left"),
+                summary = stringResource(R.string.left_swipe_app_summary),
+                value = p.getGestureName("left"),
                 enabled = p.isGestureEnabled("left"),
                 onClick = { nav.navigate(Routes.gesture("left")) },
             )
             SwitchRow(
                 title = stringResource(R.string.swipe_right),
+                summary = stringResource(R.string.swipe_right_summary),
                 checked = p.isGestureEnabled("right"),
                 onCheckedChange = { p.putBoolean("rightSwipe", it) },
             )
             NavRow(
                 title = stringResource(R.string.right_swipe_app),
-                summary = p.getGestureName("right"),
+                summary = stringResource(R.string.right_swipe_app_summary),
+                value = p.getGestureName("right"),
                 enabled = p.isGestureEnabled("right"),
                 onClick = { nav.navigate(Routes.gesture("right")) },
             )
             SwitchRow(
                 title = stringResource(R.string.double_tap),
+                summary = stringResource(R.string.double_tap_summary),
                 checked = p.isDoubleTapEnabled(),
                 onCheckedChange = { p.putBoolean("doubleTap", it) },
             )
             ListRow(
                 title = stringResource(R.string.double_tap_action),
+                summary = stringResource(R.string.double_tap_action_summary),
                 entries = arrayEntries(R.array.double_tap_action_options),
                 values = arrayEntries(R.array.double_tap_action_values),
                 current = p.getDoubleTapAction(),
@@ -648,7 +702,8 @@ private fun HomeSettingsScreen(vm: SettingsViewModel, nav: NavController) {
             )
             NavRow(
                 title = stringResource(R.string.double_tap_app),
-                summary = p.getGestureName("doubleTap"),
+                summary = stringResource(R.string.double_tap_app_summary),
+                value = p.getGestureName("doubleTap"),
                 enabled = p.isDoubleTapEnabled() && p.getDoubleTapAction() == "app",
                 onClick = { nav.navigate(Routes.gesture("doubleTap")) },
             )
@@ -682,6 +737,7 @@ private fun AppMenuSettingsScreen(vm: SettingsViewModel, nav: NavController) {
             PrefSection(stringResource(R.string.apps))
             ListRow(
                 title = stringResource(R.string.horizontal_alignment),
+                summary = stringResource(R.string.app_alignment_summary),
                 entries = arrayEntries(R.array.h_alignment_options),
                 values = arrayEntries(R.array.h_alignment_values),
                 current = p.getAppAlignment(),
@@ -689,6 +745,7 @@ private fun AppMenuSettingsScreen(vm: SettingsViewModel, nav: NavController) {
             )
             ListRow(
                 title = stringResource(R.string.app_size),
+                summary = stringResource(R.string.app_size_summary),
                 entries = arrayEntries(R.array.size_options),
                 values = arrayEntries(R.array.size_values),
                 current = p.getAppSize(),
@@ -696,6 +753,7 @@ private fun AppMenuSettingsScreen(vm: SettingsViewModel, nav: NavController) {
             )
             ListRow(
                 title = stringResource(R.string.app_spacing),
+                summary = stringResource(R.string.app_spacing_summary),
                 entries = arrayEntries(R.array.app_spacing_options),
                 values = arrayEntries(R.array.app_spacing_values),
                 current = p.getAppSpacing().toString(),
@@ -715,6 +773,7 @@ private fun AppMenuSettingsScreen(vm: SettingsViewModel, nav: NavController) {
             )
             ListRow(
                 title = stringResource(R.string.alphabet_index_position),
+                summary = stringResource(R.string.alphabet_index_position_summary),
                 entries = arrayEntries(R.array.alphabet_index_position_options),
                 values = arrayEntries(R.array.alphabet_index_position_values),
                 current = p.getAlphabetIndexPosition(),
@@ -723,6 +782,7 @@ private fun AppMenuSettingsScreen(vm: SettingsViewModel, nav: NavController) {
             )
             SwitchRow(
                 title = stringResource(R.string.contacts_menu),
+                summary = stringResource(R.string.contacts_menu_summary),
                 checked = p.areContactsEnabled(),
                 onCheckedChange = { enable ->
                     if (enable && !hasContactsPermission(context)) {
@@ -736,7 +796,8 @@ private fun AppMenuSettingsScreen(vm: SettingsViewModel, nav: NavController) {
             val autoLaunchOn = p.isAutoLaunchEnabled()
             SwitchRow(
                 title = stringResource(R.string.internet_search),
-                summary = if (p.isSearchEnabled() && autoLaunchOn) {
+                summary = stringResource(R.string.internet_search_summary),
+                value = if (p.isSearchEnabled() && autoLaunchOn) {
                     stringResource(R.string.web_search_disabled_reason_auto_open)
                 } else null,
                 checked = webSearchOn,
@@ -754,11 +815,13 @@ private fun AppMenuSettingsScreen(vm: SettingsViewModel, nav: NavController) {
             PrefSection(stringResource(R.string.search_text))
             SwitchRow(
                 title = stringResource(R.string.enable_search),
+                summary = stringResource(R.string.enable_search_summary),
                 checked = p.isSearchEnabled(),
                 onCheckedChange = { p.putBoolean("searchEnabled", it) },
             )
             ListRow(
                 title = stringResource(R.string.search_alignment),
+                summary = stringResource(R.string.search_alignment_summary),
                 entries = arrayEntries(R.array.h_alignment_options),
                 values = arrayEntries(R.array.h_alignment_values),
                 current = p.getSearchAlignment(),
@@ -767,6 +830,7 @@ private fun AppMenuSettingsScreen(vm: SettingsViewModel, nav: NavController) {
             )
             ListRow(
                 title = stringResource(R.string.search_size),
+                summary = stringResource(R.string.search_size_summary),
                 entries = arrayEntries(R.array.size_options),
                 values = arrayEntries(R.array.size_values),
                 current = p.getSearchSize(),
@@ -775,23 +839,24 @@ private fun AppMenuSettingsScreen(vm: SettingsViewModel, nav: NavController) {
             )
             SwitchRow(
                 title = stringResource(R.string.enable_fuzzy_search),
+                summary = stringResource(R.string.enable_fuzzy_search_summary),
                 checked = p.isFuzzySearchEnabled(),
                 enabled = p.isSearchEnabled(),
                 onCheckedChange = { p.putBoolean("fuzzySearchEnabled", it) },
             )
             SwitchRow(
                 title = stringResource(R.string.automatically_open_keyboard),
+                summary = stringResource(R.string.automatically_open_keyboard_summary),
                 checked = p.isAutoKeyboardEnabled(),
                 enabled = p.isSearchEnabled(),
                 onCheckedChange = { p.putBoolean("autoKeyboard", it) },
             )
             SwitchRow(
                 title = stringResource(R.string.automatic_app_opening),
-                summary = if (webSearchOn) {
+                summary = stringResource(R.string.auto_launch_summary),
+                value = if (webSearchOn) {
                     stringResource(R.string.auto_launch_disabled_reason_web_search)
-                } else {
-                    stringResource(R.string.auto_launch_summary)
-                },
+                } else null,
                 checked = autoLaunchOn,
                 enabled = p.isSearchEnabled() && !webSearchOn,
                 onCheckedChange = {
@@ -822,31 +887,37 @@ private fun ContextMenuSettingsScreen(vm: SettingsViewModel) {
         remember(tick) { tick }.let {
             SwitchRow(
                 title = stringResource(R.string.enable_pin),
+                summary = stringResource(R.string.enable_pin_summary),
                 checked = p.isPinEnabled(),
                 onCheckedChange = { p.putBoolean("pinEnabled", it) },
             )
             SwitchRow(
                 title = stringResource(R.string.enable_info),
+                summary = stringResource(R.string.enable_info_summary),
                 checked = p.isInfoEnabled(),
                 onCheckedChange = { p.putBoolean("infoEnabled", it) },
             )
             SwitchRow(
                 title = stringResource(R.string.enable_uninstall),
+                summary = stringResource(R.string.enable_uninstall_summary),
                 checked = p.isUninstallEnabled(),
                 onCheckedChange = { p.putBoolean("uninstallEnabled", it) },
             )
             SwitchRow(
                 title = stringResource(R.string.enable_rename),
+                summary = stringResource(R.string.enable_rename_summary),
                 checked = p.isRenameEnabled(),
                 onCheckedChange = { p.putBoolean("renameEnabled", it) },
             )
             SwitchRow(
                 title = stringResource(R.string.enable_hide),
+                summary = stringResource(R.string.enable_hide_summary),
                 checked = p.isHideEnabled(),
                 onCheckedChange = { p.putBoolean("hideEnabled", it) },
             )
             SwitchRow(
                 title = stringResource(R.string.enable_close),
+                summary = stringResource(R.string.enable_close_summary),
                 checked = p.isCloseEnabled(),
                 onCheckedChange = { p.putBoolean("closeEnabled", it) },
             )

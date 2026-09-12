@@ -43,6 +43,7 @@ fun PrefSection(title: String) {
 private fun RowContainer(
     title: String,
     summary: String?,
+    value: String? = null,
     enabled: Boolean,
     onClick: (() -> Unit)?,
     trailing: @Composable () -> Unit,
@@ -69,6 +70,14 @@ private fun RowContainer(
                     color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = alpha),
                 )
             }
+            if (!value.isNullOrEmpty()) {
+                Spacer(Modifier.height(2.dp))
+                Text(
+                    text = value,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.primary.copy(alpha = alpha),
+                )
+            }
         }
         Spacer(Modifier.width(16.dp))
         trailing()
@@ -79,11 +88,12 @@ private fun RowContainer(
 fun SwitchRow(
     title: String,
     summary: String? = null,
+    value: String? = null,
     checked: Boolean,
     enabled: Boolean = true,
     onCheckedChange: (Boolean) -> Unit,
 ) {
-    RowContainer(title, summary, enabled, onClick = { if (enabled) onCheckedChange(!checked) }) {
+    RowContainer(title, summary, value, enabled, onClick = { if (enabled) onCheckedChange(!checked) }) {
         Switch(
             checked = checked,
             enabled = enabled,
@@ -96,25 +106,28 @@ fun SwitchRow(
 fun NavRow(
     title: String,
     summary: String? = null,
+    value: String? = null,
     enabled: Boolean = true,
     onClick: () -> Unit,
 ) {
-    RowContainer(title, summary, enabled, onClick = { if (enabled) onClick() }) {}
+    RowContainer(title, summary, value, enabled, onClick = { if (enabled) onClick() }) {}
 }
 
 @Composable
 fun ActionRow(
     title: String,
     summary: String? = null,
+    value: String? = null,
     enabled: Boolean = true,
     onClick: () -> Unit,
 ) {
-    RowContainer(title, summary, enabled, onClick = { if (enabled) onClick() }) {}
+    RowContainer(title, summary, value, enabled, onClick = { if (enabled) onClick() }) {}
 }
 
 @Composable
 fun ListRow(
     title: String,
+    summary: String? = null,
     entries: List<String>,
     values: List<String>,
     current: String,
@@ -123,7 +136,7 @@ fun ListRow(
 ) {
     var showDialog by remember { mutableStateOf(false) }
     val currentLabel = entries.getOrNull(values.indexOf(current)) ?: current
-    RowContainer(title, currentLabel, enabled, onClick = { if (enabled) showDialog = true }) {}
+    RowContainer(title, summary, currentLabel, enabled, onClick = { if (enabled) showDialog = true }) {}
     if (showDialog) {
         AlertDialog(
             onDismissRequest = { showDialog = false },
@@ -177,7 +190,7 @@ fun EditRow(
 ) {
     var showDialog by remember { mutableStateOf(false) }
     var text by remember(showDialog) { mutableStateOf(value) }
-    RowContainer(title, summary ?: value, enabled, onClick = { if (enabled) showDialog = true }) {}
+    RowContainer(title, summary, value.ifEmpty { null }, enabled, onClick = { if (enabled) showDialog = true }) {}
     if (showDialog) {
         AlertDialog(
             onDismissRequest = { showDialog = false },

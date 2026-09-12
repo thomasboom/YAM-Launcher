@@ -55,9 +55,11 @@
     <string name="settings_title">Launcher Settings</string>
 
     <string name="default_home">Set Default Home</string>
+    <string name="default_home_summary">Open system settings to set YAM as your default launcher</string>
     <string name="unable_to_launch_settings">Unable to launch settings</string>
 
     <string name="lock_settings">Lock Settings</string>
+    <string name="lock_settings_summary">Require biometric authentication to open settings</string>
 
     <string name="customization">Customization</string>
 
@@ -67,23 +69,34 @@
 
     <string name="appearance">Appearance</string>
     <string name="background_color">Background Color</string>
+    <string name="background_color_summary">Choose the launcher background color</string>
     <string name="text_color">Text Color</string>
+    <string name="text_color_summary">Choose the color for all launcher text</string>
     <string name="text_font">Text Font</string>
+    <string name="text_font_summary">Choose the font used for launcher text</string>
     <string name="text_style">Text Style</string>
+    <string name="text_style_summary">Choose normal, bold, italic or bold-italic text</string>
     <string name="text_shadow">Text Shadow</string>
+    <string name="text_shadow_summary">Add a shadow behind text for better readability</string>
 
     <string name="operation">Operation</string>
     <string name="block_auto_rotation">Block Auto Rotation</string>
     <string name="block_auto_rotation_summary">Prevent the screen from rotating automatically</string>
     <string name="animation_speed">Animation Speed</string>
+    <string name="animation_speed_summary">Control how fast screen transitions animate</string>
     <string name="swipe_threshold">Swipe Threshold</string>
+    <string name="swipe_threshold_summary">Choose how far you must swipe to trigger a gesture</string>
     <string name="swipe_velocity_threshold">Swipe Velocity Threshold</string>
+    <string name="swipe_velocity_threshold_summary">Choose how fast you must swipe to trigger a gesture</string>
     <string name="show_status_bar">Show Status Bar</string>
+    <string name="show_status_bar_summary">Show the system status bar at the top</string>
     <string name="app_drawer_darkening">App Drawer Background Darkening</string>
+    <string name="app_drawer_darkening_summary">Dim the wallpaper behind the app list</string>
     <string
         name="settings_darkening"
     >Settings Panel Background Darkening</string>
     <string name="homescreen_darkening">Homescreen Background Darkening</string>
+    <string name="homescreen_darkening_summary">Dim the wallpaper behind the home screen</string>
     <string name="enable_confirmation">App Confirmation Dialog</string>
     <string
         name="launch_confirmation_text"
@@ -95,11 +108,17 @@
 
     <string name="clock">Clock</string>
     <string name="show_clock">Show Clock</string>
+    <string name="show_clock_summary">Show the clock on the home screen</string>
     <string name="clock_alignment">Clock Alignment</string>
+    <string name="clock_alignment_summary">Align the clock to the left, center or right</string>
     <string name="clock_size">Clock Size</string>
+    <string name="clock_size_summary">Change the size of the clock text</string>
     <string name="clicking_time_opens_clock">Clicking Time Opens Clock</string>
+    <string name="clicking_time_opens_clock_summary">Tap the clock to open your clock app</string>
     <string name="custom_clock_gesture">Custom Clock</string>
+    <string name="custom_clock_gesture_summary">Use a custom app when interacting with the clock</string>
     <string name="set_clock_app">Set Clock App</string>
+    <string name="set_clock_app_summary">Choose which app opens from the clock</string>
 
     <string name="screen_time">Screen Time</string>
     <string name="show_screen_time">Show Screen Time</string>
@@ -111,34 +130,51 @@
 
     <string name="date">Date</string>
     <string name="show_date">Show Date</string>
+    <string name="show_date_summary">Show the date on the home screen</string>
     <string name="date_size">Date Size</string>
+    <string name="date_size_summary">Change the size of the date text</string>
     <string name="battery_indicator">Battery Indicator</string>
+    <string name="battery_indicator_summary">Show the battery level next to the date</string>
     <string
         name="clicking_date_opens_calendar"
     >Clicking Date Opens Calendar</string>
+    <string name="clicking_date_opens_calendar_summary">Tap the date to open your calendar app</string>
     <string name="custom_date_gesture">Custom Calendar</string>
+    <string name="custom_date_gesture_summary">Use a custom app when interacting with the date</string>
     <string name="set_calendar_app">Set Calendar App</string>
+    <string name="set_calendar_app_summary">Choose which app opens from the date</string>
 
     <string name="weather">Weather</string>
+    <string name="weather_enabled_summary">Show weather info below the date</string>
     <string name="set_weather_app">Set Weather App</string>
+    <string name="set_weather_app_summary">Choose which app opens when tapping the weather</string>
     <string name="no_weather_app">No Weather app found</string>
     <string name="gps_location">GPS Location</string>
+    <string name="gps_location_summary">Use your current GPS position for the weather</string>
     <string name="latest_location">Latest GPS location</string>
     <string name="set_manual_location">Set Manual Location</string>
+    <string name="set_manual_location_summary">Search and pick a city for the weather</string>
     <string name="find_your_city">"Search for Your City"</string>
     <string name="weather_update_interval">Update Interval</string>
     <string
         name="weather_update_interval_summary"
     >e.g., 15m, 6h, 1d (minimum 1m)</string>
     <string name="units">Units</string>
+    <string name="units_summary">Choose Celsius or Fahrenheit for temperatures</string>
 
     <string name="shortcuts">Shortcuts</string>
     <string name="number_of_shortcuts">Number of Shortcuts</string>
+    <string name="number_of_shortcuts_summary">Choose how many shortcut slots to show</string>
     <string name="horizontal_alignment">Horizontal Alignment</string>
+    <string name="horizontal_alignment_summary">Align items to the left, center or right</string>
     <string name="vertical_alignment">Vertical Alignment</string>
+    <string name="vertical_alignment_summary">Align items to the top, center or bottom</string>
     <string name="shortcut_size">Shortcut Size</string>
+    <string name="shortcut_size_summary">Change the size of shortcut text</string>
     <string name="shortcut_spacing">Shortcut Spacing</string>
+    <string name="shortcut_spacing_summary">Adjust the spacing between shortcuts</string>
     <string name="lock_shortcuts">Lock Shortcuts</string>
+    <string name="lock_shortcuts_summary">Prevent changing shortcuts from the home screen</string>
     <string name="hidden_shortcut_title">Hidden Apps</string>
     <string
         name="hidden_shortcuts"
@@ -155,15 +191,22 @@
 
     <string name="gestures">Gestures</string>
     <string name="swipe_left">Swipe Left</string>
+    <string name="swipe_left_summary">Enable opening an app by swiping left</string>
     <string name="left_swipe_app">Left Swipe App</string>
+    <string name="left_swipe_app_summary">Choose which app opens on a left swipe</string>
     <string name="swipe_right">Swipe Right</string>
+    <string name="swipe_right_summary">Enable opening an app by swiping right</string>
     <string name="right_swipe_app">Right Swipe App</string>
+    <string name="right_swipe_app_summary">Choose which app opens on a right swipe</string>
     <string name="double_tap_to_lock_screen">Double Tap to Lock Screen</string>
     <string name="double_tap">Double Tap</string>
+    <string name="double_tap_summary">Enable an action when double-tapping the home screen</string>
     <string name="double_tap_action">Double Tap Action</string>
+    <string name="double_tap_action_summary">Choose what happens on a double-tap</string>
     <string name="double_tap_action_lock_screen">Lock Screen</string>
     <string name="double_tap_action_app">Launch App</string>
     <string name="double_tap_app">Double Tap App</string>
+    <string name="double_tap_app_summary">Choose which app opens on a double-tap</string>
 
     <string name="app_settings_title">App Menu Settings</string>
     <string name="app_settings_text">App Menu</string>
@@ -171,19 +214,25 @@
 
     <string name="apps">Apps</string>
     <string name="app_alignment">App Alignment</string>
+    <string name="app_alignment_summary">Align app names to the left, center or right</string>
     <string name="app_size">App Size</string>
+    <string name="app_size_summary">Change the size of app names</string>
     <string name="app_spacing">App Spacing</string>
+    <string name="app_spacing_summary">Adjust the spacing between apps</string>
     <string name="app_strict_click">Strict Text Click</string>
     <string name="app_strict_click_summary">Only open app when clicking directly on text</string>
     <string name="contacts_menu">Contacts Menu</string>
+    <string name="contacts_menu_summary">Show contacts together with apps when searching</string>
     <string name="permission_denied">Permission Denied</string>
     <string name="internet_search">Web Search Button</string>
+    <string name="internet_search_summary">Show a web search button when no app matches</string>
 
     <string name="alphabet_index_enabled">Alphabet Index</string>
     <string
         name="alphabet_index_summary"
     >Show a letter sidebar for quick navigation</string>
     <string name="alphabet_index_position">Index Position</string>
+    <string name="alphabet_index_position_summary">Show the letter sidebar on the left or right</string>
     <string name="alphabet_index_left">Left</string>
     <string name="alphabet_index_right">Right</string>
 
@@ -194,20 +243,31 @@
     >Enable/disable context menu items</string>
 
     <string name="enable_pin">Pin App</string>
+    <string name="enable_pin_summary">Show the Pin option to add apps to the home screen</string>
     <string name="enable_info">App Info</string>
+    <string name="enable_info_summary">Show the App Info option for system details</string>
     <string name="enable_uninstall">Uninstall App</string>
+    <string name="enable_uninstall_summary">Show the Uninstall option to remove apps</string>
     <string name="enable_rename">Rename App</string>
+    <string name="enable_rename_summary">Show the Rename option to change app names</string>
     <string name="enable_hide">Hide App</string>
+    <string name="enable_hide_summary">Show the Hide option to hide apps from the list</string>
     <string name="enable_close">Close Menu</string>
+    <string name="enable_close_summary">Show the Close option to dismiss the menu</string>
 
     <string name="search_text">Search</string>
     <string name="enable_search">Enable Search</string>
+    <string name="enable_search_summary">Show the search bar in the app menu</string>
     <string name="search_alignment">Search Alignment</string>
+    <string name="search_alignment_summary">Align the search bar to the left, center or right</string>
     <string name="search_size">Search Size</string>
+    <string name="search_size_summary">Change the size of the search text</string>
     <string name="enable_fuzzy_search">Fuzzy Search</string>
+    <string name="enable_fuzzy_search_summary">Find apps even with typos or missing letters</string>
     <string
         name="automatically_open_keyboard"
     >Automatically Open Keyboard</string>
+    <string name="automatically_open_keyboard_summary">Open the keyboard when the app menu opens</string>
     <string name="automatic_app_opening">Automatic App Opening</string>
     <string
         name="auto_launch_summary"
@@ -225,6 +285,7 @@
     <string name="hidden_confirm_text">Are you sure you want to unhide</string>
 
     <string name="about">About</string>
+    <string name="about_summary">Version info, source code and support links</string>
     <!--About Page Items-->
     <string name="about_title">About YAM Launcher</string>
     <string name="app_icon">App Icon</string>
@@ -243,7 +304,9 @@
 
     <string name="reset">Reset</string>
     <string name="restart_text">Restart YAM Launcher</string>
+    <string name="restart_summary">Reload the launcher to apply changes</string>
     <string name="reset_text">Reset All Settings</string>
+    <string name="reset_summary">Erase all settings, shortcuts and hidden apps</string>
     <string
         name="reset_confirm_text"
     >You will lose ALL changes that you have made to the launcher settings, shortcuts, hidden apps, etc.\n\nAre you sure?</string>
