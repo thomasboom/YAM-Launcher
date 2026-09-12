@@ -1,5 +1,6 @@
 package eu.ottop.yamlauncher.utils
 
+import android.content.Context
 import android.os.Build
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
@@ -66,32 +67,65 @@ class BiometricUtils(private val activity: FragmentActivity) {
         val executor = ContextCompat.getMainExecutor(activity)
         val biometricPrompt = BiometricPrompt(activity, executor, authenticationCallback)
 
-        // Determine allowed authenticators based on API level
-        // Android 11+ supports device credentials (PIN/pattern/password)
-        val authenticators = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            BiometricManager.Authenticators.BIOMETRIC_STRONG or BiometricManager.Authenticators.DEVICE_CREDENTIAL
-        } else {
-            BiometricManager.Authenticators.BIOMETRIC_STRONG
-        }
+        val authenticators = allowedAuthenticators()
 
         // Check if biometric auth is available on this device
-        val canAuthenticate =
-            BiometricManager.from(activity).canAuthenticate(authenticators)
+        val canAuthenticate = canAuthenticate(activity)
 
         // Build authentication prompt with localized strings
-        val promptInfo = BiometricPrompt.PromptInfo.Builder()
+        val promptInfoBuilder = BiometricPrompt.PromptInfo.Builder()
             .setTitle(activity.getString(R.string.text_biometric_login))
             .setSubtitle(activity.getString(R.string.text_biometric_login_sub))
             .setAllowedAuthenticators(authenticators)
             .setConfirmationRequired(false) // Don't require explicit confirm after auth
-            .build()
+        if (!isDeviceCredentialAllowed(authenticators)) {
+            // Mandatory without device credentials: PromptInfo.build() throws
+            // IllegalArgumentException ("Negative text must be set and non-empty")
+            // and crashes the app when it is missing.
+            promptInfoBuilder.setNegativeButtonText(activity.getString(R.string.confirm_no))
+        }
 
         // Start authentication if available
         if (canAuthenticate == BiometricManager.BIOMETRIC_SUCCESS) {
             logger.i("BiometricUtils", "Starting biometric authentication")
-            biometricPrompt.authenticate(promptInfo)
+            try {
+                biometricPrompt.authenticate(promptInfoBuilder.build())
+            } catch (e: IllegalArgumentException) {
+                logger.e("BiometricUtils", "Invalid biometric prompt configuration", e)
+                callbackSettings.onAuthenticationError(
+                    BiometricPrompt.ERROR_CANCELED,
+                    activity.getString(R.string.text_authentication_error, e.message.orEmpty(), BiometricPrompt.ERROR_CANCELED),
+                )
+            }
         } else {
             logger.w("BiometricUtils", "Biometric authentication not available: $canAuthenticate")
+            callbackSettings.onAuthenticationError(
+                canAuthenticate,
+                activity.getString(R.string.settings_lock_unavailable),
+            )
+        }
+    }
+
+    companion object {
+        /**
+         * Authenticators used for the settings lock.
+         * Android 11+ supports device credentials (PIN/pattern/password).
+         */
+        fun allowedAuthenticators(): Int {
+            return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                BiometricManager.Authenticators.BIOMETRIC_STRONG or BiometricManager.Authenticators.DEVICE_CREDENTIAL
+            } else {
+                BiometricManager.Authenticators.BIOMETRIC_STRONG
+            }
+        }
+
+        private fun isDeviceCredentialAllowed(authenticators: Int): Boolean {
+            return authenticators and BiometricManager.Authenticators.DEVICE_CREDENTIAL != 0
+        }
+
+        /** Returns a [BiometricManager] availability code, e.g. [BiometricManager.BIOMETRIC_SUCCESS]. */
+        fun canAuthenticate(context: Context): Int {
+            return BiometricManager.from(context).canAuthenticate(allowedAuthenticators())
         }
     }
 }

@@ -60,6 +60,7 @@
 
     <string name="lock_settings">Lock Settings</string>
     <string name="lock_settings_summary">Require biometric authentication to open settings</string>
+    <string name="settings_lock_unavailable">Biometric authentication is not available on this device, so settings cannot be locked.</string>
 
     <string name="customization">Customization</string>
 

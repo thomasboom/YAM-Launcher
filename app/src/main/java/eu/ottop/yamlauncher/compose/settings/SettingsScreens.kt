@@ -7,6 +7,7 @@ import android.provider.Settings
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.biometric.BiometricManager
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -71,6 +72,7 @@ import androidx.navigation.navArgument
 import eu.ottop.yamlauncher.R
 import eu.ottop.yamlauncher.compose.AppEntry
 import eu.ottop.yamlauncher.tasks.NotificationListener
+import eu.ottop.yamlauncher.utils.BiometricUtils
 import eu.ottop.yamlauncher.utils.CurboxApiClient
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -215,7 +217,13 @@ private fun RootSettingsScreen(vm: SettingsViewModel, nav: NavController) {
                 title = stringResource(R.string.lock_settings),
                 summary = stringResource(R.string.lock_settings_summary),
                 checked = p.isSettingsLocked(),
-                onCheckedChange = { p.putBoolean("lockSettings", it) },
+                onCheckedChange = { enable ->
+                    if (enable && BiometricUtils.canAuthenticate(context) != BiometricManager.BIOMETRIC_SUCCESS) {
+                        Toast.makeText(context, context.getString(R.string.settings_lock_unavailable), Toast.LENGTH_LONG).show()
+                    } else {
+                        p.putBoolean("lockSettings", enable)
+                    }
+                },
             )
             PrefSection(stringResource(R.string.customization))
             NavRow(

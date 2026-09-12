@@ -128,14 +128,23 @@ class MainActivity : FragmentActivity() {
 
                     override fun onAuthenticationFailed() {
                         logger.w("MainActivity", "Biometric authentication failed")
+                        Toast.makeText(this@MainActivity, getString(R.string.text_authentication_failed), Toast.LENGTH_SHORT).show()
                     }
 
                     override fun onAuthenticationError(errorCode: Int, errorMessage: CharSequence?) {
                         when (errorCode) {
-                            BiometricPrompt.ERROR_USER_CANCELED ->
+                            BiometricPrompt.ERROR_USER_CANCELED, BiometricPrompt.ERROR_NEGATIVE_BUTTON -> {
                                 logger.i("MainActivity", "Biometric authentication cancelled by user")
-                            else ->
+                                Toast.makeText(this@MainActivity, getString(R.string.text_authentication_cancel), Toast.LENGTH_SHORT).show()
+                            }
+                            else -> {
                                 logger.e("MainActivity", "Biometric authentication error: $errorMessage (code: $errorCode)")
+                                Toast.makeText(
+                                    this@MainActivity,
+                                    getString(R.string.text_authentication_error, errorMessage?.toString().orEmpty(), errorCode),
+                                    Toast.LENGTH_SHORT,
+                                ).show()
+                            }
                         }
                     }
                 })
