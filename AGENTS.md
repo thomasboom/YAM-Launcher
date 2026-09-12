@@ -4,13 +4,14 @@ Guidelines for agentic coding agents operating in this repository.
 
 ## Project Overview
 
-YAM Launcher is a minimalist text-based Android launcher with weather integration, built with Kotlin and modern Android practices.
+YAM Launcher is a minimalist text-based Android launcher with weather integration, built with Kotlin and Jetpack Compose.
 
 - **Package**: `eu.ottop.yamlauncher`
 - **Min SDK**: 24 (Android 7.0)
-- **Target SDK**: 36
-- **Language**: Kotlin 2.2.10
+- **Target SDK**: 37
+- **Language**: Kotlin 2.4.0
 - **JVM Target**: Java 17
+- **UI**: Jetpack Compose (BOM) + Material3, Compose compiler plugin, `buildFeatures.compose = true`
 
 ## Build Commands
 
@@ -63,7 +64,7 @@ YAM Launcher is a minimalist text-based Android launcher with weather integratio
 ./gradlew connectedDebugAndroidTest
 ```
 
-Note: The project currently has no test files. Tests should be placed in:
+Note: The project has unit tests. Tests should be placed in:
 - Unit tests: `app/src/test/java/eu/ottop/yamlauncher/`
 - Instrumentation tests: `app/src/androidTest/java/eu/ottop/yamlauncher/`
 
@@ -84,12 +85,11 @@ Within each group, organize alphabetically.
 - **Classes**: PascalCase (e.g., `MainActivity`, `SharedPreferenceManager`)
 - **Variables/Methods**: camelCase (e.g., `weatherSystem`, `getInstalledApps`)
 - **Constants**: UPPER_SNAKE_CASE (e.g., `MAX_LOG_FILE_SIZE`, `LOG_FILE_NAME`)
-- **XML IDs**: camelCase (e.g., `@+id/appRecycler`)
 - **String resources**: snake_case (e.g., `settings_title`, `launch_error`)
-- **Fragments**: Suffix with `Fragment` (e.g., `SettingsFragment`)
 - **Activities**: Suffix with `Activity` (e.g., `SettingsActivity`)
-- **Adapters**: Suffix with `Adapter` (e.g., `AppMenuAdapter`)
-- **Utility classes**: Suffix with `Utils` (e.g., `UIUtils`, `AppUtils`)
+- **Composables**: PascalCase screen/section names (e.g., `HomeScreen`, `AppDrawer`, `SettingsNav`)
+- **ViewModels**: Suffix with `ViewModel` (e.g., `LauncherViewModel`, `SettingsViewModel`)
+- **Utility classes**: Suffix with `Utils` (e.g., `AppUtils`)
 - **Managers**: Suffix with `Manager` (e.g., `SharedPreferenceManager`)
 - **Listeners/Receivers**: Suffix with `Listener` or `Receiver` (e.g., `NotificationListener`, `BatteryReceiver`)
 
@@ -135,18 +135,24 @@ logger.w("Tag", "Warning message")
 logger.e("Tag", "Error message", throwable)
 ```
 
-### View Binding
+### Compose UI
 
-The project uses View Binding:
+All UI is Jetpack Compose. State lives in ViewModels as `StateFlow`, collected with
+`collectAsState()` / `collectAsStateWithLifecycle()`:
+
 ```kotlin
-private lateinit var binding: ActivityMainBinding
-
-override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    binding = ActivityMainBinding.inflate(layoutInflater)
-    setContentView(binding.root)
+@Composable
+fun HomeScreen(vm: LauncherViewModel, onOpenSettings: () -> Unit) {
+    val p by vm.uiPrefs.collectAsState()
+    Text(text = timeText, style = launcherTextStyle(p, p.clockSizeSp.sp))
 }
 ```
+
+- Launcher UI: `compose/` (`LauncherViewModel`, `YamTheme`, `LauncherRoot`, `HomeScreen`, `AppDrawer`)
+- Settings UI: `compose/settings/` (`SettingsViewModel`, `SettingsNav`, `SettingsScreens`, `SettingsComponents`)
+- Theme helpers (`launcherTextStyle`, `fontFamilyFor`, size tables) live in `compose/YamTheme.kt`
+- Window-level styling (background, status bar) stays in `UIUtils`; everything else View-related was removed
+- `MainActivity` extends `FragmentActivity` (required by `BiometricUtils`); `SettingsActivity` is a plain `ComponentActivity`
 
 ### SharedPreferences
 
@@ -164,45 +170,23 @@ preferences.edit {
 }
 ```
 
-### RecyclerView Patterns
+### LazyColumn Lists
 
-Use DiffUtil for efficient updates:
+App/contact/settings lists are Compose `LazyColumn` with stable keys — no adapters, no DiffUtil:
 ```kotlin
-class AppDiffCallback(
-    private val oldList: List<App>,
-    private val newList: List<App>
-) : DiffUtil.Callback() {
-    override fun getOldListSize() = oldList.size
-    override fun getNewListSize() = newList.size
-    override fun areItemsTheSame(oldPos: Int, newPos: Int): Boolean {
-        return oldList[oldPos].id == newList[newPos].id
-    }
-    override fun areContentsTheSame(oldPos: Int, newPos: Int): Boolean {
-        return oldList[oldPos] == newList[newPos]
+LazyColumn(state = listState) {
+    items(filtered, key = { it.componentString + "#" + it.profile }) { entry ->
+        AppRow(vm, entry)
     }
 }
 ```
 
-### Fragments
+### Settings Navigation
 
-Fragments extend `PreferenceFragmentCompat` for settings or standard Fragment:
-```kotlin
-class SettingsFragment : PreferenceFragmentCompat(), TitleProvider {
-    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-        setPreferencesFromResource(R.xml.root_preferences, rootKey)
-    }
-}
-```
-
-### Interfaces for Callbacks
-
-Define interfaces in the same file as the class using them:
-```kotlin
-class AppMenuAdapter : RecyclerView.Adapter<AppMenuAdapter.AppViewHolder>() {
-    interface OnItemClickListener {
-        fun onItemClick(appInfo: LauncherActivityInfo, userHandle: UserHandle)
-    }
-}
+Settings use a Compose `NavHost` (`SettingsNav`), not fragments:
+- Routes: `root`, `ui`, `home`, `appmenu`, `context`, `hidden`, `gesture/{direction}`, `location`, `about`
+- Preference rows: `SwitchRow`, `ListRow`, `NavRow`, `EditRow`, `ActionRow` in `SettingsComponents.kt`
+- Backups stay JSON (`app_id`, `schema_version = 2`) via `ActivityResultContracts.CreateDocument/OpenDocument`
 ```
 
 ### Dependency Management
@@ -229,9 +213,9 @@ core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx
 ### Resources
 
 - String resources in `res/values/strings.xml`
-- Layouts in `res/layout/`
-- Preference XMLs in `res/xml/`
-- Support RTL layouts with `res/layout-land/` for landscape
+- Drawables (`R.drawable.*`) loaded via `painterResource` in Compose
+- Settings entry labels/values still in `res/values/arrays.xml` + `arrays_common.xml`
+- Support RTL layouts automatically via Compose `Alignment`/`TextAlign` mappings
 
 ### Biometric Authentication
 
@@ -255,5 +239,5 @@ biometricUtils.startBiometricSettingsAuth(object : BiometricUtils.CallbackSettin
 1. **Singleton**: `Logger` uses companion object with double-checked locking
 2. **Utility Classes**: Stateless utility classes with Context passed to constructor
 3. **Manager Pattern**: `SharedPreferenceManager` encapsulates all preference logic
-4. **Fragment Navigation**: Uses `supportFragmentManager` for fragment transactions
+4. **Compose Navigation**: Settings use `NavHost`; launcher home/drawer switch via `AnimatedVisibility` + `LauncherViewModel.drawerOpen`
 5. **Coroutines + Lifecycle**: Uses `lifecycleScope` and `repeatOnLifecycle` for lifecycle-aware coroutines

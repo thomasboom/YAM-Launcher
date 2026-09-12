@@ -1,5 +1,6 @@
 plugins {
     id("com.android.application")
+    alias(libs.plugins.kotlin.compose)
 }
 
 android {
@@ -54,9 +55,9 @@ android {
     }
     buildFeatures {
         aidl = true
-        viewBinding = true
         buildConfig = false
         resValues = true
+        compose = true
     }
 }
 
@@ -64,11 +65,22 @@ dependencies {
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
     implementation(libs.material)
-    implementation(libs.recyclerview)
     implementation(libs.preference.ktx)
     implementation(libs.activity.ktx)
-    implementation(libs.constraintlayout)
     implementation(libs.biometric.ktx)
+
+    // Jetpack Compose
+    implementation(platform(libs.compose.bom))
+    androidTestImplementation(platform(libs.compose.bom))
+    implementation(libs.compose.ui)
+    implementation(libs.compose.ui.tooling.preview)
+    implementation(libs.compose.foundation)
+    implementation(libs.compose.material3)
+    implementation(libs.compose.material.icons)
+    implementation(libs.activity.compose)
+    implementation(libs.lifecycle.viewmodel.compose)
+    implementation(libs.lifecycle.runtime.compose)
+    implementation(libs.navigation.compose)
 
     // Test dependencies
     testImplementation(libs.junit)

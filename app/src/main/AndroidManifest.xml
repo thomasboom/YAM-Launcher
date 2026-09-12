@@ -40,14 +40,14 @@
             android:name=".settings.SettingsActivity"
             android:exported="false"
             android:theme="@style/SettingsTheme"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".MainActivity"
             android:excludeFromRecents="true"
             android:exported="true"
             android:launchMode="singleTask"
             android:theme="@style/Theme.YamLauncher"
-            android:windowSoftInputMode="adjustResize">
+            android:windowSoftInputMode="adjustNothing">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

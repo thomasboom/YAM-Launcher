@@ -6,7 +6,6 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
 import androidx.core.content.ContextCompat
-import eu.ottop.yamlauncher.MainActivity
 import eu.ottop.yamlauncher.R
 import eu.ottop.yamlauncher.settings.SharedPreferenceManager
 import kotlinx.coroutines.CancellableContinuation
@@ -39,10 +38,10 @@ class WeatherSystem(private val context: Context) {
      * Acquires GPS location and updates weather based on current position.
      * Requires ACCESS_COARSE_LOCATION permission.
      *
-     * @param activity MainActivity for coroutine scope
+     * @param onLocated Called after the location was resolved (or skipped)
      * @suspend Must be called from coroutine context
      */
-    suspend fun setGpsLocation(activity: MainActivity) {
+    suspend fun setGpsLocation(onLocated: suspend () -> Unit) {
 
         val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
@@ -84,10 +83,10 @@ class WeatherSystem(private val context: Context) {
                     "latitude=${latitude}&longitude=${longitude}",
                     context.getString(R.string.latest_location)
                 )
-                activity.updateWeatherText()
+                onLocated()
             } else {
                 // Location unavailable, still update weather (will show empty)
-                activity.updateWeatherText()
+                onLocated()
             }
         } catch(_: Exception) {
             return

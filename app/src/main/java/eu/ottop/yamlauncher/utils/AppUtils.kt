@@ -130,14 +130,14 @@ class AppUtils(private val context: Context, private val launcherApps: LauncherA
     }
 
     /**
-     * Internal method to start an app.
+     * Starts an app directly without confirmation.
      * Handles the actual launch and error reporting.
      *
      * @param componentName App component to launch
      * @param userHandle User profile to launch in
      * @return true if launch succeeded, false otherwise
      */
-    private fun startApp(componentName: ComponentName, userHandle: UserHandle): Boolean {
+    fun startApp(componentName: ComponentName, userHandle: UserHandle): Boolean {
         return try {
             launcherApps.startMainActivity(componentName, userHandle, null, null)
             logger.i("AppUtils", "Launched app: ${componentName.packageName}")

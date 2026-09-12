@@ -21,7 +21,9 @@ import eu.ottop.yamlauncher.utils.Logger
  */
 class NotificationListener : NotificationListenerService() {
 
-    private val logger = Logger.getInstance(this)
+    // Lazily initialized: field initializers run before the Service base
+    // context is attached, so getInstance(this) would NPE there.
+    private val logger: Logger by lazy { Logger.getInstance(this) }
 
     companion object {
         // Action broadcast when notification state changes

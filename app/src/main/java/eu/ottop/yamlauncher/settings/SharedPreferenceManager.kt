@@ -26,6 +26,25 @@ class SharedPreferenceManager(private val context: Context) {
         store.repairKnownTypes()
     }
 
+    /**
+     * Generic setters used by the Compose settings UI.
+     * All other access stays type-safe through the dedicated getters.
+     */
+    fun putString(key: String, value: String) = store.putString(key, value)
+
+    fun putBoolean(key: String, value: Boolean) = store.putBoolean(key, value)
+
+    /** Raw persisted strings backing the list preferences in the Compose UI. */
+    fun getBgColorString(): String = store.string("bgColor", "#00000000")
+
+    fun getAnimationSpeedString(): String = store.string("animationSpeed", "200")
+
+    fun getSwipeThresholdString(): String = store.string("swipeThreshold", "100")
+
+    fun getSwipeVelocityString(): String = store.string("swipeVelocity", "100")
+
+    fun getWeatherUpdateIntervalRaw(): String = store.string("weatherUpdateInterval", "15m")
+
     // ============================================
     // UI Preferences
     // ============================================
